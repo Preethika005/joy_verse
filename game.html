@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dyslexia-Friendly Word Game</title>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            text-align: center;
+            background: linear-gradient(135deg, #FFEB3B, #FF9800);
+            padding: 20px;
+            color: #333;
+        }
+        .game-container {
+            max-width: 600px;
+            margin: auto;
+            padding: 20px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.2);
+        }
+        .word-container {
+            font-size: 50px;
+            font-weight: bold;
+            background: #FF5722;
+            color: white;
+            display: inline-block;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.2);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease-in-out;
+        }
+        .options {
+            margin-top: 20px;
+        }
+        .option {
+            font-size: 26px;
+            padding: 15px;
+            margin: 10px;
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 8px;
+            transition: transform 0.2s, box-shadow 0.2s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+        .option:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.4);
+        }
+        button {
+            background: linear-gradient(135deg, #3F51B5, #1A237E);
+            color: rgb(243, 98, 98);
+            font-size: 22px;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            margin-top: 15px;
+            transition: transform 0.3s ease-in-out;
+        }
+        button:hover {
+            transform: scale(1.1);
+            box-shadow: 4px 4px 15px rgba(0, 0, 0, 0.3);
+        }
+        #feedback {
+            font-size: 28px;
+            margin-top: 20px;
+            font-weight: bold;
+            transition: opacity 0.5s;
+        }
+        .image-container img {
+            width: 250px;
+            height: 200px;
+            margin-top: 10px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <h1 style="color: #D32F2F;">Word Matching Game</h1>
+        <p style="color: #1976D2; font-size: 22px;">Match the correct word!</p>
+        <div class="word-container" id="word">Loading...</div>
+        <div class="image-container" id="imageContainer"></div>
+        <button onclick="speakWord()">🔊 Hear Word</button>
+        <div class="options" id="options"></div>
+        <div id="feedback"></div>
+    </div>
+    <script>
+        const words = [
+        { word: "Apple", options: ["Apple", "Appli", "Aple"], correct: "Apple", image: "apple.jpg" },
+        { word: "Tiger", options: ["Tigar", "Tiger", "Teger"], correct: "Tiger", image: "tiger.jpg" },
+        { word: "Happy", options: ["Hapy", "Happy", "Happie"], correct: "Happy", image: "happy.jpg" },
+        { word: "Desert", options: ["desert", "dessert", "dezert"], correct: "desert", image: "desert.jpg" },
+        { word: "Right", options: ["right", "write", "rite"], correct: "right", image: "right.jpg" },
+        { word: "Quiet", options: ["quite", "quiet", "quit"], correct: "quiet", image: "quiet.jpg" }
+    ];
+
+    let shuffledWords = [];
+    let currentIndex = 0;
+
+    function shuffleWords() {
+        shuffledWords = [...words].sort(() => Math.random() - 0.5);
+        currentIndex = 0;
+    }
+
+    function loadWord() {
+        if (currentIndex >= shuffledWords.length) {
+            shuffleWords(); // Reshuffle after all words are shown
+        }
+
+        let currentWord = shuffledWords[currentIndex];
+        currentIndex++;
+
+        document.getElementById("word").textContent = currentWord.word;
+        document.getElementById("feedback").textContent = "";
+        document.getElementById("imageContainer").innerHTML = 
+            `<img src="images/${currentWord.image}" alt="${currentWord.word}" onerror="this.onerror=null; this.src='images/fallback.png';">`;
+
+        let optionsDiv = document.getElementById("options");
+        optionsDiv.innerHTML = "";
+        currentWord.options.sort(() => Math.random() - 0.5);
+        currentWord.options.forEach(option => {
+            let btn = document.createElement("button");
+            btn.textContent = option;
+            btn.classList.add("option");
+            btn.onclick = () => checkAnswer(option, currentWord.correct);
+            optionsDiv.appendChild(btn);
+        });
+    }
+
+    function checkAnswer(selected, correct) {
+        let feedbackDiv = document.getElementById("feedback");
+        feedbackDiv.style.opacity = "1";
+        if (selected === correct) {
+            feedbackDiv.textContent = "🎉 Correct!";
+            feedbackDiv.style.color = "green";
+        } else {
+            feedbackDiv.textContent = "❌ Try again!";
+            feedbackDiv.style.color = "red";
+        }
+        setTimeout(() => {
+            feedbackDiv.style.opacity = "0";
+            loadWord();
+        }, 1000);
+    }
+
+    function speakWord() {
+        let speech = new SpeechSynthesisUtterance(document.getElementById("word").textContent);
+        speech.lang = "en-US";
+        window.speechSynthesis.speak(speech);
+    }
+
+    window.onload = () => {
+        shuffleWords();
+        loadWord();
+    };
+    </script>
+</body>
+</html>
