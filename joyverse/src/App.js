@@ -12,6 +12,9 @@ import MathGame from "./MathGame";
 import Games from "./Games";
 import Quiz from "./Quiz";
 import HeroSection from "./HeroSection";
+import LoginPage from "./LoginPage";
+import RegisterPage from "./RegisterPage";
+
 
 
 function App() {
@@ -28,6 +31,8 @@ function App() {
         <Route path="/mathgame" element={<MathGame />} />
         <Route path="/games" element={<Games/>}/>
         <Route path="/quiz" element={<Quiz/>}/>
+        <Route path="/loginpage" element={<LoginPage/>}/>
+        <Route path="/registerpage" element={<RegisterPage/>}/>
         <Route path="/herosection" element={<HeroSection/>}/>
         <Route path="*" element={<h1>Page Not Found</h1>} />
 

@@ -19,10 +19,10 @@ function HeroSection() {
 
       {/* Buttons */}
       <div className="button-container">
-        <button className="play-button" onClick={() => navigate("/games")}>
+        <button className="play-button" onClick={() => navigate("/loginpage")}>
           LOGIN
         </button>
-        <button className="info-button" onClick={() => navigate("/about")}>
+        <button className="info-button" onClick={() => navigate("/registerpage")}>
           REGISTER
         </button>
       </div>
