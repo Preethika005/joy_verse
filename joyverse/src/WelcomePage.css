@@ -1,0 +1,92 @@
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif;
+    background-color: #fff6e9;
+    margin: 0;
+    padding: 0;
+    background-image: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\joyverse\public\images\gamesback2.jpg");
+    background-size: cover; /* or contain */
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-attachment: fixed;
+  }
+  
+  .container {
+    text-align: center;
+    padding: 30px;
+    border-radius: 20px;
+    background-color: #fdfdfd;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    max-width: 650px;
+    margin: 60px auto;
+  }
+  .welcome-text{
+    color: #050505;
+  font-size: 1.95rem;
+  margin-bottom: 1rem;
+  font-weight: bold;
+  }
+  h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #333;
+  }
+  
+  .faces {
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    flex-wrap: wrap;
+  }
+  
+  .face {
+    font-size: 2.5rem;
+    padding: 15px;
+    width: 70px;
+    height: 70px;
+    line-height: 70px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .face:hover {
+    transform: scale(1.1);
+  }
+  
+  .happy { background-color: #98d87e; }
+  .smile { background-color: #c3e88d; }
+  .neutral { background-color: #fce38a; }
+  .sad { background-color: #f6a96b; }
+  .angry { background-color: #f77b72; }
+  
+  .message-box {
+    margin-top: 25px;
+    font-size: 1.2rem;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: #fff3cd;
+    color: #5a5a5a;
+    display: inline-block;
+    max-width: 300px;
+  }
+  .start-button {
+    background-color: #4CAF50; /* Green background */
+    color: white; /* White text */
+    font-size: 18px; /* Increase font size */
+    padding: 15px 32px; /* Add padding */
+    border: none;
+    border-radius: 25px; /* Rounded corners */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    position: absolute; /* Position at the bottom */
+    bottom: 80px; /* Space from the bottom */
+    left: 50%; /* Center it horizontally */
+    transform: translateX(-50%); /* Center it exactly */
+  }
+  
+  .start-button:hover {
+    background-color: #45a049; /* Darker green on hover */
+  }

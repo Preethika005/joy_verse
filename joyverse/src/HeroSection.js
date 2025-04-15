@@ -9,7 +9,7 @@ function HeroSection() {
     <div className="hero-container">
       {/* Heading */}
       <h1 className="hero-title">
-        Welcome to JoyVerse 🎉
+        Welcome to JoyVerse🎉
       </h1>
 
       {/* Subtitle */}
