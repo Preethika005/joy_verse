@@ -1,16 +1,19 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import "./WordPuzzleAdventure.css";
 
 const words = [
-  {
-    image: "/images/apple.jpg", 
-    word: "APPLE",
-    hint: "A red-colored fruit"
-  },
-  {
-    image: "/images/tiger.jpg", 
-    word: "TIGER",
-    hint: "National animal of India"
-  }
+  { image: "/images/apple.jpg", word: "APPLE", hint: "A red-colored fruit" },
+  { image: "/images/tiger.jpg", word: "TIGER", hint: "National animal of India" },
+  { image: "/images/elephant.webp", word: "ELEPHANT", hint: "The largest land animal" },
+  { image: "/images/sun.webp", word: "SUN", hint: "The star at the center of our solar system" },
+  { image: "/images/banana.jpg", word: "BANANA", hint: "A long yellow fruit" },
+  { image: "/images/dog.jpg", word: "DOG", hint: "A loyal domestic animal" },
+  { image: "/images/mountain.jpg", word: "MOUNTAIN", hint: "A large natural elevation of the earth's surface" },
+  { image: "/images/rose.jpg", word: "ROSE", hint: "A beautiful flower often red or pink" },
+  { image: "/images/car.png", word: "CAR", hint: "A vehicle with four wheels" },
+  { image: "/images/book.jpg", word: "BOOK", hint: "You can read stories or information from this" },
+  { image: "/images/owl.jpg", word: "OWL", hint: "A bird that is active at night" },
+  { image: "/images/fish.jpg", word: "FISH", hint: "An animal that lives in water" },
 ];
 
 const encouragingMessages = [
@@ -18,16 +21,32 @@ const encouragingMessages = [
   "You're Amazing! ⭐",
   "Fantastic! Keep Going! 🚀",
   "You Did It! 🏆",
-  "Awesome! 🎈"
+  "Awesome! 🎈",
 ];
+
 
 const WordPuzzleAdventure = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [selectedLetters, setSelectedLetters] = useState(Array(words[currentIndex].word.length).fill(""));
-  const [shuffledLetters, setShuffledLetters] = useState([...words[currentIndex].word].sort(() => Math.random() - 0.5));
+  const [selectedLetters, setSelectedLetters] = useState(Array(words[0].word.length).fill(""));
+  const [shuffledLetters, setShuffledLetters] = useState([...words[0].word].sort(() => Math.random() - 0.5));
   const [hintVisible, setHintVisible] = useState(false);
   const [message, setMessage] = useState("");
   const [showMessage, setShowMessage] = useState(false);
+  const [score, setScore] = useState(0);
+
+  useEffect(() => {
+    // Enable scrolling when this page is open
+    document.body.style.overflow = "auto";
+  
+    // When leaving this page, disable scrolling again
+    return () => {
+      document.body.style.overflow = "hidden";
+    };
+  }, []);
+  useEffect(() => {
+    checkIfWordIsCorrect();
+    // eslint-disable-next-line
+  }, [selectedLetters]);
 
   const handleLetterClick = (letter, index) => {
     const emptyIndex = selectedLetters.findIndex((l) => l === "");
@@ -51,17 +70,18 @@ const WordPuzzleAdventure = () => {
     }
   };
 
-  const checkAnswer = () => {
+  const checkIfWordIsCorrect = () => {
     const currentWord = words[currentIndex].word;
     if (selectedLetters.join("") === currentWord) {
       const randomMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
       setMessage(randomMessage);
-      // new Audio("/sounds/correct.mp3").play(); 
-    } 
-    else {
-      setMessage("Try Again! ❌");
+      setScore(prevScore => prevScore + 10);
+      setShowMessage(true);
+
+      setTimeout(() => {
+        nextWord();
+      }, 2000); // Move to next word after 2 seconds
     }
-    setShowMessage(true);
   };
 
   const nextWord = () => {
@@ -71,62 +91,69 @@ const WordPuzzleAdventure = () => {
     setShuffledLetters([...words[newIndex].word].sort(() => Math.random() - 0.5));
     setHintVisible(false);
     setShowMessage(false);
+    setMessage("");
   };
 
   return (
-    <div style={{ display: "flex", flexDirection: "column", alignItems: "center", height: "100vh", justifyContent: "center", backgroundColor: "#f3f4f6" ,width: "100vw"  /* Add this */}}>
-      <h2 style={{ fontSize: "24px", fontWeight: "bold" }}>Guess the Word</h2>
-      <img src={words[currentIndex].image} alt="word" style={{ height: "370px", marginBottom: "20px" }} />
+    <div className="word-puzzle-container">
+      <div className="word-puzzle-score-board">
+        <h3>Score: {score}</h3>
+      </div>
+      <h2 className="word-puzzle-title">🎯 Guess the Word!</h2>
+      <img
+        src={words[currentIndex].image}
+        alt="word"
+        className="word-puzzle-word-image"
+      />
 
-      {/* Word Slots */}
-      <div style={{ display: "flex", gap: "10px", marginBottom: "20px" }}>
+      <div className="word-puzzle-word-slots">
         {selectedLetters.map((letter, index) => (
           <div
             key={index}
+            className={`word-puzzle-slot ${letter ? "filled" : ""}`}
             onClick={() => handleAnswerClick(index)}
-            style={{
-              width: "40px",
-              height: "40px",
-              border: "2px solid black",
-              textAlign: "center",
-              fontSize: "20px",
-              lineHeight: "40px",
-              backgroundColor: letter ? "#d1d5db" : "white",
-              cursor: letter ? "pointer" : "default"
-            }}
           >
             {letter}
           </div>
         ))}
       </div>
 
-      {/* Jumbled Letters */}
-      <div style={{ display: "flex", gap: "10px", marginTop: "20px" }}>
+      <div className="word-puzzle-letters-container">
         {shuffledLetters.map((letter, index) => (
-          <button key={index} onClick={() => handleLetterClick(letter, index)} style={{ padding: "10px", fontSize: "18px", border: "2px solid black", cursor: "pointer" }}>
+          <button
+            key={index}
+            className="word-puzzle-letter-button"
+            onClick={() => handleLetterClick(letter, index)}
+          >
             {letter}
           </button>
         ))}
       </div>
 
-      {/* Buttons */}
-      <div style={{ marginTop: "20px" }}>
-        <button onClick={checkAnswer} style={{ padding: "10px", marginRight: "10px", backgroundColor: "purple", color: "white", cursor: "pointer" }}>
-          Check Answer
+      <div className="word-puzzle-buttons">
+        <button
+          className="word-puzzle-action-button hint"
+          onClick={() => setHintVisible(true)}
+        >
+          Show Hint
         </button>
-        <button onClick={() => setHintVisible(true)} style={{ padding: "10px", marginRight: "10px", backgroundColor: "blue", color: "white", cursor: "pointer" }}>
-          Hint
-        </button>
-        <button onClick={nextWord} style={{ padding: "10px", backgroundColor: "green", color: "white", cursor: "pointer" }}>
-          Next Word
+        <button
+          className="word-puzzle-action-button next"
+          onClick={nextWord}
+        >
+          Skip
         </button>
       </div>
 
-      {/* Hint Display */}
-      {hintVisible && <p style={{ marginTop: "20px", fontSize: "18px", fontWeight: "bold" }}>{words[currentIndex].hint}</p>}
+      {hintVisible && <p className="word-puzzle-hint">{words[currentIndex].hint}</p>}
 
-      {/* Encouragement Message */}
-      {showMessage && <p style={{ marginTop: "20px", fontSize: "22px", fontWeight: "bold", color: message.includes("Try Again") ? "red" : "green" }}>{message}</p>}
+      {showMessage && (
+        <p
+          className={`word-puzzle-message success`}
+        >
+          {message}
+        </p>
+      )}
     </div>
   );
 };

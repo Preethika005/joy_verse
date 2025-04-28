@@ -1,4 +1,3 @@
-// models/User.js
 import mongoose from "mongoose";
 
 const userSchema = new mongoose.Schema({
@@ -6,6 +5,6 @@ const userSchema = new mongoose.Schema({
   email: String,
   username: { type: String, unique: true },
   password: String,
-  role: String, // example roles: player, admin, therapist
+  role: String, 
 });
 export default mongoose.model("User", userSchema);

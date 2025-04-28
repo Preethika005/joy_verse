@@ -7,17 +7,14 @@ function HeroSection() {
 
   return (
     <div className="hero-container">
-      {/* Heading */}
       <h1 className="hero-title">
-        Welcome to JoyVerse🎉
+        Welcome to JoyVerse
       </h1>
 
-      {/* Subtitle */}
       <p className="hero-subtitle">
         Educational games designed to make learning fun and engaging for every child!
       </p>
 
-      {/* Buttons */}
       <div className="button-container">
         <button className="play-button" onClick={() => navigate("/loginpage")}>
           LOGIN

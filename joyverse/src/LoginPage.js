@@ -43,7 +43,7 @@ const LoginPage = () => {
 
   return (
     <div className="login-container">
-      <h1 className="login-title">🌈 JoyVerse Login</h1>
+      <h1 className="login-title">JoyVerse Login</h1>
       <form className="login-form" onSubmit={handleLogin}>
         <input
           type="text"
@@ -59,13 +59,15 @@ const LoginPage = () => {
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-        <button type="submit">Let's Go! 🚀</button>
-        {/* <p className="login-link">
-          New here? <a href="/registerpage">Register Now</a>
-        </p> */}
+        <button type="submit">Let's Go! </button>
       </form>
     </div>
   );
 };
 
 export default LoginPage;
+
+
+
+
+

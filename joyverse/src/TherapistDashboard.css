@@ -1,47 +1,91 @@
-/* ChildrenTable.css */
+/* TherapistDashboard.css */
 
-.table-container {
-  padding: 20px;
-  width:1000px;
-  height:600px;
-  max-width: 1000px;
+.dashboard-container {
+  padding: 30px;
+  max-width: 1200px;
   margin: 40px auto;
-  background-color: #fff;
-  border-radius: 12px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+  background: #fefefe;
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
-.table-title {
+.welcome-therapist {
   text-align: center;
-  font-size: 2rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
+  font-size: 2.4rem;
+  margin-bottom: 10px;
+  color: #6a1b9a;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+.dashboard-title {
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 30px;
+  color: #4a148c;
   font-weight: bold;
+}
+
+.search-bar {
+  display: block;
+  width: 60%;
+  margin: 0 auto 30px;
+  padding: 12px 20px;
+  font-size: 1rem;
+  border: 2px solid #ce93d8;
+  border-radius: 25px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.search-bar:focus {
+  border-color: #ba68c8;
 }
 
 .custom-table {
   width: 100%;
-  border-collapse: collapse;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-.custom-table th,
-.custom-table td {
-  padding: 14px 18px;
-  text-align: left;
-  border-bottom: 1px solid #ddd;
-}
-
-.custom-table thead {
-  background-color: #f0f0f0;
-}
-
-.custom-table tr:hover {
-  background-color: #f9f9f9;
-  transition: 0.3s;
+  border-collapse: separate;
+  border-spacing: 0 10px;
+  font-family: 'Poppins', sans-serif;
 }
 
 .custom-table th {
+  background-color: #e1bee7;
+  color: #4a148c;
+  padding: 16px;
+  text-align: left;
+  font-size: 1rem;
+  border-bottom: 2px solid #d1c4e9;
+}
+
+.custom-table td {
+  background: #ffffff;
+  padding: 14px 20px;
+  font-size: 1rem;
   color: #555;
-  font-weight: 600;
+  border-bottom: 1px solid #eee;
+}
+
+.custom-table tr {
+  transition: transform 0.2s ease, background-color 0.3s ease;
+}
+
+/* .custom-table tr:hover {
+  background-color: #f3e5f5;
+  transform: scale(1.01);
+} */
+
+.action-btn {
+  background-color: #ab47bc;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  font-size: 0.9rem;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.action-btn:hover {
+  background-color: #8e24aa;
+  transform: scale(1.05);
 }

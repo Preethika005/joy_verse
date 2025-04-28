@@ -1,10 +1,7 @@
-/* Overall Page Styling */
-.games-container {
+.games-page-container {
   text-align: center;
   padding: 40px;
-  /* background: linear-gradient(135deg, #ffeb3b, #ff9800); */
-  background: url("C:\Users\preet\OneDrive\Documents\JOYVERSE\joyverse\public\images\gamesback2.jpg") no-repeat center center/cover;
-
+  background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\joyverse\public\images\gamesback2.jpg") no-repeat center center/cover;
   min-height: 100vh;
   width: 100vw;  
   display: flex;
@@ -13,7 +10,7 @@
 }
 
 /* Title Styling */
-.title {
+.games-page-title {
   font-size: 3rem;
   color: #070707;
   text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
@@ -21,22 +18,23 @@
 }
 
 /* Subtitle */
-.subtitle {
+.games-page-subtitle {
   font-size: 1.5rem;
   color: #1b1a1a;
   margin-bottom: 30px;
 }
 
 /* Game List Styling */
-.games-list {
+.games-page-list {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
+  
   gap: 20px;
 }
 
 /* Individual Game Card */
-.game-card {
+.games-page-card {
   background: #fff;
   padding: 20px;
   border-radius: 15px;
@@ -49,38 +47,43 @@
 }
 
 /* Hover Effects */
-.game-card:hover {
+.games-page-card:hover {
   transform: scale(1.08);
   box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
 }
 
 /* Game Titles */
-.game-card h2 {
+.games-page-card h2 {
   font-size: 1.8rem;
   margin-bottom: 10px;
 }
 
 /* Game Descriptions */
-.game-card p {
-  font-size: 1rem;
+.games-page-card p {
+  font-size: 1.1rem;
   color: #444;
 }
 
 /* Unique Colors for Each Game */
-.word-game {
+.games-page-word-game {
   background: #ffccbc;
   border: 3px solid #ff5722;
 }
 
-.math-game {
+.games-page-math-game {
   background: #c8e6c9;
   border: 3px solid #4caf50;
 }
 
-.quiz-game {
+.games-page-quiz-game {
   background: #bbdefb;
   border: 3px solid #2196f3;
 }
-p{
-  font-size: larger;
+.games-page-syllable-game {
+  background: #f5bbe4;
+  border: 3px solid #f406ac;
+}
+.games-page-shapememory-game {
+  background: #f7f7c1;
+  border: 3px solid #fcfc08;
 }

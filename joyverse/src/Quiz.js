@@ -53,10 +53,12 @@ const quizData = [
     answer: "Cat",
   },
 ];
+
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
+
   const handleAnswerClick = (selected) => {
     if (selected === quizData[currentQuestion].answer) {
       setScore(score + 1);
@@ -68,37 +70,39 @@ const Quiz = () => {
       setShowScore(true);
     }
   };
+
   const handleReplay = () => {
     setCurrentQuestion(0);
     setScore(0);
     setShowScore(false);
   };
+
   return (
     <div className="quiz-container">
       <div className="quiz-box">
         <h2 className="quiz-title">Fun Quiz!</h2>
 
         {showScore ? (
-          <div className="score-section">
+          <div className="quiz-score-section">
             <p>You scored {score} out of {quizData.length}!🎉</p>
-            <button className="replay-btn" onClick={handleReplay}>Replay Quiz</button>
+            <button className="quiz-replay-btn" onClick={handleReplay}>Replay Quiz</button>
           </div>
         ) : (
           <>
-            <p className="question">{quizData[currentQuestion].question}</p>
-            <div className="options">
+            <p className="quiz-question">{quizData[currentQuestion].question}</p>
+            <div className="quiz-options">
               {quizData[currentQuestion].options.map((option) => (
                 <button
                   key={option.text}
-                  className="option-btn"
+                  className="quiz-option-btn"
                   onClick={() => handleAnswerClick(option.text)}
                 >
-                  <img src={option.image} alt={option.text} className="option-image" />
+                  <img src={option.image} alt={option.text} className="quiz-option-image" />
                   <div>{option.text}</div>
                 </button>
               ))}
             </div>
-            <p className="question-count">
+            <p className="quiz-question-count">
               Question {currentQuestion + 1} of {quizData.length}
             </p>
           </>

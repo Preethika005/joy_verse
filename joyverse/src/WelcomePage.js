@@ -1,15 +1,17 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./WelcomePage.css";
 
-const WelcomPage = () => {
-    const [username, setUsername] = useState("");
+const WelcomePage = () => {
+  const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername || "Guest");
   }, []);
+
   const showMessage = (mood) => {
     const messages = {
       happy: "Yay! You're feeling great! Keep smiling! 🌟",
@@ -20,30 +22,33 @@ const WelcomPage = () => {
     };
     setMessage(messages[mood]);
   };
+
   const handleStartPlaying = () => {
     navigate("/games"); // Redirect to the games page
   };
 
   return (
-    <div>
-        <h2 className="welcome-text">Welcome to JoyVerse, {username}! let's play and learn together! ✨😊</h2>
-    <div className="container">
-      <h1>How are you feeling today?</h1>
-      <div className="faces">
-        <div className="face happy" onClick={() => showMessage("happy")}>😊</div>
-        <div className="face smile" onClick={() => showMessage("smile")}>🙂</div>
-        <div className="face neutral" onClick={() => showMessage("neutral")}>😐</div>
-        <div className="face sad" onClick={() => showMessage("sad")}>☹️</div>
-        <div className="face angry" onClick={() => showMessage("angry")}>😠</div>
+    <div className="welcome-page">
+      <h2 className="welcome-page__text">
+        Welcome to JoyVerse, {username}! Let's play and learn together! ✨😊
+      </h2>
+      <div className="welcome-page__container">
+        <h1>How are you feeling today?</h1>
+        <div className="welcome-page__faces">
+          <div className="welcome-page__face happy" onClick={() => showMessage("happy")}>😊</div>
+          <div className="welcome-page__face smile" onClick={() => showMessage("smile")}>🙂</div>
+          <div className="welcome-page__face neutral" onClick={() => showMessage("neutral")}>😐</div>
+          <div className="welcome-page__face sad" onClick={() => showMessage("sad")}>☹️</div>
+          <div className="welcome-page__face angry" onClick={() => showMessage("angry")}>😠</div>
+        </div>
+        {message && <div className="welcome-page__message-box">{message}</div>}
+        
       </div>
-      {message && <div className="message-box show">{message}</div>}
-      <button className="start-button" onClick={handleStartPlaying}>
+      <button className="welcome-page__start-button" onClick={handleStartPlaying}>
           Start Playing
         </button>
     </div>
-    </div>
-   
   );
 };
 
-export default WelcomPage;
+export default WelcomePage;

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import "./MathGame.css";
 
 const MathGame = () => {
   const [num1, setNum1] = useState(2);
@@ -95,72 +96,35 @@ const MathGame = () => {
   };
 
   return (
-    <div style={{
-      textAlign: "center",
-      padding: "20px",
-      fontFamily: "Arial, sans-serif",
-      background: "#f0f8ff",
-      minHeight: "100vh",
-      color: "#333"
-    }}>
-      <h1 style={{ fontSize: "40px", color: "#ff6b6b" }}>🎉 Math Fun Challenge 🎈</h1>
-      <p style={{ fontSize: "22px", fontWeight: "bold", color: "#4caf50" }}>Score: {score}</p>
-      <p style={{ fontSize: "20px", color: "#007bff" }}>Question {questionCount + 1} of {totalQuestions}</p>
+    <div className="math-game-container">
+      <h1 className="math-game-title">🎉 Math Fun Challenge 🎈</h1>
+      <p className="math-game-score">Score: {score}</p>
+      <p className="math-game-question-count">Question {questionCount + 1} of {totalQuestions}</p>
 
       {gameOver ? (
-        <div>
-          <h2 style={{ fontSize: "32px", color: "#ff4757" }}>Game Over! 🎮</h2>
-          <p style={{ fontSize: "26px", color: "#2f3542" }}>Final Score: {score}/{totalQuestions}</p>
-          <p style={{ fontSize: "22px", color: score >= 7 ? "green" : "red" }}>
+        <div className="game-over-container">
+          <h2 className="game-over-title">Game Over! 🎮</h2>
+          <p className="game-over-score">Final Score: {score}/{totalQuestions}</p>
+          <p className="game-over-message">
             {score >= 8 ? "Amazing job! You're a math star! 🌟" :
              score >= 5 ? "Great effort! Keep practicing and you'll be a pro! 😊" :
              "Don't give up! Every try makes you better! 💪"}
           </p>
-          <button onClick={resetGame} style={{
-            backgroundColor: "#ff6b6b",
-            color: "#fff",
-            fontSize: "26px",
-            padding: "12px 24px",
-            borderRadius: "12px",
-            border: "none",
-            cursor: "pointer",
-            boxShadow: "3px 3px 10px rgba(0,0,0,0.2)"
-          }}>
-            🔄 Play Again
-          </button>
+          <button onClick={resetGame} className="play-again-button">🔄 Play Again</button>
         </div>
       ) : (
-        <div style={{
-          backgroundColor: "#fff",
-          padding: "20px",
-          borderRadius: "15px",
-          display: "inline-block",
-          boxShadow: "0px 4px 10px rgba(0, 0, 0, 0.2)"
-        }}>
-          <h2 style={{ fontSize: "32px", marginBottom: "20px", color: "#e67e22" }}>
-            {num1} {operation} {num2} = ?
-          </h2>
-          <div style={{ display: "flex", justifyContent: "center", gap: "20px" }}>
+        <div className="question-container">
+          <h2 className="question-text">{num1} {operation} {num2} = ?</h2>
+          <div className="options-container">
             {options.map((option, index) => (
-              <button key={index} onClick={() => checkAnswer(option)}
-                style={{
-                  backgroundColor: "#3498db",
-                  color: "#fff",
-                  fontSize: "26px",
-                  padding: "12px 24px",
-                  borderRadius: "12px",
-                  border: "none",
-                  cursor: "pointer",
-                  transition: "0.3s",
-                  boxShadow: "3px 3px 10px rgba(0,0,0,0.2)"
-                }}>
+              <button key={index} onClick={() => checkAnswer(option)} className="option-button">
                 {option}
               </button>
             ))}
-          </div>  
+          </div>
         </div>
       )}
-      <p style={{ marginTop: "20px", fontSize: "24px", fontWeight: "bold" }}>{message}</p>
+      <p className="message">{message}</p>
     </div>
   );
 };

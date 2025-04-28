@@ -41,7 +41,7 @@ const RegisterPage = () => {
 
   return (
     <div className="register-container">
-      <h1 className="register-title">🎉 Join JoyVerse</h1>
+      <h1 className="register-title"> Join JoyVerse</h1>
       <form className="register-form" onSubmit={handleSubmit}>
         <input
           type="text"
@@ -81,7 +81,7 @@ const RegisterPage = () => {
           <option value="therapist">Therapist</option>
         </select>
 
-        <button type="submit">Create Account 🌟</button>
+        <button type="submit">Create Account</button>
         {/* <p className="register-link">
           Already have an account? <a href="/loginpage">Login</a>
         </p> */}

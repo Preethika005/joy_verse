@@ -1,0 +1,138 @@
+/* Global styles */
+/* body {
+    margin: 0;
+    padding: 0;
+    background-color: #111827;
+    color: white;
+    font-family: 'Segoe UI', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    overflow: hidden;
+  } */
+  
+  /* Shape Memory Game container */
+  .smg-container {
+    width: 100%;
+  max-width: 500px;
+  background-color: #111827;
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  padding: 20px;
+  margin: 40px auto;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* changed from center */
+  min-height: 100vh;
+  overflow-y: auto; /* ADD THIS */
+  }
+  
+  /* Title */
+  .smg-title {
+    font-size: 2.5rem;
+    margin-bottom: 10px;
+  }
+  
+  /* Dropdown controls */
+  .smg-controls {
+    margin-bottom: 10px;
+  }
+  
+  .smg-dropdown {
+    padding: 6px 12px;
+    font-size: 1rem;
+    border-radius: 6px;
+    border: none;
+    background-color: #1f2937;
+    color: white;
+  }
+  
+  .smg-dropdown:focus {
+    outline: 2px solid #3b82f6;
+  }
+  
+  /* Prompt & timer */
+  .smg-prompt,
+  .smg-timer {
+    font-size: 1.1rem;
+    margin: 5px 0;
+  }
+  
+  /* Grid layout */
+  .smg-grid {
+    display: grid;
+    grid-template-columns: repeat(5, 50px);
+    gap: 10px;
+    justify-content: center;
+    margin: 15px 0;
+  }
+  
+  /* Tile styles */
+  .smg-tile {
+    width: 50px;
+    height: 50px;
+    background-color: #374151;
+    border-radius: 8px;
+    font-size: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  
+  .smg-correct {
+    background-color: #10b981;
+    color: white;
+  }
+  
+  .smg-wrong {
+    background-color: #ef4444;
+    color: white;
+  }
+  
+  .smg-revealed {
+    background-color: #4b5563;
+    color: white;
+  }
+  
+  .smg-hidden {
+    background-color: #374151;
+  }
+  
+  /* Score display */
+  .smg-score {
+    margin-top: 8px;
+    font-size: 1.1rem;
+  }
+  
+  /* End screen */
+  .smg-end-screen {
+    margin-top: 10px;
+  }
+  
+  .smg-result-text {
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  .smg-reset-button {
+    padding: 8px 14px;
+    font-size: 1rem;
+    border: none;
+    border-radius: 8px;
+    background-color: #3b82f6;
+    color: white;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .smg-reset-button:hover {
+    background-color: #2563eb;
+  }
+  
