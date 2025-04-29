@@ -135,4 +135,19 @@
   .smg-reset-button:hover {
     background-color: #2563eb;
   }
+  .smg-container.happy {
+    background-color: #ffeaa7;
+  }
+  .smg-container.sad {
+    background-color: #74b9ff;
+  }
+  .smg-container.angry {
+    background-color: #ff7675;
+  }
+  .smg-container.surprised {
+    background-color: #fdcb6e;
+  }
+  .smg-container.neutral {
+    background-color: #dfe6e9;
+  }
   
