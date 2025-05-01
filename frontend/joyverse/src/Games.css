@@ -1,0 +1,89 @@
+.games-page-container {
+  text-align: center;
+  padding: 40px;
+  background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\gamesback2.jpg") no-repeat center center/cover;
+  min-height: 100vh;
+  width: 100vw;  
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Title Styling */
+.games-page-title {
+  font-size: 3rem;
+  color: #070707;
+  text-shadow: 3px 3px 8px rgba(0, 0, 0, 0.2);
+  margin-bottom: 10px;
+}
+
+/* Subtitle */
+.games-page-subtitle {
+  font-size: 1.5rem;
+  color: #1b1a1a;
+  margin-bottom: 30px;
+}
+
+/* Game List Styling */
+.games-page-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  
+  gap: 20px;
+}
+
+/* Individual Game Card */
+.games-page-card {
+  background: #fff;
+  padding: 20px;
+  border-radius: 15px;
+  box-shadow: 4px 4px 12px rgba(0, 0, 0, 0.2);
+  transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+  cursor: pointer;
+  width: 260px;
+  text-align: center;
+  font-family: "Comic Sans MS", cursive, sans-serif;
+}
+
+/* Hover Effects */
+.games-page-card:hover {
+  transform: scale(1.08);
+  box-shadow: 6px 6px 15px rgba(0, 0, 0, 0.3);
+}
+
+/* Game Titles */
+.games-page-card h2 {
+  font-size: 1.8rem;
+  margin-bottom: 10px;
+}
+
+/* Game Descriptions */
+.games-page-card p {
+  font-size: 1.1rem;
+  color: #444;
+}
+
+/* Unique Colors for Each Game */
+.games-page-word-game {
+  background: #ffccbc;
+  border: 3px solid #ff5722;
+}
+
+.games-page-math-game {
+  background: #c8e6c9;
+  border: 3px solid #4caf50;
+}
+
+.games-page-quiz-game {
+  background: #bbdefb;
+  border: 3px solid #2196f3;
+}
+.games-page-syllable-game {
+  background: #f5bbe4;
+  border: 3px solid #f406ac;
+}
+.games-page-shapememory-game {
+  background: #f7f7c1;
+  border: 3px solid #fcfc08;
+}
