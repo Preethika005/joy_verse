@@ -1,18 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import axios from "axios";
-import Webcam from "react-webcam";
+import React, { useState } from "react";
 import "./Quiz.css";
 
-const emotionColors = {
-  Happy: "#fff3cd",     // light yellow
-  Sad: "#cce5ff",       // light blue
-  Angry: "#f8d7da",     // light red
-  Disgust: "#d4edda",   // light green
-  Fear: "#e2e3e5",      // grey
-  Neutral: "#ffffff",   // white
-};
-
-const quizData = [/* your existing quizData array here */
+const quizData = [
   {
     question: "What is the color of the sky?",
     options: [
@@ -63,68 +52,12 @@ const quizData = [/* your existing quizData array here */
     ],
     answer: "Cat",
   },
-
 ];
 
 const Quiz = () => {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
-  const [emotion, setEmotion] = useState("Neutral");
-  const webcamRef = useRef(null);
-
-  const [emotionBuffer, setEmotionBuffer] = useState([]);
-
-  // Capture a single frame and send to backend
-  const captureEmotion = async () => {
-    if (webcamRef.current) {
-      const screenshot = webcamRef.current.getScreenshot();
-      if (!screenshot) return;
-
-      const blob = await fetch(screenshot).then((res) => res.blob());
-      const formData = new FormData();
-      formData.append("file", blob, "frame.jpg");
-
-      try {
-        const response = await axios.post("http://localhost:8000/predict", formData);
-        const detected = response.data.expression;
-        setEmotionBuffer(prev => [...prev, detected]);
-      } catch (err) {
-        console.error("Error detecting emotion:", err);
-      }
-    }
-  };
-
-  // Analyze buffer and set theme
-  const analyzeAndSetTheme = () => {
-    if (emotionBuffer.length === 0) return;
-    const freq = {};
-    for (let emo of emotionBuffer) {
-      freq[emo] = (freq[emo] || 0) + 1;
-    }
-    const dominantEmotion = Object.entries(freq).sort((a, b) => b[1] - a[1])[0][0];
-    setEmotion(dominantEmotion);
-    setEmotionBuffer([]); // Clear buffer for next cycle
-  };
-
-  // Start periodic emotion sampling every 10s (capture for 2s, every 500ms)
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setEmotionBuffer([]);
-      let captureCount = 0;
-      const captureInterval = setInterval(() => {
-        if (captureCount < 4) {
-          captureEmotion();
-          captureCount++;
-        } else {
-          clearInterval(captureInterval);
-          setTimeout(analyzeAndSetTheme, 500); // wait a bit to ensure last prediction is included
-        }
-      }, 500);
-    }, 10000); // every 10s
-
-    return () => clearInterval(interval);
-  }, []);
 
   const handleAnswerClick = (selected) => {
     if (selected === quizData[currentQuestion].answer) {
@@ -145,27 +78,13 @@ const Quiz = () => {
   };
 
   return (
-    <div
-      className="quiz-container"
-      style={{ backgroundColor: emotionColors[emotion] || "#ffffff" }}
-    >
-      {/* Webcam hidden but active */}
-      <Webcam
-        ref={webcamRef}
-        audio={false}
-        screenshotFormat="image/jpeg"
-        width={0}
-        height={0}
-        style={{ display: "none" }}
-      />
-
+    <div className="quiz-container">
       <div className="quiz-box">
         <h2 className="quiz-title">Fun Quiz!</h2>
-        <p style={{ fontWeight: "bold" }}>Current Mood: {emotion}</p>
 
         {showScore ? (
           <div className="quiz-score-section">
-            <p>You scored {score} out of {quizData.length}! 🎉</p>
+            <p>You scored {score} out of {quizData.length}!🎉</p>
             <button className="quiz-replay-btn" onClick={handleReplay}>Replay Quiz</button>
           </div>
         ) : (

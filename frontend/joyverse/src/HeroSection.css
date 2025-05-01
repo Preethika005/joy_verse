@@ -13,14 +13,10 @@ html, body {
     align-items: center;
     justify-content: center;
     height: 100vh;
-    /* width: 100vw;   */
     text-align: center;
     background: linear-gradient(135deg, #7f5af0, #00ebc7);
-    /* background: url("C:\Users\preet\OneDrive\Documents\JOYVERSE\joyverse\public\images\back2.jpg") no-repeat center center/cover; */
-    background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\gamesback2.jpg") no-repeat center center;
+    background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\homeback.jpg") no-repeat center center;
     background-size: cover;
-    /* height: 100vh;
-    width: 100vh; */
     width: 100vw;  /* Full width of the viewport */
   height: 100vh; /* Full height of the viewport */
   display: flex;

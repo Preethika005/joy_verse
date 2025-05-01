@@ -217,7 +217,7 @@ function ShapeMemoryGame() {
       <p className="smg-prompt">
         {isStarting
           ? "Memorize the tiles..."
-          : `Find all tiles with: ${currentTarget}`}
+          :` Find all tiles with: ${currentTarget}`}
       </p>
 
       <p className="smg-timer">Time Left: {timeLeft}s</p>
