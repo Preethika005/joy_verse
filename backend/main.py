@@ -8,7 +8,7 @@ import io
 
 # Load processor and model
 processor = AutoImageProcessor.from_pretrained("trpakov/vit-face-expression")
-model = AutoModelForImageClassification.from_pretrained("trpakov/vit-face-expression")
+model = AutoModelForImageClassification.from_pretrained("trpakov/vit-face-expression", use_auth_token=False)
 
 # Initialize FastAPI app
 app = FastAPI()
