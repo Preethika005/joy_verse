@@ -1,89 +1,91 @@
-/* Global styles */
-/* body {
-  margin: 0;
-  padding: 0;
-  background-color: #111827;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
-  overflow: hidden;
-  transition: background-color 0.5s ease; 
-} */
+/* Body is now theme-driven from JS */
 
-/* Shape Memory Game container */
+/* Game container with card style */
 .smg-container {
+  min-height: 100vh;
   width: 100%;
-  max-width: 500px;
-  background-color: #111827;
-  color: white;
-  font-family: 'Segoe UI', sans-serif;
-  padding: 20px;
-  margin: 40px auto;
-  border-radius: 10px;
-  box-shadow: 0 0 10px rgba(0,0,0,0.5);
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: flex-start; /* changed from center */
-  min-height: 100vh;
-  overflow-y: auto; /* ADD THIS */
+  padding: 30px 20px;
+  box-sizing: border-box;
+  transition: background-color 0.5s ease;
+}
+
+/* Card border for the game area */
+.smg-container {
+  background-color: #fefefe; /* fixed color for the game container */
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 30px 20px;
+  border-radius: 16px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(6px);
+  z-index: 2;
+  position: relative;
 }
 
 /* Title */
 .smg-title {
   font-size: 2.5rem;
-  margin-bottom: 10px;
+  font-weight: bold;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
-/* Dropdown controls */
+/* Controls and dropdown */
 .smg-controls {
   margin-bottom: 10px;
+  font-weight: 500;
 }
 
 .smg-dropdown {
-  padding: 6px 12px;
+  padding: 8px 14px;
   font-size: 1rem;
-  border-radius: 6px;
+  border-radius: 8px;
   border: none;
   background-color: #1f2937;
   color: white;
+  transition: background-color 0.3s ease;
 }
 
 .smg-dropdown:focus {
   outline: 2px solid #3b82f6;
 }
 
-/* Prompt & timer */
+/* Prompt, timer, expression */
 .smg-prompt,
-.smg-timer {
+.smg-timer,
+.smg-score,
+.smg-clicks-left,
+.smg-expression {
   font-size: 1.1rem;
-  margin: 5px 0;
+  margin: 6px 0;
+  font-weight: 500;
 }
 
 /* Grid layout */
 .smg-grid {
   display: grid;
-  grid-template-columns: repeat(5, 50px);
-  gap: 10px;
+  grid-template-columns: repeat(5, 60px);
+  gap: 12px;
   justify-content: center;
-  margin: 15px 0;
+  margin: 20px 0;
 }
 
 /* Tile styles */
 .smg-tile {
-  width: 50px;
-  height: 50px;
+  width: 60px;
+  height: 60px;
   background-color: #374151;
-  border-radius: 8px;
-  font-size: 24px;
+  border-radius: 10px;
+  font-size: 28px;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .smg-correct {
@@ -105,25 +107,20 @@
   background-color: #374151;
 }
 
-/* Score display */
-.smg-score {
-  margin-top: 8px;
-  font-size: 1.1rem;
-}
-
-/* End screen */
+/* End game screen */
 .smg-end-screen {
-  margin-top: 10px;
+  margin-top: 15px;
 }
 
 .smg-result-text {
-  font-size: 1.3rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
 .smg-reset-button {
-  padding: 8px 14px;
+  padding: 10px 16px;
   font-size: 1rem;
   border: none;
   border-radius: 8px;

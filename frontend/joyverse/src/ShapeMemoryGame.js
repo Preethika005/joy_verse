@@ -32,7 +32,7 @@ function ShapeMemoryGame() {
   const [level, setLevel] = useState("easy");
   const [isStarting, setIsStarting] = useState(true);
   const [clicksLeft, setClicksLeft] = useState(0);
-  const [expression, setExpression] = useState("Happy"); // Start with Happy for testing
+  const [expression, setExpression] = useState("Happy");
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
@@ -40,15 +40,14 @@ function ShapeMemoryGame() {
   useEffect(() => {
     setupGame();
   }, [level]);
+
   useEffect(() => {
-      // Enable scrolling when this page is open
-      document.body.style.overflow = "auto";
-    
-      // When leaving this page, disable scrolling again
-      return () => {
-        document.body.style.overflow = "hidden";
-      };
-    }, []);
+    document.body.style.overflow = "auto";
+    return () => {
+      document.body.style.overflow = "hidden";
+    };
+  }, []);
+
   useEffect(() => {
     if (timeLeft > 0 && !isGameOver) {
       const timer = setTimeout(() => setTimeLeft((prev) => prev - 1), 1000);
@@ -59,23 +58,33 @@ function ShapeMemoryGame() {
   }, [timeLeft, isGameOver, isStarting]);
 
   useEffect(() => {
-    // Set the background color of the body based on the detected emotion
-    const bgColor = emotionThemes[expression] ; // Default to dark if no valid emotion
-    document.body.style.backgroundColor = bgColor;
-  }, [expression]); // Will update whenever 'expression' changes
+    const bgColor = emotionThemes[expression] || "#ffffff";
+    document.body.style.setProperty("background-color", bgColor, "important");
+  }, [expression]);
 
+  // ✅ Webcam stream + emotion capture setup
   useEffect(() => {
-    navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+    let stream;
+    let interval;
+
+    navigator.mediaDevices.getUserMedia({ video: true }).then((s) => {
+      stream = s;
       if (videoRef.current) {
         videoRef.current.srcObject = stream;
       }
     });
 
-    const interval = setInterval(() => {
+    interval = setInterval(() => {
       captureAndSend();
-    }, 10000); // Every 10 seconds
+    }, 10000);
 
-    return () => clearInterval(interval);
+    // ✅ Cleanup: stop camera + interval on unmount
+    return () => {
+      if (stream) {
+        stream.getTracks().forEach((track) => track.stop());
+      }
+      clearInterval(interval);
+    };
   }, []);
 
   const captureAndSend = async () => {
@@ -100,7 +109,10 @@ function ShapeMemoryGame() {
 
         const data = await response.json();
         if (data.expression) {
-          setExpression(data.expression); // Update the expression and trigger the background change
+          const normalizedExpression =
+            data.expression.charAt(0).toUpperCase() +
+            data.expression.slice(1).toLowerCase();
+          setExpression(normalizedExpression);
         }
       } catch (err) {
         console.error("Failed to detect expression:", err);
@@ -132,10 +144,17 @@ function ShapeMemoryGame() {
     setWrongTiles(new Array(totalTiles).fill(false));
     setScore(0);
     setIsGameOver(false);
-    setTimeLeft(0);
     setClicksLeft(allowedClicks);
+    setTimeLeft(revealTime / 1000);
+
+    let countdown = revealTime / 1000;
+    const interval = setInterval(() => {
+      countdown -= 1;
+      setTimeLeft(countdown);
+    }, 1000);
 
     setTimeout(() => {
+      clearInterval(interval);
       setRevealed(new Array(totalTiles).fill(false));
       const shape = shapes[Math.floor(Math.random() * shapes.length)];
       setCurrentTarget(shape);
@@ -217,10 +236,13 @@ function ShapeMemoryGame() {
       <p className="smg-prompt">
         {isStarting
           ? "Memorize the tiles..."
-          :` Find all tiles with: ${currentTarget}`}
+          : `Find all tiles with: ${currentTarget}`}
       </p>
 
-      <p className="smg-timer">Time Left: {timeLeft}s</p>
+      <p className="smg-timer">
+        {isStarting ? `Memorizing... ${timeLeft}s` : `Time Left: ${timeLeft}s`}
+      </p>
+
       <p className="smg-clicks-left">Chances Left: {clicksLeft}</p>
       <p className="smg-expression">Current Mood: {expression}</p>
 
