@@ -7,10 +7,6 @@ import torch
 import io
 import os
 
-# Load processor and model
-# processor = AutoImageProcessor.from_pretrained("trpakov/vit-face-expression")
-# model = AutoModelForImageClassification.from_pretrained("trpakov/vit-face-expression", use_auth_token=False)
-
 model_name = os.getenv("MODEL_NAME", "trpakov/vit-face-expression")
 use_auth_token = os.getenv("USE_AUTH_TOKEN", "false").lower() == "true"
 
