@@ -22,5 +22,7 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-
+/backend/main.py
+/frontend/joyverse/src/ShapeMemoryGame.js
+/frontend/joyverse/src/ShapeMemoryGame.css
 .env
