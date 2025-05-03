@@ -1,6 +1,4 @@
-/* Body is now theme-driven from JS */
-
-/* Game container with card style */
+/* 
 .smg-container {
   min-height: 100vh;
   width: 100%;
@@ -12,20 +10,21 @@
   transition: background-color 0.5s ease;
 }
 
-/* Card border for the game area */
-.smg-container {
-  background-color: #fefefe; /* fixed color for the game container */
-  max-width: 600px;
-  margin: 40px auto;
-  padding: 30px 20px;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
-  backdrop-filter: blur(6px);
-  z-index: 2;
-  position: relative;
-}
 
-/* Title */
+
+  .smg-container {
+    background-color: #fefefe;
+    max-width: 600px;
+    margin: 40px auto;
+    padding: 30px 20px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(6px);
+    z-index: 2;
+    position: relative;
+  }
+  
+
 .smg-title {
   font-size: 2.5rem;
   font-weight: bold;
@@ -33,7 +32,6 @@
   text-align: center;
 }
 
-/* Controls and dropdown */
 .smg-controls {
   margin-bottom: 10px;
   font-weight: 500;
@@ -53,7 +51,6 @@
   outline: 2px solid #3b82f6;
 }
 
-/* Prompt, timer, expression */
 .smg-prompt,
 .smg-timer,
 .smg-score,
@@ -64,7 +61,6 @@
   font-weight: 500;
 }
 
-/* Grid layout */
 .smg-grid {
   display: grid;
   grid-template-columns: repeat(5, 60px);
@@ -73,7 +69,6 @@
   margin: 20px 0;
 }
 
-/* Tile styles */
 .smg-tile {
   width: 60px;
   height: 60px;
@@ -107,7 +102,6 @@
   background-color: #374151;
 }
 
-/* End game screen */
 .smg-end-screen {
   margin-top: 15px;
 }
@@ -132,4 +126,4 @@
 
 .smg-reset-button:hover {
   background-color: #2563eb;
-}
+} */
