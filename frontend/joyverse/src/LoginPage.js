@@ -1,46 +1,37 @@
 import React, { useState } from "react";
+import axios from 'axios';
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState('');
   const navigate = useNavigate();
+  
+ 
   const handleLogin = async (e) => {
     e.preventDefault();
+  try {
+    const response = await axios.post('http://localhost:5000/api/auth/login', {
+      username,
+      password,
+    });
 
-    const credentials = { username, password };
+    const { role } = response.data;
 
-    try {
-      const response = await fetch("http://localhost:5000/api/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(credentials),
-      });
-
-      const result = await response.json();
-
-      if (response.ok) {
-        localStorage.setItem("username", result.username);
-        localStorage.setItem("role", result.role); // Save the role if needed elsewhere
-  
-        // Redirect based on role
-        if (result.role === "child") {
-          navigate("/welcomepage");
-        } else if (result.role === "therapist") {
-          navigate("/therapistdashboard"); // Change this to your actual therapist route
-        } else {
-          alert("Unknown role. Please contact support.");
-        }
-      } else {
-        alert(result.message || "Invalid credentials");
-      }
-    } catch (error) {
-      console.error("Login failed:", error);
-      alert("Something went wrong. Please try again.");
+    if (role === 'therapist') {
+      navigate('/therapistdashboard');
+    } else if (role === 'child') {
+      navigate('/games');
+    } else {
+      setError('Unknown user role');
     }
-  };
 
+  } catch (err) {
+    setError('Invalid username or password');
+  }
+  };
   return (
     <div className="login-container">
       <h1 className="login-title">JoyVerse Login</h1>
@@ -61,6 +52,7 @@ const LoginPage = () => {
         />
         <button type="submit">Let's Go! </button>
       </form>
+      {error && <p className="error">{error}</p>}
     </div>
   );
 };

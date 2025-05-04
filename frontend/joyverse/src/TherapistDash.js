@@ -12,7 +12,7 @@ const TherapistDashboard = () => {
   useEffect(() => {
     const fetchChildren = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/children");
+        const response = await fetch("http://localhost:5000/api/auth/children");
         const data = await response.json();
 
         // Log the data to check its structure

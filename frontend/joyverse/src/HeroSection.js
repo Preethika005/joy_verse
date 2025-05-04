@@ -2,10 +2,12 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./HeroSection.css";
 
+
 function HeroSection() {
   const navigate = useNavigate();
 
   return (
+    
     <div className="hero-container">
       <h1 className="hero-title">
         Welcome to JoyVerse

@@ -32,7 +32,7 @@ function ShapeMemoryGame() {
   const [level, setLevel] = useState("easy");
   const [isStarting, setIsStarting] = useState(true);
   const [clicksLeft, setClicksLeft] = useState(0);
-  const [expression, setExpression] = useState("Happy");
+  const [expression, setExpression] = useState("Neutral");
 
   const videoRef = useRef(null);
   const canvasRef = useRef(null);
