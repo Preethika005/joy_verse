@@ -10,7 +10,6 @@ import LoginPage from "./LoginPage";
 import RegisterPage from "./RegisterPage";
 import TherapistDashboard from "./TherapistDashboard";
 import WelcomePage from "./WelcomePage";
-import LoginPages from "./demo";
 import SyllableTapGame from "./SyllableTapGame";
 import ShapeMemoryGame from "./ShapeMemoryGame";
 
@@ -28,10 +27,8 @@ function App() {
         <Route path="/registerpage" element={<RegisterPage/>}/>
         <Route path="/therapistdashboard" element={<TherapistDashboard/>}/>
         <Route path="/welcomepage" element={<WelcomePage/>}/>
-        <Route path="/loginpages" element={<LoginPages/>}/>
         <Route path="/syllabletapgame" element={<SyllableTapGame/>}/>
         <Route path="/shapememorygame" element={<ShapeMemoryGame/>}/>
-        {/* <Route path="/therapistdash" element={<TherapistDash/>}/> */}
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
     </Router>

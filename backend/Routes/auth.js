@@ -11,7 +11,10 @@ router.post('/login', async (req, res) => {
     // Check for therapist
     const therapist = await Therapist.findOne({ username, password });
     if (therapist) {
-      return res.json({ role: 'therapist' });
+      return res.json({ 
+        role: 'therapist', 
+        therapistId: therapist.therapistId // 👈 send therapistId to frontend
+      });
     }
 
     // Check for child

@@ -18,9 +18,10 @@ const LoginPage = () => {
       password,
     });
 
-    const { role } = response.data;
+    const { role, therapistId } = response.data;
 
     if (role === 'therapist') {
+      localStorage.setItem("therapistId", therapistId);
       navigate('/therapistdashboard');
     } else if (role === 'child') {
       navigate('/games');

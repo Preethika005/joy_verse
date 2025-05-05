@@ -9,23 +9,32 @@ const TherapistDashboard = () => {
   const [child, setChild] = useState({ name: '', username: '', password: '' });
   const [error, setError] = useState('');
 
+  // Get therapistId from localStorage
+  const therapistId = localStorage.getItem("therapistId");
+
   useEffect(() => {
     const fetchChildren = async () => {
+      if (!therapistId) {
+        setError('Therapist ID is missing');
+        return;
+      }
+
       try {
-        const response = await fetch("http://localhost:5000/api/children");
-        const data = await response.json();
+        const response = await axios.get("http://localhost:5000/api/children", {
+          headers: { 'therapist-id': therapistId }  // Send therapistId in headers
+        });
 
         // Log the data to check its structure
-        console.log("Fetched children:", data);
+        console.log("Fetched children:", response.data);
 
-        setChildren(data);
+        setChildren(response.data);
       } catch (err) {
         console.error("Failed to fetch children:", err);
       }
     };
 
     fetchChildren();
-  }, []);
+  }, [therapistId]);
 
   useEffect(() => {
     document.body.style.overflow = "auto";
@@ -42,7 +51,8 @@ const TherapistDashboard = () => {
   const handleAddChild = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/children', child);
+      const newChild = { ...child, therapistId }; // Attach therapistId when adding a child
+      await axios.post('http://localhost:5000/api/children', newChild);
       setError('');
       alert('Child added successfully!');
       setChild({ name: '', username: '', password: '' });
