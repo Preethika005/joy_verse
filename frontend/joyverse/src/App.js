@@ -13,7 +13,7 @@ import WelcomePage from "./WelcomePage";
 import LoginPages from "./demo";
 import SyllableTapGame from "./SyllableTapGame";
 import ShapeMemoryGame from "./ShapeMemoryGame";
-import TherapistDash from "./TherapistDash";
+
 function App() {
   return (
     <Router>
@@ -31,7 +31,7 @@ function App() {
         <Route path="/loginpages" element={<LoginPages/>}/>
         <Route path="/syllabletapgame" element={<SyllableTapGame/>}/>
         <Route path="/shapememorygame" element={<ShapeMemoryGame/>}/>
-        <Route path="/therapistdash" element={<TherapistDash/>}/>
+        {/* <Route path="/therapistdash" element={<TherapistDash/>}/> */}
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
     </Router>

@@ -19,10 +19,7 @@ function HeroSection() {
 
       <div className="button-container">
         <button className="play-button" onClick={() => navigate("/loginpage")}>
-          LOGIN
-        </button>
-        <button className="info-button" onClick={() => navigate("/registerpage")}>
-          REGISTER
+          Login Here
         </button>
       </div>
     </div>
