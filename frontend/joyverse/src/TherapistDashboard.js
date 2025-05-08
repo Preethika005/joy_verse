@@ -1,6 +1,46 @@
 import React, { useEffect, useState } from 'react';
-import './TherapistDashboard.css';
 import axios from 'axios';
+import ReactApexChart from 'react-apexcharts';
+import './TherapistDashboard.css';
+
+const EmotionTimelineChart = ({ expressions }) => {
+  const series = expressions.map((exp, idx) => ({
+    x: exp.expression,
+    y: [
+      new Date(exp.timestamp).getTime(),
+      new Date(exp.timestamp).getTime() + 1000 // 1 second duration
+    ]
+  }));
+
+  const options = {
+    chart: {
+      type: 'rangeBar',
+      height: 150,
+      toolbar: { show: false }
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        barHeight: '60%'
+      }
+    },
+    xaxis: {
+      type: 'datetime',
+      labels: { datetimeFormatter: { second: 'HH:mm:ss' } }
+    },
+    title: {
+      text: 'Emotion Timeline',
+      align: 'left',
+      style: { fontSize: '14px' }
+    }
+  };
+
+  return (
+    <div style={{ marginBottom: '20px' }}>
+      <ReactApexChart options={options} series={[{ data: series }]} type="rangeBar" height={150} />
+    </div>
+  );
+};
 
 const TherapistDashboard = () => {
   const [children, setChildren] = useState([]);
@@ -8,8 +48,10 @@ const TherapistDashboard = () => {
   const [showAddChildForm, setShowAddChildForm] = useState(false);
   const [child, setChild] = useState({ name: '', username: '', password: '' });
   const [error, setError] = useState('');
+  const [selectedChildSessions, setSelectedChildSessions] = useState([]);
+  const [showSessionDetails, setShowSessionDetails] = useState(false);
+  const [sessionError, setSessionError] = useState('');
 
-  // Get therapistId from localStorage
   const therapistId = localStorage.getItem("therapistId");
 
   useEffect(() => {
@@ -18,47 +60,26 @@ const TherapistDashboard = () => {
         setError('Therapist ID is missing');
         return;
       }
-
       try {
         const response = await axios.get("http://localhost:5000/api/children", {
-          headers: { 'therapist-id': therapistId }  // Send therapistId in headers
+          headers: { 'therapist-id': therapistId }
         });
-
-        // Log the data to check its structure
-        console.log("Fetched children:", response.data);
-
         setChildren(response.data);
       } catch (err) {
-        console.error("Failed to fetch children:", err);
+        setError('Failed to fetch children');
       }
     };
 
     fetchChildren();
   }, [therapistId]);
 
-  useEffect(() => {
-    document.body.style.overflow = "auto";
-    return () => {
-      document.body.style.overflow = "hidden";
-    };
-  }, []);
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setChild({ ...child, [name]: value });
-  };
-
-  const handleAddChild = async (e) => {
-    e.preventDefault();
+  const handleViewDetails = async (username) => {
     try {
-      const newChild = { ...child, therapistId }; // Attach therapistId when adding a child
-      await axios.post('http://localhost:5000/api/children', newChild);
-      setError('');
-      alert('Child added successfully!');
-      setChild({ name: '', username: '', password: '' });
-      setShowAddChildForm(false);
+      const response = await axios.get(`http://localhost:5000/api/sessions?username=${username}`);
+      setSelectedChildSessions(response.data);
+      setShowSessionDetails(true);
     } catch (err) {
-      setError('Error adding child');
+      setSessionError('Failed to fetch game sessions');
     }
   };
 
@@ -79,8 +100,8 @@ const TherapistDashboard = () => {
         onChange={(e) => setSearchTerm(e.target.value)}
       />
 
-      <button 
-        onClick={() => setShowAddChildForm(!showAddChildForm)} 
+      <button
+        onClick={() => setShowAddChildForm(!showAddChildForm)}
         className="add-child-btn"
       >
         {showAddChildForm ? 'Cancel' : 'Add Child'}
@@ -89,34 +110,10 @@ const TherapistDashboard = () => {
       {showAddChildForm && (
         <div className="add-child-form-container">
           <h3>Add Child</h3>
-          <form onSubmit={handleAddChild} className="add-child-form">
-            <input
-              type="text"
-              name="name"
-              value={child.name}
-              onChange={handleInputChange}
-              placeholder="Child's Name"
-              required
-              className="form-input"
-            />
-            <input
-              type="text"
-              name="username"
-              value={child.username}
-              onChange={handleInputChange}
-              placeholder="Username"
-              required
-              className="form-input"
-            />
-            <input
-              type="password"
-              name="password"
-              value={child.password}
-              onChange={handleInputChange}
-              placeholder="Password"
-              required
-              className="form-input"
-            />
+          <form className="add-child-form">
+            <input type="text" name="name" placeholder="Child's Name" className="form-input" />
+            <input type="text" name="username" placeholder="Username" className="form-input" />
+            <input type="password" name="password" placeholder="Password" className="form-input" />
             <button type="submit" className="submit-btn">Add Child</button>
           </form>
           {error && <p className="error-msg">{error}</p>}
@@ -136,15 +133,36 @@ const TherapistDashboard = () => {
           {filteredChildren.map((child, index) => (
             <tr key={child._id}>
               <td>{index + 1}</td>
-              <td>{child.name}</td> {/* Display Name */}
-              <td>{child.username}</td> {/* Display Username */}
+              <td>{child.name}</td>
+              <td>{child.username}</td>
               <td>
-                <button className="action-btn">View Details</button>
+                <button
+                  className="action-btn"
+                  onClick={() => handleViewDetails(child.username)}
+                >
+                  View Details
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
+
+      {showSessionDetails && (
+        <div className="session-details">
+          <h3>Game Sessions for {filteredChildren.find(c => c.username === selectedChildSessions[0]?.username)?.name}</h3>
+          {sessionError && <p className="error-msg">{sessionError}</p>}
+
+          {selectedChildSessions.map((session, index) => (
+            <div key={session._id} className="session-block">
+              <h4>Session {index + 1}: {session.gameName} ({session.difficulty})</h4>
+              <p><strong>Start:</strong> {new Date(session.startTime).toLocaleString()}</p>
+              <p><strong>End:</strong> {new Date(session.endTime).toLocaleString()}</p>
+              <EmotionTimelineChart expressions={session.expressions} />
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

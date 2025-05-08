@@ -3,24 +3,29 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
 import authRoutes from './Routes/auth.js';
+import childRoutes from './Routes/child.js';
+import gameSessionRoutes from './Routes/gameSession.js'; // ✅ NEW LINE
+
 dotenv.config();
 
 const app = express();
 
-// Connect to MongoDB (using Atlas URI or local URI)
-mongoose.connect(process.env.MONGO_URI, { useNewUrlParser: true, useUnifiedTopology: true })
-  .then(() => console.log('Connected to MongoDB Atlas'))
-  .catch((err) => console.error('Error connecting to MongoDB Atlas:', err));
+// MongoDB Connection
+mongoose.connect(process.env.MONGO_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+})
+.then(() => console.log('Connected to MongoDB Atlas'))
+.catch((err) => console.error('Error connecting to MongoDB Atlas:', err));
 
 // Middleware
 app.use(cors());
 app.use(express.json());
+
+// Routes
 app.use('/api/auth', authRoutes);
-// Import routes (direct import without async)
-import childRoutes from './Routes/child.js';
-
-// Use routes
 app.use('/api/children', childRoutes);
+app.use('/api/sessions', gameSessionRoutes); // ✅ NEW LINE
 
-// Start the server
+// Server
 app.listen(5000, () => console.log('Server running on port 5000'));

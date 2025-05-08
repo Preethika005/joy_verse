@@ -1,5 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import "./ShapeMemoryGame.css";
+import useGameSessionLogger from "./hooks/useGameSessionLogger"; // Adjust path
 
 const emotionThemes = {
   Happy: "#ffeaa7",
@@ -86,6 +87,11 @@ function ShapeMemoryGame() {
       clearInterval(interval);
     };
   }, []);
+  useEffect(() => {
+    if (isGameOver) {
+      endSession(); // Log session data when game ends
+    }
+  }, [isGameOver]);
 
   const captureAndSend = async () => {
     const canvas = canvasRef.current;
@@ -119,6 +125,8 @@ function ShapeMemoryGame() {
       }
     }, "image/jpeg");
   };
+  const username = localStorage.getItem("username");
+  const { endSession } = useGameSessionLogger({ username, difficulty: level, expression });
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {

@@ -17,6 +17,7 @@ const LoginPage = () => {
       username,
       password,
     });
+    localStorage.setItem("username", username); // or response.user.displayName / email
 
     const { role, therapistId } = response.data;
 
