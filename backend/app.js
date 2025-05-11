@@ -5,6 +5,7 @@ import dotenv from 'dotenv';
 import authRoutes from './Routes/auth.js';
 import childRoutes from './Routes/child.js';
 import gameSessionRoutes from './Routes/gameSession.js'; // ✅ NEW LINE
+import quizRoutes from './Routes/quiz.js';
 
 dotenv.config();
 
@@ -26,6 +27,6 @@ app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/children', childRoutes);
 app.use('/api/sessions', gameSessionRoutes); // ✅ NEW LINE
-
+app.use("/api", quizRoutes);
 // Server
 app.listen(5000, () => console.log('Server running on port 5000'));

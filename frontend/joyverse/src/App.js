@@ -12,7 +12,7 @@ import TherapistDashboard from "./TherapistDashboard";
 import WelcomePage from "./WelcomePage";
 import SyllableTapGame from "./SyllableTapGame";
 import ShapeMemoryGame from "./ShapeMemoryGame";
-
+import LetterBridge from "./LetterBridge";
 function App() {
   return (
     <Router>
@@ -29,11 +29,11 @@ function App() {
         <Route path="/welcomepage" element={<WelcomePage/>}/>
         <Route path="/syllabletapgame" element={<SyllableTapGame/>}/>
         <Route path="/shapememorygame" element={<ShapeMemoryGame/>}/>
+        <Route path="/letterbridge" element={<LetterBridge/>}/>
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
     </Router>
   );
 }
-
 export default App;
 

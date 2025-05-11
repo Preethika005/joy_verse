@@ -1,0 +1,150 @@
+.letter-bridge-container {
+    text-align: center;
+    padding: 2rem;
+    position: relative;
+    font-family: "Comic Sans MS", cursive, sans-serif;
+    background: linear-gradient(to bottom right, #fffef2, #e2faff);
+  }
+  
+  .letter-bridge-title {
+    font-size: 3rem;
+    color: #ff6f61;
+    margin-bottom: 10px;
+  }
+  
+  .letter-bridge-subtitle {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  .letter-bridge-start-screen {
+    text-align: center;
+    padding: 30px;
+  }
+  
+  .letter-bridge-start-btn {
+    margin-top: 20px;
+    padding: 12px 30px;
+    background-color: #ff6f61;
+    color: white;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: 0.3s ease;
+  }
+  
+  .letter-bridge-start-btn:hover {
+    background-color: #ff3e2d;
+  }
+  
+  .letter-bridge-difficulty-select {
+    margin-top: 1rem;
+  }
+  
+  .letter-bridge-info-bar {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    color: #444;
+  }
+  
+  .letter-bridge-grid-wrapper {
+    position: relative;
+    display: flex;
+    justify-content: center;
+  }
+  
+  .letter-bridge-grid {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .letter-bridge-column {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+  }
+  
+  .letter-bridge-circle {
+    width: 60px;
+    height: 60px;
+    background-color: #fff;
+    border: 2px solid #ccc;
+    border-radius: 50%;
+    font-size: 24px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  
+  .letter-bridge-circle.letter-bridge-selected {
+    border-color: #00aaff;
+    background-color: #f0f8ff;
+  }
+  
+  .letter-bridge-circle.letter-bridge-blink-red {
+    animation: letter-bridge-blink-red 0.5s ease-in-out 2;
+  }
+  
+  @keyframes letter-bridge-blink-red {
+    0%, 100% {
+      background-color: #fff;
+    }
+    50% {
+      background-color: #ffcccc;
+    }
+  }
+  
+  .letter-bridge-words-container {
+    margin-top: 20px;
+  }
+  
+  .letter-bridge-word-pill {
+    display: inline-block;
+    background: #e0f7f1;
+    border-radius: 8px;
+    padding: 8px 16px;
+    margin: 4px;
+    font-weight: bold;
+    color: #00775d;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .letter-bridge-game-over {
+    margin-top: 20px;
+    font-size: 1.4rem;
+    color: #d14;
+    animation: letter-bridge-pop-in 0.3s ease-out;
+  }
+  
+  @keyframes letter-bridge-pop-in {
+    from {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    to {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+  
+  .line-drawer {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+  }
+  

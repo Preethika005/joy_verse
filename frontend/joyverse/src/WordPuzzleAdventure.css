@@ -37,14 +37,17 @@
 }
 
 .word-puzzle-word-image {
-    max-height: 300px;
-    max-width: 100%;
-    border-radius: 20px;
+    /* width: 650px;
+    height: 450px;
+    object-fit: cover; */
+    width: 100%;
+  max-width: 400px; /* or whatever max width fits your design */
+  height: 300px;     /* or use auto to maintain aspect ratio */
+  object-fit: contain; /* key property */
+  /* border-radius: 10px; */
+    border-radius: 12px;
     margin-bottom: 20px;
-    box-shadow: 0 8px 16px rgba(0,0,0,0.2);
-    object-fit: contain;
-    background-color: white;
-    padding: 10px;
+    /* border: 2px solid #ccc; */
 }
 
 .word-puzzle-word-slots {
@@ -214,3 +217,29 @@
         padding: 10px;
     }
 }
+.word-puzzle-difficulty-buttons button {
+    margin: 10px;
+    font-size: 1.2rem;
+    padding: 10px 20px;
+  }
+  
+
+  .word-puzzle-replay-container {
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+  .word-puzzle-replay-button {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #FFB347;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .word-puzzle-replay-button:hover {
+    background-color: #ffa726;
+  }
+  
