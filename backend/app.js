@@ -29,4 +29,4 @@ app.use('/api/children', childRoutes);
 app.use('/api/sessions', gameSessionRoutes); // ✅ NEW LINE
 app.use("/api", quizRoutes);
 // Server
-app.listen(5000, () => console.log('Server running on port 5000'));
+app.listen(3000, () => console.log('Server running on port 5000'));
