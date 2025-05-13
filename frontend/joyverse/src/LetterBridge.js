@@ -121,9 +121,9 @@ const LetterBridge = () => {
           <div className="letter-bridge-difficulty-select">
             <label>Select Difficulty:</label>
             <select value={difficulty} onChange={handleDifficultyChange}>
-              <option value="easy">Easy</option>
-              <option value="medium">Medium</option>
-              <option value="hard">Hard</option>
+              <option value="easy">🟢Easy</option>
+              <option value="medium">🟡Medium</option>
+              <option value="hard">🔴Hard</option>
             </select>
           </div>
 

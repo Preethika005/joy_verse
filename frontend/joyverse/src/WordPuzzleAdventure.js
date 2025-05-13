@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from "react";
+ import React, { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import "./WordPuzzleAdventure.css";
 
 const wordData = {
@@ -44,19 +45,30 @@ const WordPuzzleAdventure = () => {
   const [showMessage, setShowMessage] = useState(false);
   const [score, setScore] = useState(0);
   const [gameCompleted, setGameCompleted] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
+  const [completionMessage, setCompletionMessage] = useState("");
+  const [feedback, setFeedback] = useState("");
+
   useEffect(() => {
     initializeGame(difficulty);
   }, [difficulty]);
+
   useEffect(() => {
-    // Enable scrolling when this page is open
+    if (gameCompleted) {
+      confetti({
+        particleCount: 150,
+        spread: 100,
+        origin: { y: 0.6 },
+      });
+    }
+  }, [gameCompleted]);
+
+  useEffect(() => {
     document.body.style.overflow = "auto";
-  
-    // When leaving this page, disable scrolling again
     return () => {
       document.body.style.overflow = "hidden";
     };
   }, []);
+
   const shuffleArray = (array) => {
     return [...array].sort(() => Math.random() - 0.5);
   };
@@ -72,48 +84,48 @@ const WordPuzzleAdventure = () => {
     setMessage("");
     setShowMessage(false);
     setGameCompleted(false);
+    setCompletionMessage("");
+    setFeedback("");
   };
 
   const handleLetterClick = (letter, index) => {
-    const emptyIndex = selectedLetters.findIndex((l) => l === "");
-    if (emptyIndex !== -1) {
-      const newSelection = [...selectedLetters];
-      newSelection[emptyIndex] = letter;
-      setSelectedLetters(newSelection);
-  
-      const newShuffledLetters = [...shuffledLetters];
-      newShuffledLetters.splice(index, 1);
-      setShuffledLetters(newShuffledLetters);
-  
-      // 🔥 Check if word is correct after updating
-      const newWordFormed = newSelection.join("");
-      const correctWord = shuffledWords[currentIndex].word;
-  
-      if (!newSelection.includes("") && newWordFormed === correctWord) {
-        const randomMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
-        setMessage(randomMessage);
-        setScore(prev => prev + 10);
-        setShowMessage(true);
-  
-        setTimeout(() => {
-          nextWord();
-        }, 2000);
-      }
-    }
-  };
-  
+    if (letter === null) return;
 
-  const handleAnswerClick = (index) => {
-    if (selectedLetters[index] !== "") {
-      setShuffledLetters([...shuffledLetters, selectedLetters[index]]);
-      const newSelection = [...selectedLetters];
-      newSelection[index] = "";
-      setSelectedLetters(newSelection);
+    const newSelection = [...selectedLetters];
+    const emptyIndex = newSelection.findIndex((char) => char === "");
+    if (emptyIndex === -1) return;
+
+    newSelection[emptyIndex] = letter;
+    setSelectedLetters(newSelection);
+
+    const updatedShuffled = [...shuffledLetters];
+    updatedShuffled[index] = null;
+    setShuffledLetters(updatedShuffled);
+
+    const formedWord = newSelection.join("");
+    if (!newSelection.includes("")) {
+      const correctWord = shuffledWords[currentIndex].word;
+      if (formedWord === correctWord) {
+        setFeedback("Correct! 🎉");
+        setScore(score + 20);
+        setTimeout(() => {
+          setFeedback("");
+          nextWord();
+        }, 1500);
+      } else {
+        setFeedback("Oops! That's incorrect. ❌");
+        setTimeout(() => {
+          setFeedback("");
+          nextWord();
+        }, 1500);
+      }
     }
   };
 
   const nextWord = () => {
     if (currentIndex + 1 >= shuffledWords.length) {
+      const finalMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
+      setCompletionMessage(`${finalMessage} 🎯 Final Score: ${score}`);
       setGameCompleted(true);
     } else {
       const newIndex = currentIndex + 1;
@@ -127,11 +139,30 @@ const WordPuzzleAdventure = () => {
     }
   };
 
-  const currentWordObj = shuffledWords[currentIndex] || {};
+  const handleAnswerClick = (index) => {
+    const letterToRemove = selectedLetters[index];
+    if (letterToRemove !== "") {
+      const newSelection = [...selectedLetters];
+      newSelection[index] = "";
+      setSelectedLetters(newSelection);
+
+      const restored = [...shuffledLetters];
+      for (let i = 0; i < restored.length; i++) {
+        if (restored[i] === null) {
+          restored[i] = letterToRemove;
+          break;
+        }
+      }
+      setShuffledLetters(restored);
+    }
+  };
+
   const handleReplay = () => {
     initializeGame(difficulty);
-    setGameOver(false);
   };
+
+  const currentWordObj = shuffledWords[currentIndex] || {};
+
   return (
     <div className="word-puzzle-container">
       <div className="word-puzzle-score-board">
@@ -143,18 +174,34 @@ const WordPuzzleAdventure = () => {
             value={difficulty}
             onChange={(e) => setDifficulty(e.target.value)}
           >
-            <option value="easy">Easy</option>
-            <option value="medium">Medium</option>
-            <option value="hard">Hard</option>
+            <option value="easy">🟢Easy</option>
+            <option value="medium">🟡Medium</option>
+            <option value="hard">🔴Hard</option>
           </select>
         </div>
       </div>
 
       {gameCompleted ? (
-        <h2 className="word-puzzle-title">🎉 You finished all the words!</h2>
+        <div className="word-puzzle-completion-message">
+          <h2>You finished all the words!</h2>
+          <p className="word-puzzle-final-score">Your Score: {score}</p>
+          <p className="word-puzzle-final-encouragement">
+            {score === 0
+              ? "Keep Practicing! You'll get it next time!"
+              : score <= 20
+              ? "Nice Try! You're Getting There!"
+              : score <= 40
+              ? "Great Work! You're Improving!"
+              : "Amazing Work! You're a Word Master!"}
+          </p>
+          <div className="word-puzzle-confetti" />
+          <button onClick={handleReplay} className="word-puzzle-replay-button">
+            🔄 Play Again
+          </button>
+        </div>
       ) : (
         <>
-          <h2 className="word-puzzle-title">🎯 Guess the Word!</h2>
+          <h2 className="word-puzzle-title">Guess the Word!</h2>
           <img src={currentWordObj.image} alt="word" className="word-puzzle-word-image" />
 
           <div className="word-puzzle-word-slots">
@@ -175,6 +222,8 @@ const WordPuzzleAdventure = () => {
                 key={index}
                 className="word-puzzle-letter-button"
                 onClick={() => handleLetterClick(letter, index)}
+                disabled={!letter}
+                style={{ visibility: letter ? "visible" : "hidden" }}
               >
                 {letter}
               </button>
@@ -182,7 +231,10 @@ const WordPuzzleAdventure = () => {
           </div>
 
           <div className="word-puzzle-buttons">
-            <button className="word-puzzle-action-button hint" onClick={() => setHintVisible(true)}>
+            <button
+              className="word-puzzle-action-button hint"
+              onClick={() => setHintVisible(true)}
+            >
               Show Hint
             </button>
             <button className="word-puzzle-action-button next" onClick={nextWord}>
@@ -191,17 +243,9 @@ const WordPuzzleAdventure = () => {
           </div>
 
           {hintVisible && <p className="word-puzzle-hint">{currentWordObj.hint}</p>}
-
-          {showMessage && <p className="word-puzzle-message success">{message}</p>}
+          {feedback && <p className="word-puzzle-feedback">{feedback}</p>}
         </>
       )}
-      {gameOver && (
-  <div className="word-puzzle-replay-container">
-    <button onClick={handleReplay} className="word-puzzle-replay-button">
-      🔄 Replay
-    </button>
-  </div>
-)}
     </div>
   );
 };

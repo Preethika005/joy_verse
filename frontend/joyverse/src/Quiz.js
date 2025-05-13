@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import confetti from "canvas-confetti";
 import "./Quiz.css";
 
 const Quiz = () => {
@@ -41,6 +42,7 @@ const Quiz = () => {
       setCurrentQuestion(nextQuestion);
     } else {
       setShowScore(true);
+      confetti();
     }
   };
 

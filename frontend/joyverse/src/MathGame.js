@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import confetti from "canvas-confetti";
 import "./MathGame.css";
 
 const MathGame = () => {
@@ -13,17 +14,26 @@ const MathGame = () => {
   const [gameOver, setGameOver] = useState(false);
   const [level, setLevel] = useState("easy");
   const [gameStarted, setGameStarted] = useState(false);
+  const [isAnswering, setIsAnswering] = useState(true);
 
   useEffect(() => {
     if (gameStarted) generateQuestion();
   }, [gameStarted]);
-
+useEffect(() => {
+  if (gameOver && gameStarted) {
+    confetti({
+      particleCount: 150,
+      spread: 70,
+      origin: { y: 0.6 },
+    });
+  }
+}, [gameOver, gameStarted]);
   const generateQuestion = () => {
     if (questionCount >= totalQuestions) {
       setGameOver(true);
       return;
     }
-
+    setIsAnswering(true); // allow clicking again
     let newNum1, newNum2, operations, randomOperation, correctAnswer;
 
     if (level === "easy") {
@@ -76,39 +86,46 @@ const MathGame = () => {
   };
 
   const checkAnswer = (answer) => {
-    if (questionCount >= totalQuestions - 1) {
-      setGameOver(true);
-      return;
-    }
+    if (!isAnswering) return; // prevent double click
+  setIsAnswering(false); // lock further clicks
+  let correctAnswer;
+  switch (operation) {
+    case "+":
+      correctAnswer = num1 + num2;
+      break;
+    case "-":
+      correctAnswer = num1 - num2;
+      break;
+    case "x":
+      correctAnswer = num1 * num2;
+      break;
+    case "/":
+      correctAnswer = Math.floor(num1 / num2);
+      break;
+    default:
+      correctAnswer = num1 + num2;
+  }
 
-    let correctAnswer;
-    switch (operation) {
-      case "+":
-        correctAnswer = num1 + num2;
-        break;
-      case "-":
-        correctAnswer = num1 - num2;
-        break;
-      case "x":
-        correctAnswer = num1 * num2;
-        break;
-      case "/":
-        correctAnswer = Math.floor(num1 / num2);
-        break;
-      default:
-        correctAnswer = num1 + num2;
-    }
+  if (answer === correctAnswer) {
+    setScore((prev) => prev + 10);
+    setMessage("✅ Correct! Well done.");
+  } else {
+    setMessage("❌ Oops! Try again.");
+  }
 
-    if (answer === correctAnswer) {
-      setScore(score + 1);
-      setMessage("✅ Correct! Well done.");
-    } else {
-      setMessage("❌ Oops! Try again.");
-    }
+  setTimeout(() => {
+  const newCount = questionCount + 1;
+  setQuestionCount(newCount);
 
-    setQuestionCount((prev) => prev + 1);
-    setTimeout(generateQuestion, 1500);
-  };
+  if (newCount >= totalQuestions) {
+    setGameOver(true);
+  } else {
+    generateQuestion();
+  }
+}, 1500);
+
+};
+
 
   const resetGame = () => {
     setScore(0);
@@ -145,12 +162,17 @@ const MathGame = () => {
       {gameStarted && (
         <>
           <p className="math-game-score">Score: {score}</p>
-          <p className="math-game-question-count">Question {questionCount + 1} of {totalQuestions}</p>
+          {!gameOver && (
+  <p className="math-game-question-count">
+    Question {questionCount + 1} of {totalQuestions}
+  </p>
+)}
+
 
           {gameOver ? (
             <div className="game-over-container">
               <h2 className="game-over-title">Game Over! </h2>
-              <p className="game-over-score">Final Score: {score}/{totalQuestions}</p>
+              <p className="game-over-score">Final Score: {score}/{totalQuestions*10}</p>
               <p className="game-over-message">
                 {score >= 8 ? "Amazing job! You're a math star! " :
                  score >= 5 ? "Great effort! Keep practicing and you'll be a pro! " :
@@ -163,14 +185,14 @@ const MathGame = () => {
               <h2 className="question-text">{num1} {operation} {num2} = ?</h2>
               <div className="options-container">
                 {options.map((option, index) => (
-                  <button key={index} onClick={() => checkAnswer(option)} className="option-button">
+                  <button key={index} onClick={() => checkAnswer(option)} className="option-button" disabled={!isAnswering}>
                     {option}
                   </button>
                 ))}
               </div>
             </div>
           )}
-          <p className="message">{message}</p>
+         {!gameOver && <p className="message">{message}</p>}
         </>
       )}
     </div>

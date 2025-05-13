@@ -235,9 +235,9 @@ function ShapeMemoryGame() {
           onChange={handleLevelChange}
           className="smg-dropdown"
         >
-          <option value="easy">Easy</option>
-          <option value="medium">Medium</option>
-          <option value="hard">Hard</option>
+          <option value="easy">🟢Easy</option>
+          <option value="medium">🟡Medium</option>
+          <option value="hard">🔴Hard</option>
         </select>
       </div>
 

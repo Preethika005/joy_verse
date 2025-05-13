@@ -31,8 +31,8 @@ function Games() {
         </div>
         <div className="games-page-card games-page-shapememory-game" onClick={() => navigate("/shapememorygame")}>
           <h2>Shape Memory Game</h2>
-          <p>Keep tapping, keep learning, keep winning!</p>
-        </div>
+          <p>Match the shapes, train your brain, and boost your memory power!</p>
+        </div>  
         <div className="games-page-card games-page-letterbridge-game" onClick={() => navigate("/letterbridge")}>
           <h2>Letter Bridging Game</h2>
           <p>Bridge the letters, build the words, and boost your brain!</p>
