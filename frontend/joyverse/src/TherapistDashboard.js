@@ -48,12 +48,21 @@ const TherapistDashboard = () => {
   const [showAddChildForm, setShowAddChildForm] = useState(false);
   const [child, setChild] = useState({ name: '', username: '', password: '' });
   const [error, setError] = useState('');
+  const [successMessage, setSuccessMessage] = useState('');
   const [selectedChildSessions, setSelectedChildSessions] = useState([]);
   const [showSessionDetails, setShowSessionDetails] = useState(false);
   const [sessionError, setSessionError] = useState('');
 
   const therapistId = localStorage.getItem("therapistId");
-
+ useEffect(() => {
+    // Enable scrolling when this page is open
+    document.body.style.overflow = "auto";
+  
+    // When leaving this page, disable scrolling again
+    return () => {
+      document.body.style.overflow = "hidden";
+    };
+  }, []);
   useEffect(() => {
     const fetchChildren = async () => {
       if (!therapistId) {
@@ -83,11 +92,41 @@ const TherapistDashboard = () => {
     }
   };
 
-  const filteredChildren = children.filter(child =>
-    child.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    child.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  const handleAddChild = async (e) => {
+    e.preventDefault();
+    setError("");
+    setSuccessMessage(""); // Reset success message
 
+    if (!child.name || !child.username || !child.password) {
+      setError("All fields are required.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("http://localhost:5000/api/children", {
+        ...child,
+        therapistId,
+      });
+
+      setChildren(prev => [...prev, response.data]);
+
+      setChild({ name: "", username: "", password: "" });
+      setShowAddChildForm(false);
+      setSuccessMessage("Child added successfully!"); // Show success message
+
+      // Hide success message after 3 seconds
+      setTimeout(() => {
+      setSuccessMessage('');
+    }, 3000);
+  } catch (err) {
+    setError(err.response?.data?.message || "Failed to add child.");
+  }
+  };
+
+  const filteredChildren = children.filter(child =>
+    (child.username && child.username.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (child.name && child.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  );
   return (
     <div className="dashboard-container">
       <h2 className="welcome-therapist">Welcome back, Therapist!</h2>
@@ -110,13 +149,35 @@ const TherapistDashboard = () => {
       {showAddChildForm && (
         <div className="add-child-form-container">
           <h3>Add Child</h3>
-          <form className="add-child-form">
-            <input type="text" name="name" placeholder="Child's Name" className="form-input" />
-            <input type="text" name="username" placeholder="Username" className="form-input" />
-            <input type="password" name="password" placeholder="Password" className="form-input" />
+          <form className="add-child-form" onSubmit={handleAddChild}>
+            <input
+              type="text"
+              name="name"
+              placeholder="Child's Name"
+              className="form-input"
+              value={child.name}
+              onChange={(e) => setChild({ ...child, name: e.target.value })}
+            />
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              className="form-input"
+              value={child.username}
+              onChange={(e) => setChild({ ...child, username: e.target.value })}
+            />
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              className="form-input"
+              value={child.password}
+              onChange={(e) => setChild({ ...child, password: e.target.value })}
+            />
             <button type="submit" className="submit-btn">Add Child</button>
           </form>
           {error && <p className="error-msg">{error}</p>}
+          {successMessage && <p className="success-msg">{successMessage}</p>}
         </div>
       )}
 

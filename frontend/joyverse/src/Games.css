@@ -29,8 +29,9 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  
-  gap: 20px;
+  padding-left: 30px;
+  padding-right: 30px;
+  gap: 30px;
 }
 
 /* Individual Game Card */
@@ -86,4 +87,8 @@
 .games-page-shapememory-game {
   background: #f7f7c1;
   border: 3px solid #fcfc08;
+}
+.games-page-letterbridge-game {
+  background: #d8ace9;
+  border: 3px solid #bb01ff;
 }
