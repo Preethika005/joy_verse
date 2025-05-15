@@ -1,7 +1,7 @@
 .games-page-container {
   text-align: center;
   padding: 40px;
-  background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\gamesback2.jpg") no-repeat center center/cover;
+  /* background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\gamesback2.jpg") no-repeat center center/cover; */
   min-height: 100vh;
   width: 100vw;  
   display: flex;
@@ -55,7 +55,7 @@
 
 /* Game Titles */
 .games-page-card h2 {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
@@ -86,9 +86,27 @@
 }
 .games-page-shapememory-game {
   background: #f7f7c1;
-  border: 3px solid #fcfc08;
+  border: 3px solid #fafa01;
 }
 .games-page-letterbridge-game {
   background: #d8ace9;
   border: 3px solid #bb01ff;
 }
+.game-icon {
+  width: 210px;
+  height: 150px;
+  /* margin-top: 10px; */
+  /* border-radius: 50%; */
+  /* object-fit: contain; */
+  /* animation: pop 2s infinite; */
+}
+
+/* Optional fun animation */
+/* @keyframes pop {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+} */

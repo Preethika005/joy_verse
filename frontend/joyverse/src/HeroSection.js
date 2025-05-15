@@ -1,13 +1,18 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./HeroSection.css";
-
+import hamepageBackground from './assets/homeback.jpg';
 
 function HeroSection() {
   const navigate = useNavigate();
 
   return (
-    
+    <div
+      style={{
+        background: `url(${hamepageBackground}) no-repeat center center`,
+        backgroundSize: 'cover',
+      }}
+    >
     <div className="hero-container">
       <h1 className="hero-title">
         Welcome to JoyVerse
@@ -22,6 +27,7 @@ function HeroSection() {
           Login Here
         </button>
       </div>
+    </div>
     </div>
   );
 }

@@ -1,9 +1,9 @@
 @import url('https://fonts.googleapis.com/css2?family=Fredoka+One&display=swap');
 .welcome-page {
   font-family: 'Comic Sans MS', cursive, sans-serif;
-  background-color: #fff6e9;
+  /* background-color: #fff6e9; */
   min-height: 100vh;
-  background-image: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\gamesback2.jpg"); /* public folder */
+  /* background-image: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\gamesback2.jpg");  */
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center;

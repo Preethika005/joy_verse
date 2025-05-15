@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./MathGame.css";
+import mathgameimg from './assets/maths.jpg';
 
 const MathGame = () => {
   const [num1, setNum1] = useState(2);
@@ -144,6 +145,12 @@ useEffect(() => {
   };
 
   return (
+    <div
+          style={{
+            background: `url(${mathgameimg}) no-repeat center center`,
+            backgroundSize: 'cover',
+          }}
+        >
     <div className="math-game-container">
       <h1 className="math-game-title"> Math Fun Challenge </h1>
 
@@ -195,6 +202,7 @@ useEffect(() => {
          {!gameOver && <p className="message">{message}</p>}
         </>
       )}
+    </div>
     </div>
   );
 };

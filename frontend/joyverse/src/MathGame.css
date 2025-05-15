@@ -4,7 +4,7 @@
   font-family: 'Comic Sans MS', cursive, sans-serif;
   min-height: 100vh;
   color: #333;
-  background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\maths.jpg") no-repeat center center;
+  /* background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\maths.jpg") no-repeat center center; */
   background-size: cover;
 }
 

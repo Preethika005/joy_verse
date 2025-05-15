@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./WelcomePage.css";
+import gamesBackground from './assets/gamesback2.jpg';
 
 const WelcomePage = () => {
   const [username, setUsername] = useState("");
@@ -28,6 +29,12 @@ const WelcomePage = () => {
   };
 
   return (
+    <div
+      style={{
+        background: `url(${gamesBackground}) no-repeat center center`,
+        backgroundSize: 'cover',
+      }}
+    >
     <div className="welcome-page">
       <h2 className="welcome-page__text">
         Welcome to JoyVerse, {username}! Let's play and learn together! ✨😊
@@ -47,6 +54,7 @@ const WelcomePage = () => {
       <button className="welcome-page__start-button" onClick={handleStartPlaying}>
           Start Playing
         </button>
+    </div>
     </div>
   );
 };
