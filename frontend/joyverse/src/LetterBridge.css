@@ -3,6 +3,7 @@
     padding: 2rem;
     position: relative;
     font-family: "Comic Sans MS", cursive, sans-serif;
+     min-height: 100vh;
     background: linear-gradient(to bottom right, #fffef2, #e2faff);
   }
   

@@ -42,7 +42,7 @@
     object-fit: cover; */
     width: 100%;
   max-width: 400px; /* or whatever max width fits your design */
-  height: 400px;     /* or use auto to maintain aspect ratio */
+  height: 310px;     /* or use auto to maintain aspect ratio */
   object-fit: contain; /* key property */
   
     /* border-radius: 50%; */

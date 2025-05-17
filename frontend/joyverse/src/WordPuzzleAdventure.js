@@ -26,13 +26,13 @@ const wordData = {
   ],
 };
 
-const encouragingMessages = [
-  "Great Job! 🎉",
-  "You're Amazing! ⭐",
-  "Fantastic! Keep Going! 🚀",
-  "You Did It! 🏆",
-  "Awesome! 🎈",
-];
+// const encouragingMessages = [
+//   "Great Job! 🎉",
+//   "You're Amazing! ⭐",
+//   "Fantastic! Keep Going! 🚀",
+//   "You Did It! 🏆",
+//   "Awesome! 🎈",
+// ];
 
 const WordPuzzleAdventure = () => {
   const [difficulty, setDifficulty] = useState("easy");
@@ -41,11 +41,11 @@ const WordPuzzleAdventure = () => {
   const [selectedLetters, setSelectedLetters] = useState([]);
   const [shuffledLetters, setShuffledLetters] = useState([]);
   const [hintVisible, setHintVisible] = useState(false);
-  const [message, setMessage] = useState("");
-  const [showMessage, setShowMessage] = useState(false);
+  // const [message, setMessage] = useState("");
+  // const [showMessage, setShowMessage] = useState(false);
   const [score, setScore] = useState(0);
   const [gameCompleted, setGameCompleted] = useState(false);
-  const [completionMessage, setCompletionMessage] = useState("");
+  // const [completionMessage, setCompletionMessage] = useState("");
   const [feedback, setFeedback] = useState("");
 
   useEffect(() => {
@@ -81,10 +81,10 @@ const WordPuzzleAdventure = () => {
     setShuffledLetters(shuffleArray([...levelWords[0].word]));
     setScore(0);
     setHintVisible(false);
-    setMessage("");
-    setShowMessage(false);
+    // setMessage("");
+    // setShowMessage(false);
     setGameCompleted(false);
-    setCompletionMessage("");
+    // setCompletionMessage("");
     setFeedback("");
   };
 
@@ -124,8 +124,8 @@ const WordPuzzleAdventure = () => {
 
   const nextWord = () => {
     if (currentIndex + 1 >= shuffledWords.length) {
-      const finalMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
-      setCompletionMessage(`${finalMessage} 🎯 Final Score: ${score}`);
+      // const finalMessage = encouragingMessages[Math.floor(Math.random() * encouragingMessages.length)];
+      // setCompletionMessage(`${finalMessage} 🎯 Final Score: ${score}`);
       setGameCompleted(true);
     } else {
       const newIndex = currentIndex + 1;
@@ -134,8 +134,8 @@ const WordPuzzleAdventure = () => {
       setSelectedLetters(Array(nextWord.length).fill(""));
       setShuffledLetters(shuffleArray([...nextWord]));
       setHintVisible(false);
-      setShowMessage(false);
-      setMessage("");
+      // setShowMessage(false);
+      // setMessage("");
     }
   };
 
