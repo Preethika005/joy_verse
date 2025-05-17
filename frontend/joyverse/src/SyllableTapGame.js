@@ -6,17 +6,23 @@ const hardcodedWords = {
   easy: [
     { word: 'cat', syllables: 1, split: ['cat'] },
     { word: 'apple', syllables: 2, split: ['ap', 'ple'] },
-    { word: 'banana', syllables: 3, split: ['ba', 'na', 'na'] }
+    { word: 'banana', syllables: 3, split: ['ba', 'na', 'na'] },
+    { word: 'dog', syllables: 1, split: ['dog'] },
+    { word: 'cookie', syllables: 2, split: ['cook', 'ie'] }
   ],
   medium: [
     { word: 'elephant', syllables: 3, split: ['el', 'e', 'phant'] },
     { word: 'computer', syllables: 3, split: ['com', 'pu', 'ter'] },
-    { word: 'umbrella', syllables: 3, split: ['um', 'brel', 'la'] }
+    { word: 'umbrella', syllables: 3, split: ['um', 'brel', 'la'] },
+    { word: 'giraffe', syllables: 2, split: ['gi', 'raffe'] },
+    { word: 'vacation', syllables: 3, split: ['va', 'ca', 'tion'] }
   ],
   hard: [
     { word: 'helicopter', syllables: 4, split: ['hel', 'i', 'cop', 'ter'] },
     { word: 'mathematics', syllables: 4, split: ['math', 'e', 'mat', 'ics'] },
-    { word: 'encyclopedia', syllables: 6, split: ['en', 'cy', 'clo', 'pe', 'di', 'a'] }
+    { word: 'encyclopedia', syllables: 6, split: ['en', 'cy', 'clo', 'pe', 'di', 'a'] },
+    { word: 'refrigerator', syllables: 5, split: ['re', 'fri', 'ge', 'ra', 'tor'] },
+    { word: 'architecture', syllables: 4, split: ['ar', 'chi', 'tec', 'ture'] }
   ]
 };
 
@@ -80,7 +86,7 @@ export default function SyllableTapGame() {
     if (!currentWord) return;
     if (taps === currentWord.syllables) {
       setFeedback('✅ Great job!');
-      setScore((prev) => prev + 1);
+      setScore((prev) => prev + 20);
     } else {
       setFeedback(`❌ Oops! It has ${currentWord.syllables} syllables.`);
     }
@@ -104,7 +110,7 @@ export default function SyllableTapGame() {
 
   return (
     <div className="syllable-tap-game">
-      <h2 className="game-title">🥁 Syllable Tap Game</h2>
+      <h2 className="game-title"> Syllable Tap Game</h2>
 
       <div className="difficulty-select">
         <label>Difficulty: </label>
@@ -141,8 +147,8 @@ export default function SyllableTapGame() {
         </>
       ) : gameComplete ? (
         <div className="game-over-message">
-          <p>🎉 You completed all words in <strong>{difficulty}</strong> mode!</p>
-          <p>⭐ Your score: {score}/{wordPool.length}</p>
+          <p> You completed all words in <strong>{difficulty}</strong> mode!</p>
+          <p> Your score: {score}/{wordPool.length*20}</p>
           <button onClick={repeatGame} className="repeat-game-button">🔁 Repeat All Words</button>
         </div>
       ) : (
