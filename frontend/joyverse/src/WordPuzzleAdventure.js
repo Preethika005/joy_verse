@@ -9,6 +9,17 @@ const wordData = {
     { image: "/images/car.png", word: "CAR", hint: "A vehicle with four wheels" },
     { image: "/images/owl.jpg", word: "OWL", hint: "A bird that is active at night" },
     { image: "/images/fish.jpg", word: "FISH", hint: "An animal that lives in water" },
+    { image: "/images/cat.jpg", word: "CAT", hint: "A small, fluffy pet that meows" },
+    { image: "/images/ball.jpg", word: "BALL", hint: "A round object used in various sports" },
+    { image: "/images/star.jpg", word: "STAR", hint: "A shining object seen in the night sky" },
+    { image: "/images/bird.jpg", word: "BIRD", hint: "An animal that can fly" },
+    { image: "/images/tree.jpg", word: "TREE", hint: "A tall plant with leaves and branches" },
+    { image: "/images/cow.jpg", word: "COW", hint: "A farm animal that gives milk" },
+    { image: "/images/duck.jpg", word: "DUCK", hint: "A bird that swims and quacks" },
+    { image: "/images/mango.jpg", word: "MANGO", hint: "A tropical fruit that's sweet and juicy" },
+    { image: "/images/shoe.jpg", word: "SHOE", hint: "Something you wear on your feet" },
+    { image: "/images/chair.jpg", word: "CHAIR", hint: "Furniture you sit on" },
+  
   ],
   medium: [
     { image: "/images/apple.jpg", word: "APPLE", hint: "A red-colored fruit" },
@@ -16,6 +27,17 @@ const wordData = {
     { image: "/images/banana.jpg", word: "BANANA", hint: "A long yellow fruit" },
     { image: "/images/rose.jpg", word: "ROSE", hint: "A beautiful flower often red or pink" },
     { image: "/images/book.jpg", word: "BOOK", hint: "You can read stories or information from this" },
+    { image: "/images/rainbow.jpg", word: "RAINBOW", hint: "A colorful arc in the sky after rain" },
+    { image: "/images/cloud.jpg", word: "CLOUD", hint: "A fluffy white shape in the sky" },
+    { image: "/images/glasses.jpg", word: "GLASSES", hint: "Worn to improve vision" },
+    { image: "/images/pencil.jpg", word: "PENCIL", hint: "Used to write or draw" },
+    { image: "/images/clock.jpg", word: "CLOCK", hint: "Used to tell time" },
+    { image: "/images/guitar.jpg", word: "GUITAR", hint: "A musical instrument with strings" },
+    { image: "/images/bridge.jpg", word: "BRIDGE", hint: "A structure that connects two places" },
+    { image: "/images/snowflake.jpg", word: "SNOWFLAKE", hint: "A small piece of frozen water" },
+    { image: "/images/butterfly.jpg", word: "BUTTERFLY", hint: "An insect with beautiful wings" },
+    { image: "/images/rocket.jpg", word: "ROCKET", hint: "Used to travel into space" },
+  
   ],
   hard: [
     { image: "/images/elephant.webp", word: "ELEPHANT", hint: "The largest land animal" },
@@ -23,6 +45,17 @@ const wordData = {
     { image: "/images/watermelon.jpg", word: "WATERMELON", hint: "A large green fruit with red, juicy flesh and black seeds" },
     { image: "/images/strawberry.jpeg", word: "STRAWBERRY", hint: "A red fruit with seeds on the outside" },
     { image: "/images/crocodile.jpg", word: "CROCODILE", hint: "A large reptile with a strong jaw, found in rivers" },
+    { image: "/images/jellyfish.jpg", word: "JELLYFISH", hint: "A sea creature with tentacles" },
+    { image: "/images/ocean.jpg", word: "OCEAN", hint: "A vast body of saltwater covering most of the earth" },
+    { image: "/images/pyramid.webp", word: "PYRAMID", hint: "A historic triangular structure in Egypt" },
+     { image: "/images/tsunami.jpg", word: "TSUNAMI", hint: "A giant ocean wave caused by earthquakes" },
+    { image: "/images/volcano.jpg", word: "VOLCANO", hint: "A mountain that erupts with lava" },
+    { image: "/images/eagle.jpg", word: "EAGLE", hint: "A powerful bird known for keen eyesight" },
+    { image: "/images/planet.jpg", word: "PLANET", hint: "A celestial body orbiting a star" },
+    { image: "/images/microscope.jpg", word: "MICROSCOPE", hint: "Used to see tiny objects" },
+    { image: "/images/scorpion.jpg", word: "SCORPION", hint: "An arachnid with pincers and a stinger" },
+    { image: "/images/chameleon.jpg", word: "CHAMELEON", hint: "A reptile that changes color to blend in" },
+    
   ],
 };
 
@@ -73,20 +106,19 @@ const WordPuzzleAdventure = () => {
     return [...array].sort(() => Math.random() - 0.5);
   };
 
-  const initializeGame = (level) => {
-    const levelWords = shuffleArray(wordData[level]);
-    setShuffledWords(levelWords);
-    setCurrentIndex(0);
-    setSelectedLetters(Array(levelWords[0].word.length).fill(""));
-    setShuffledLetters(shuffleArray([...levelWords[0].word]));
-    setScore(0);
-    setHintVisible(false);
-    // setMessage("");
-    // setShowMessage(false);
-    setGameCompleted(false);
-    // setCompletionMessage("");
-    setFeedback("");
-  };
+ const initializeGame = (level) => {
+  const allWords = shuffleArray(wordData[level]);
+  const levelWords = allWords.slice(0, 5); // Pick only 5 random words
+  setShuffledWords(levelWords);
+  setCurrentIndex(0);
+  setSelectedLetters(Array(levelWords[0].word.length).fill(""));
+  setShuffledLetters(shuffleArray([...levelWords[0].word]));
+  setScore(0);
+  setHintVisible(false);
+  setGameCompleted(false);
+  setFeedback("");
+};
+
 
   const handleLetterClick = (letter, index) => {
     if (letter === null) return;

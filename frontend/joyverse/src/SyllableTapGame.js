@@ -35,6 +35,7 @@ export default function SyllableTapGame() {
   const [feedback, setFeedback] = useState('');
   const [score, setScore] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
+  const [isFirstWord, setIsFirstWord] = useState(true);
 
   const pickNewWord = (availableWords, used) => {
     const unusedWords = availableWords.filter(
@@ -74,6 +75,7 @@ export default function SyllableTapGame() {
     setWordPool(words);
     setGameComplete(false);
     setScore(0);
+    setIsFirstWord(true);
     pickNewWord(words, []);
   };
 
@@ -93,6 +95,7 @@ export default function SyllableTapGame() {
   };
 
   const nextWord = () => {
+    setIsFirstWord(false);
     pickNewWord(wordPool, usedWords);
   };
 
@@ -124,11 +127,13 @@ export default function SyllableTapGame() {
       {currentWord ? (
         <>
           <p className="current-word-display">{currentWord.word}</p>
-          <p className="syllable-split-display">
-            {currentWord.split.map((syllable, idx) => (
-              <span key={idx} className="syllable">{syllable}</span>
-            ))}
-          </p>
+          {isFirstWord && (
+  <p className="syllable-split-display">
+    {currentWord.split.map((syllable, idx) => (
+      <span key={idx} className="syllable">{syllable}</span>
+    ))}
+  </p>
+)}
 
           <button onClick={handleTap} className="tap-button">Tap</button>
           <p className="tap-count">Taps: {taps}</p>
