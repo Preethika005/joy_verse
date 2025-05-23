@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from 'react-router-dom';
 import "./WelcomePage.css";
-import gamesBackground from './assets/gamesback2.jpg';
+import gamesBackground from '../assets/gamesback2.jpg';
 
 const WelcomePage = () => {
   const [username, setUsername] = useState("");

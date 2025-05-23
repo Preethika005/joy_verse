@@ -1,18 +1,18 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import "./App.css";
-import HeroSection from "./HeroSection";
-import WordPuzzleAdventure from "./WordPuzzleAdventure";
-import MathGame from "./MathGame";
-import Games from "./Games";
-import Quiz from "./Quiz";
-import LoginPage from "./LoginPage";
-import RegisterPage from "./RegisterPage";
-import TherapistDashboard from "./TherapistDashboard";
-import WelcomePage from "./WelcomePage";
-import SyllableTapGame from "./SyllableTapGame";
-import ShapeMemoryGame from "./ShapeMemoryGame";
-import LetterBridge from "./LetterBridge";
+import HeroSection from "./pages/HeroSection";
+import WordPuzzleAdventure from "./pages/WordPuzzleAdventure";
+import MathGame from "./pages/MathGame";
+import Games from "./pages/Games";
+import Quiz from "./pages/Quiz";
+import LoginPage from "./pages/LoginPage";
+import TherapistDashboard from "./pages/TherapistDashboard";
+import WelcomePage from "./pages/WelcomePage";
+import SyllableTapGame from "./pages/SyllableTapGame";
+import ShapeMemoryGame from "./pages/ShapeMemoryGame";
+import LetterBridge from "./pages/LetterBridge";
+import MirrorWordsGame from "./pages/MirrorWordsGame";
 function App() {
   return (
     <Router>
@@ -24,12 +24,12 @@ function App() {
         <Route path="/games" element={<Games/>}/>
         <Route path="/quiz" element={<Quiz/>}/>
         <Route path="/loginpage" element={<LoginPage/>}/>
-        <Route path="/registerpage" element={<RegisterPage/>}/>
         <Route path="/therapistdashboard" element={<TherapistDashboard/>}/>
         <Route path="/welcomepage" element={<WelcomePage/>}/>
         <Route path="/syllabletapgame" element={<SyllableTapGame/>}/>
         <Route path="/shapememorygame" element={<ShapeMemoryGame/>}/>
         <Route path="/letterbridge" element={<LetterBridge/>}/>
+        <Route path="/mirrorword" element={<MirrorWordsGame/>}/>
         <Route path="*" element={<h1>Page Not Found</h1>} />
       </Routes>
     </Router>

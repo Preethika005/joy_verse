@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { difficultyData } from './letterBridgingData';
-import LineDrawer from './components/LineDrawer';
+import LineDrawer from '../components/LineDrawer';
 import './LetterBridge.css';
 
 const GAME_DURATION = 60;

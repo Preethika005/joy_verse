@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./MathGame.css";
-import mathgameimg from './assets/maths.jpg';
+import mathgameimg from '../assets/maths.jpg';
 
 const MathGame = () => {
   const [num1, setNum1] = useState(2);

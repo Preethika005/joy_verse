@@ -67,7 +67,7 @@
 
 /* Unique Colors for Each Game */
 .games-page-word-game {
-  background: #ffccbc;
+  background: #fbc4b3;
   border: 3px solid #ff5722;
 }
 
@@ -91,6 +91,10 @@
 .games-page-letterbridge-game {
   background: #d8ace9;
   border: 3px solid #bb01ff;
+}
+.games-page-mirrorword-game {
+  background: #f8dbdb;
+  border: 3px solid #ff0101;
 }
 .game-icon {
   width: 210px;

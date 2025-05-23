@@ -1,7 +1,7 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./HeroSection.css";
-import hamepageBackground from './assets/homeback.jpg';
+import hamepageBackground from '../assets/homeback.jpg';
 
 function HeroSection() {
   const navigate = useNavigate();

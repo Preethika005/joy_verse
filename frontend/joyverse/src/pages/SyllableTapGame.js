@@ -2,29 +2,29 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './SyllableTapGame.css';
 
-const hardcodedWords = {
-  easy: [
-    { word: 'cat', syllables: 1, split: ['cat'] },
-    { word: 'apple', syllables: 2, split: ['ap', 'ple'] },
-    { word: 'banana', syllables: 3, split: ['ba', 'na', 'na'] },
-    { word: 'dog', syllables: 1, split: ['dog'] },
-    { word: 'cookie', syllables: 2, split: ['cook', 'ie'] }
-  ],
-  medium: [
-    { word: 'elephant', syllables: 3, split: ['el', 'e', 'phant'] },
-    { word: 'computer', syllables: 3, split: ['com', 'pu', 'ter'] },
-    { word: 'umbrella', syllables: 3, split: ['um', 'brel', 'la'] },
-    { word: 'giraffe', syllables: 2, split: ['gi', 'raffe'] },
-    { word: 'vacation', syllables: 3, split: ['va', 'ca', 'tion'] }
-  ],
-  hard: [
-    { word: 'helicopter', syllables: 4, split: ['hel', 'i', 'cop', 'ter'] },
-    { word: 'mathematics', syllables: 4, split: ['math', 'e', 'mat', 'ics'] },
-    { word: 'encyclopedia', syllables: 6, split: ['en', 'cy', 'clo', 'pe', 'di', 'a'] },
-    { word: 'refrigerator', syllables: 5, split: ['re', 'fri', 'ge', 'ra', 'tor'] },
-    { word: 'architecture', syllables: 4, split: ['ar', 'chi', 'tec', 'ture'] }
-  ]
-};
+// const hardcodedWords = {
+//   easy: [
+//     { word: 'cat', syllables: 1, split: ['cat'] },
+//     { word: 'apple', syllables: 2, split: ['ap', 'ple'] },
+//     { word: 'banana', syllables: 3, split: ['ba', 'na', 'na'] },
+//     { word: 'dog', syllables: 1, split: ['dog'] },
+//     { word: 'cookie', syllables: 2, split: ['cook', 'ie'] }
+//   ],
+//   medium: [
+//     { word: 'elephant', syllables: 3, split: ['el', 'e', 'phant'] },
+//     { word: 'computer', syllables: 3, split: ['com', 'pu', 'ter'] },
+//     { word: 'umbrella', syllables: 3, split: ['um', 'brel', 'la'] },
+//     { word: 'giraffe', syllables: 2, split: ['gi', 'raffe'] },
+//     { word: 'vacation', syllables: 3, split: ['va', 'ca', 'tion'] }
+//   ],
+//   hard: [
+//     { word: 'helicopter', syllables: 4, split: ['hel', 'i', 'cop', 'ter'] },
+//     { word: 'mathematics', syllables: 4, split: ['math', 'e', 'mat', 'ics'] },
+//     { word: 'encyclopedia', syllables: 6, split: ['en', 'cy', 'clo', 'pe', 'di', 'a'] },
+//     { word: 'refrigerator', syllables: 5, split: ['re', 'fri', 'ge', 'ra', 'tor'] },
+//     { word: 'architecture', syllables: 4, split: ['ar', 'chi', 'tec', 'ture'] }
+//   ]
+// };
 
 export default function SyllableTapGame() {
   const [difficulty, setDifficulty] = useState('easy');
@@ -37,6 +37,26 @@ export default function SyllableTapGame() {
   const [gameComplete, setGameComplete] = useState(false);
   const [isFirstWord, setIsFirstWord] = useState(true);
 
+useEffect(() => {
+    fetchWords(difficulty);
+  }, []);
+
+  const fetchWords = async (level) => {
+    try {
+      const res = await axios.get(`http://localhost:5000/api/syllable-game/${level}`);
+      const words = res.data;
+      setDifficulty(level);
+      setUsedWords([]);
+      setWordPool(words);
+      setGameComplete(false);
+      setScore(0);
+      setIsFirstWord(true);
+      pickNewWord(words, []);
+    } catch (err) {
+      console.error('Error fetching syllable game questions:', err);
+    }
+  };
+
   const pickNewWord = (availableWords, used) => {
     const unusedWords = availableWords.filter(
       (w) => !used.some((usedWord) => usedWord.word === w.word)
@@ -45,7 +65,7 @@ export default function SyllableTapGame() {
     if (unusedWords.length === 0) {
       setCurrentWord(null);
       setGameComplete(true);
-      submitScore();
+      // submitScore();
       return;
     }
 
@@ -56,27 +76,19 @@ export default function SyllableTapGame() {
     setFeedback('');
   };
 
-  const submitScore = async () => {
-    try {
-      await axios.post('http://localhost:5000/api/scores', {
-        score,
-        difficulty
-      });
-      console.log('🎯 Score submitted successfully');
-    } catch (err) {
-      console.error('❌ Failed to submit score:', err);
-    }
-  };
-
-  const startGame = (level) => {
-    const words = hardcodedWords[level];
-    setDifficulty(level);
-    setUsedWords([]);
-    setWordPool(words);
-    setGameComplete(false);
-    setScore(0);
-    setIsFirstWord(true);
-    pickNewWord(words, []);
+  // const submitScore = async () => {
+  //   try {
+  //     await axios.post('http://localhost:5000/api/scores', {
+  //       score,
+  //       difficulty
+  //     });
+  //     console.log('🎯 Score submitted successfully');
+  //   } catch (err) {
+  //     console.error('❌ Failed to submit score:', err);
+  //   }
+  // };
+const handleDifficultyChange = (e) => {
+    fetchWords(e.target.value);
   };
 
   const handleTap = () => {
@@ -100,16 +112,14 @@ export default function SyllableTapGame() {
   };
 
   const repeatGame = () => {
-    startGame(difficulty);
+    fetchWords(difficulty);
   };
 
-  const handleDifficultyChange = (e) => {
-    startGame(e.target.value);
-  };
 
   useEffect(() => {
-    startGame(difficulty);
+    fetchWords(difficulty);
   }, []);
+
 
   return (
     <div className="syllable-tap-game">

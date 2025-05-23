@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import "./ShapeMemoryGame.css";
-import useGameSessionLogger from "./hooks/useGameSessionLogger"; // Adjust path
+import useGameSessionLogger from "../hooks/useGameSessionLogger"; // Adjust path
 
 const emotionThemes = {
   Happy: "#ffeaa7",

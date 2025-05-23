@@ -1,13 +1,14 @@
 import React,{useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Games.css";
-import shapememoryimg from './assets/shapememorygame.png';
-import mathfunimg from './assets/mathfun.png';
-import funquizimg from './assets/funquiz.png';
-import wordquestimg from './assets/wordquest.png';
-import syllabletapgameimg from './assets/syllabletapgame.png';
-import letterbridgeimg from './assets/letterbridge.png';
-import gamesBackground from './assets/gamesback2.jpg';
+import shapememoryimg from '../assets/shapememorygame.png';
+import mathfunimg from '../assets/mathfun.png';
+import funquizimg from '../assets/funquiz.png';
+import wordquestimg from '../assets/wordquest.png';
+import syllabletapgameimg from '../assets/syllabletapgame.png';
+import letterbridgeimg from '../assets/letterbridge.png';
+import gamesBackground from '../assets/gamesback2.jpg';
+import mirrorwordgameimg from '../assets/mirrorwordsgame.png';
 function Games() {
    useEffect(() => {
       document.body.style.overflow = "auto";
@@ -56,6 +57,10 @@ function Games() {
         <div className="games-page-card games-page-letterbridge-game" onClick={() => navigate("/letterbridge")}>
           <img src={letterbridgeimg} alt="Word Quest" className="game-icon" />
           <h2>Letter Bridging Game</h2>
+        </div>
+        <div className="games-page-card games-page-mirrorword-game" onClick={() => navigate("/mirrorword")}>
+          <img src={mirrorwordgameimg} alt="Word Quest" className="game-icon" />
+          <h2>Mirror Word Game</h2>
         </div>
       </div>
     </div>

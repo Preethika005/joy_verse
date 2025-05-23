@@ -2,11 +2,14 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import dotenv from 'dotenv';
+
 import authRoutes from './Routes/auth.js';
 import childRoutes from './Routes/child.js';
-import gameSessionRoutes from './Routes/gameSession.js'; // ✅ NEW LINE
+import gameSessionRoutes from './Routes/gameSession.js';
 import quizRoutes from './Routes/quiz.js';
-
+import wordQuestionsRoutes from './Routes/wordQuestions.js';
+import syllableRoutes from './Routes/syllableGame.js';
+import mirrorQuestionRoutes from './Routes/mirrorQuestion.js';
 dotenv.config();
 
 const app = express();
@@ -26,7 +29,9 @@ app.use(express.json());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/children', childRoutes);
-app.use('/api/sessions', gameSessionRoutes); // ✅ NEW LINE
-app.use("/api", quizRoutes);
-// Server
+app.use('/api/sessions', gameSessionRoutes);
+app.use('/api', quizRoutes);
+app.use('/api/wordQuestions', wordQuestionsRoutes); 
+app.use('/api/syllable-game', syllableRoutes);
+app.use("/api/mirrorquestions", mirrorQuestionRoutes);
 app.listen(5000, () => console.log('Server running on port 5000'));
