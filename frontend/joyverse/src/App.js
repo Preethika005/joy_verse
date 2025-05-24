@@ -8,7 +8,7 @@ import Games from "./pages/Games";
 import Quiz from "./pages/Quiz";
 import LoginPage from "./pages/LoginPage";
 import TherapistDashboard from "./pages/TherapistDashboard";
-import WelcomePage from "./pages/WelcomePage";
+import WelcomeScreen from "./WelcomeScreen";
 import SyllableTapGame from "./pages/SyllableTapGame";
 import ShapeMemoryGame from "./pages/ShapeMemoryGame";
 import LetterBridge from "./pages/LetterBridge";
@@ -25,7 +25,7 @@ function App() {
         <Route path="/quiz" element={<Quiz/>}/>
         <Route path="/loginpage" element={<LoginPage/>}/>
         <Route path="/therapistdashboard" element={<TherapistDashboard/>}/>
-        <Route path="/welcomepage" element={<WelcomePage/>}/>
+        <Route path="/welcomepage" element={<WelcomeScreen/>}/>
         <Route path="/syllabletapgame" element={<SyllableTapGame/>}/>
         <Route path="/shapememorygame" element={<ShapeMemoryGame/>}/>
         <Route path="/letterbridge" element={<LetterBridge/>}/>
