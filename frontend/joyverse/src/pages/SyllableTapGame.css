@@ -1,165 +1,188 @@
-
-.syllable-tap-game {
-    background: #ffffff;
-    margin: 0 auto;
-    margin-top: 70px;
-    padding: 40px 50px;
-    min-height: 80vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    max-width: 720px;
-    width: 90%;
-    border-radius: 32px;
-    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.15);
-    text-align: center;
-    animation: fadeIn 0.8s ease;
-}
-  
-/* ==== Typography ==== */
-.current-word-display {
-    font-size: 3rem;
-    color: #333;
-    font-weight: bold;
-    margin-bottom: 20px;
-}
-  
-.syllable-split-display {
-     font-size: 2.2rem;
-    margin-bottom: 20px;
-    color: #444;
-}
-  
-.tap-count {
-    font-size: 1.2rem;
-    margin: 10px 0;
-    color: #666;
-}
-  
-.feedback-message {
-    font-size: 1.5rem;
-    margin-top: 20px;
-    font-weight: bold;
-    transition: all 0.3s ease;
-
-}
-  
-.feedback-message.correct {
-    background-color: #d4f7dc;
-    color: #2e7d32;
-    padding: 12px 24px;
-    border-radius: 16px;
-    display: inline-block;
-    animation: bounce 0.6s ease;
-}
-  
-.feedback-message.wrong {
-    color: #e53935;
-    animation: shake 0.6s ease;
+/* Top-level wrapper just for the SyllableTapGame */
+.game-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  padding: 20px;
+  box-sizing: border-box;
+  align-content: center;
 }
 
-/* ==== Syllable Display ==== */
-.syllable-split-display {
-    font-size: 2rem;
-    margin-bottom: 20px;
+/* Game card itself */
+.game-card {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 80vh;
+  padding: 32px;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+  border-radius: 28px;
+  text-align: center;
+  max-width: 720px;
+  width: 90%;
+  animation: fadeIn 0.6s ease;
+  align-items: center;
+  align-content: center;
 }
-  
-.syllable {
-    display: inline-block;
-    margin: 0 8px;
-    padding: 8px 14px;
-    background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
-    border: 2px solid #4dd0e1;
-    border-radius: 12px;
-    font-weight: bold;
-    font-size: 1.5rem;
-    color: #00796b;
-    transition: transform 0.2s ease;
+
+/* Title */
+.game-title {
+  font-size: 2.4rem;
+  color: var(--text-color, #222);
+  margin-bottom: 20px;
 }
-.syllable:hover {
-    transform: scale(1.1);
-}
-/* ==== Buttons ==== */
-button {
-    padding: 14px 28px;
-    font-size: 1.1rem;
-    margin: 10px;
-    border: none;
-    border-radius: 14px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-weight: bold;
-    color: #333;
-}
-  
-.tap-button,
-.next-button,
-.repeat-game-button {
-    background: linear-gradient(to right, #ffcc80, #ffb300);
-}
-  
-.tap-button:hover,
-.next-button:hover,
-.repeat-game-button:hover {
-    background: linear-gradient(to right, #ffa000, #ff8f00);
-    transform: scale(1.05);
-}
-  
-.submit-button {
-    background: linear-gradient(to right, #90caf9, #42a5f5);
-    border-radius: 12px;
-    color: white;
-}
-  
-.submit-button:hover {
-    background: linear-gradient(to right, #64b5f6, #1e88e5);
-    transform: scale(1.05);
-}
-  
-/* ==== Difficulty Select ==== */
-/* .difficulty-select {
-    margin-bottom: 1rem;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
-    color: #555;
-} */
-  
+
+/* Difficulty selector */
 .difficulty-select {
-    margin-bottom: 1rem;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
-    justify-content: center;
-    font-size: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-size: 1rem;
 }
-  
+
 select {
-    padding: 0.4rem;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 1rem;
-    cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 8px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
 }
-  
-/* ==== Animations ==== */
+
+/* Content area */
+.game-content {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+/* Word and syllables */
+.current-word {
+  font-size: 3rem;
+  font-weight: bold;
+  color: #333;
+  margin: 0;
+}
+
+.syllable-split {
+  margin: 14px 0 20px;
+}
+
+.syllable {
+  display: inline-block;
+  margin: 0 6px;
+  padding: 8px 14px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: 2px solid #4dd0e1;
+  background: linear-gradient(to bottom, #e0f7fa, #b2ebf2);
+  border-radius: 12px;
+  color: #00796b;
+  transition: transform 0.2s ease;
+}
+
+.syllable:hover {
+  transform: scale(1.1);
+}
+
+/* Tap count */
+.tap-count {
+  font-size: 1.1rem;
+  color: #555;
+  margin: 8px 0;
+}
+
+/* Tap button stays in place with fixed height container */
+.tap-button-container {
+  margin-top: 16px;
+  min-height: 60px;
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+  flex-wrap: wrap;
+}
+
+.game-button {
+  padding: 12px 24px;
+  font-size: 1.1rem;
+  font-weight: bold;
+  border: none;
+  border-radius: 14px;
+  cursor: pointer;
+  color: #333;
+  background: linear-gradient(to right, #ffcc80, #ffb300);
+  transition: all 0.3s ease;
+}
+
+.game-button:hover {
+  background: linear-gradient(to right, #ffa000, #ff8f00);
+  transform: scale(1.05);
+}
+
+.game-button.secondary {
+  background: linear-gradient(to right, #90caf9, #42a5f5);
+  color: white;
+}
+
+.game-button.secondary:hover {
+  background: linear-gradient(to right, #64b5f6, #1e88e5);
+}
+
+/* Feedback messages */
+.feedback-message {
+  margin-top: 16px;
+  font-size: 1.3rem;
+  font-weight: bold;
+}
+
+.feedback-message.correct {
+  background: #d4f7dc;
+  color: #2e7d32;
+  padding: 10px 20px;
+  border-radius: 16px;
+  display: inline-block;
+  animation: bounce 0.6s ease;
+}
+
+.feedback-message.wrong {
+  color: #e53935;
+  animation: shake 0.6s ease;
+}
+
+.game-complete {
+  font-size: 1.2rem;
+  margin-top: 20px;
+}
+
+.loading-message {
+  font-size: 1.2rem;
+  color: #888;
+}
+
+/* Animations */
 @keyframes bounce {
-    0%, 100% { transform: translateY(0); }
-    30% { transform: translateY(-12px); }
-    70% { transform: translateY(-6px); }
+  0%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-12px); }
+  70% { transform: translateY(-6px); }
 }
 
 @keyframes shake {
-    0%, 100% { transform: translateX(0); }
-    25% { transform: translateX(-8px); }
-    50% { transform: translateX(8px); }
-    75% { transform: translateX(-6px); }
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-8px); }
+  50% { transform: translateX(8px); }
+  75% { transform: translateX(-6px); }
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }

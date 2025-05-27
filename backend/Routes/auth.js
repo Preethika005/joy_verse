@@ -1,13 +1,19 @@
 import express from 'express';
 import Child from '../models/Child.js';
 import Therapist from '../models/Therapist.js';
-
+import SuperAdmin from '../models/SuperAdmin.js';
 const router = express.Router();
 
 router.post('/login', async (req, res) => {
   const { username, password } = req.body;
 
   try {
+    // Check superadmin first
+  const superadmin = await SuperAdmin.findOne({ username, password });
+  if (superadmin) {
+    return res.json({ role: 'superadmin' });
+  }
+
     // Check for therapist
     const therapist = await Therapist.findOne({ username, password });
     if (therapist) {

@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./MirrorWordsGame.css";
-
+import useEmotionDetection from "../hooks/useEmotionDetection";
 const MirrorWordsGame = () => {
-
+  const { emotion, videoRef, canvasRef } = useEmotionDetection();
   const [level, setLevel] = useState("Easy");
   const [current, setCurrent] = useState(0);
   const [selected, setSelected] = useState(null);
@@ -14,7 +14,7 @@ const MirrorWordsGame = () => {
   useEffect(() => {
   const fetchQuestions = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/mirrorquestions/${level}`);
+      const res = await fetch(`http://localhost:4000/api/mirrorquestions/${level}`);
       const data = await res.json();
       setQuestions(data);
       setCurrent(0);
@@ -143,6 +143,9 @@ const filteredQuestions = questions;
           </button>
         </div>
       )}
+      <video ref={videoRef} autoPlay style={{ display: "none" }} />
+    <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }}/>
+    
     </div>
   );
 };

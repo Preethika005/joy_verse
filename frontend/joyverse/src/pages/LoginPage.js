@@ -12,7 +12,7 @@ const LoginPage = () => {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post("http://localhost:5000/api/auth/login", {
+      const response = await axios.post("http://localhost:4000/api/auth/login", {
         username,
         password,
       });
@@ -24,7 +24,11 @@ const LoginPage = () => {
       if (role === "therapist") {
         localStorage.setItem("therapistId", therapistId);
         navigate("/therapistdashboard");
-      } else if (role === "child") {
+      } 
+      else if (role === "superadmin") {
+        navigate("/superadmin");
+      }
+      else if (role === "child") {
         navigate("/welcomepage");
       } else {
         setError("Unknown user role");

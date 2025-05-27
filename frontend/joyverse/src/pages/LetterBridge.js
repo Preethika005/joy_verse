@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { difficultyData } from './letterBridgingData';
 import LineDrawer from '../components/LineDrawer';
 import './LetterBridge.css';
-
+import useEmotionDetection from "../hooks/useEmotionDetection";
 const GAME_DURATION = 60;
 
 const LetterBridge = () => {
+  const { emotion, videoRef, canvasRef } = useEmotionDetection();
   const [difficulty, setDifficulty] = useState('easy');
   const [letters, setLetters] = useState([]);
   const [validWords, setValidWords] = useState([]);
@@ -177,6 +178,9 @@ const LetterBridge = () => {
           )}
         </>
       )}
+      <video ref={videoRef} autoPlay style={{ display: "none" }} />
+    <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }}/>
+    
     </div>
   );
 };

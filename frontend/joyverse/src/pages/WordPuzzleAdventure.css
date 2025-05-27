@@ -1,317 +1,119 @@
-
-
-.word-puzzle-container {
-
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: flex-start;
-    background: linear-gradient(135deg, #f9d5e5, #fceabb);
-    font-family: 'Comic Sans MS', cursive, sans-serif;
-    box-sizing: border-box;
-    min-height: 100vh;
-    padding: 20px;
+body, .game-card {
+  font-family: var(--font-opendyslexic);
 }
 
-.word-puzzle-score-board {
-    position: absolute;
-    top: 20px;
-    right: 20px;
-    background: white;
-    padding: 10px 15px;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+.quiz-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
-.word-puzzle-title {
-    font-size: 36px;
-    color: #ff5e78;
-    margin: 20px 0;
-    text-align: center;
-}
-
-.word-puzzle-word-image {
-     width: 500px;
-  height: 260px;
-  object-fit: contain;
-  margin-bottom: 1.5rem;
-
-}
-
-.word-puzzle-word-slots {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin-bottom: 20px;
-    width: 100%;
-    max-width: 900px;
-}
-
-.word-puzzle-slot {
-    width: 50px;
-    height: 50px;
-    border: 3px dashed #555;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    background-color: white;
-    border-radius: 10px;
-    /* transition: all 0.3s; */
-    cursor: pointer;
-}
-
-.word-puzzle-slot.filled {
-    background-color: #ffe0f0;
-    border: 3px solid #ff5e78;
-}
-
-.word-puzzle-letters-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin: 20px 0;
-    width: 100%;
-    max-width: 900px;
-}
-
-
-.word-puzzle-letter-button {
-    background-color: #ff8c42;
-    border: 2px solid #e67300;
-    color: white;
-    padding: 12px 18px;
-    font-size: 22px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: background-color 0.2s ease-in-out;
-
-   
-}
-
-.word-puzzle-letter-button:hover {
-    background-color: #e67300;
-}
-
-.word-puzzle-buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 15px;
-    margin: 20px 0;
-    width: 100%;
-    max-width: 500px;
-}
-
-.word-puzzle-action-button {
-    padding: 12px 20px;
-    font-size: 18px;
-    border: none;
-    border-radius: 12px;
-    color: white;
-    cursor: pointer;
-    transition: background-color 0.3s;
-    flex: 1;
-    min-width: 120px;
-}
-
-.word-puzzle-action-button.check {
-    background-color: #f3722c;
-}
-
-.word-puzzle-action-button.check:hover {
-    background-color: #f8961e;
-}
-
-.word-puzzle-action-button.hint {
-    background-color: #90be6d;
-}
-
-.word-puzzle-action-button.hint:hover {
-    background-color: #43aa8b;
-}
-
-.word-puzzle-action-button.next {
-    background-color: #577590;
-}
-
-.word-puzzle-action-button.next:hover {
-    background-color: #4d648d;
-}
-
-.word-puzzle-hint {
-    margin: 20px 0;
-    padding: 15px;
-    font-size: 20px;
-    color: #ff6f61;
-    font-weight: bold;
-    text-align: center;
-    background-color: white;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.word-puzzle-message {
-    margin: 20px 0;
-    padding: 15px;
-    font-size: 24px;
-    font-weight: bold;
-    text-align: center;
-    background-color: white;
-    border-radius: 10px;
-    width: 100%;
-    max-width: 500px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.success {
-    color: #06d6a0;
-}
-
-.error {
-    color: #ef476f;
-}
-
-@media (max-width: 600px) {
-    .word-puzzle-title {
-        font-size: 28px;
-        margin: 15px 0;
-    }
-    
-    .word-puzzle-word-image {
-        max-height: 250px;
-    }
-    
-    .word-puzzle-slot {
-        width: 40px;
-        height: 40px;
-        font-size: 20px;
-    }
-    
-    .word-puzzle-letter-button {
-        padding: 10px 15px;
-        font-size: 18px;
-    }
-    
-    .word-puzzle-action-button {
-        padding: 10px 15px;
-        font-size: 16px;
-    }
-    
-    .word-puzzle-hint, .word-puzzle-message {
-        font-size: 18px;
-        padding: 10px;
-    }
-}
-.word-puzzle-difficulty-buttons button {
-    margin: 10px;
-    font-size: 1.2rem;
-    padding: 10px 20px;
-  }
-  
-
-  .word-puzzle-replay-container {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  .word-puzzle-replay-button {
-    padding: 10px 20px;
-    font-size: 16px;
-    background-color: #FFB347;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-  }
-  
-  .word-puzzle-replay-button:hover {
-    background-color: #ffa726;
-  }
-  .word-puzzle-completion-message {
-  margin-top: 120px;
-  text-align: center;
-  padding: 40px 20px;
-  background: linear-gradient(to top, #fdfbfb, #ebedee);
+.game-card {
+  background: rgba(255, 255, 255, 0.8);
   border-radius: 20px;
-  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
-  animation: fadeIn 1s ease-in-out;
-  position: relative;
-  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 30px;
+  max-width: 600px;
+  width: 100%;
+  text-align: center;
 }
 
-.word-puzzle-completion-message h2 {
-  font-size: 2.5rem;
-  color: #ff9800;
-  margin-bottom: 10px;
-  animation: pop 0.5s ease-in-out;
+.game-title {
+  font-size: 28px;
+  color: var(--text-color, #333);
 }
 
-.word-puzzle-final-score {
-  font-size: 1.8rem;
+.game-text {
+  font-size: 18px;
+  color: var(--text-color, #333);
+  margin: 10px 0;
+}
+
+.emotion-text {
   font-weight: bold;
-  color: #2196f3;
-  margin-bottom: 10px;
 }
 
-.word-puzzle-final-encouragement {
-  font-size: 1.5rem;
-  color: #4caf50;
+.game-button {
+  background: var(--button-bg, #007bff);
+  color: var(--button-text, #fff);
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  font-size: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.game-button:hover {
+  background: var(--button-hover-bg, #0056b3);
+}
+
+.quiz-option-image {
+  width: 400px;
+  height: auto;
+  margin: 20px 0;
+  border-radius: 12px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.word-slot-container {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px 0;
+}
+
+.word-slot {
+  width: 40px;
+  height: 40px;
+  border: 2px solid #ccc;
+  border-radius: 6px;
+  font-size: 24px;
+  line-height: 40px;
+  text-align: center;
+  background: var(--card-color, #fff);
+  cursor: pointer;
+}
+
+.word-slot.filled {
+  font-weight: bold;
+}
+
+.word-letters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin: 15px 0;
+}
+
+.quiz-option-btn {
+  font-size: 18px;
+  padding: 10px 15px;
+  background: var(--card-color, #fff);
+  border: 2px solid #ccc;
+  border-radius: 8px;
+  cursor: pointer;
+  color: var(--text-color, #333);
+}
+
+.quiz-option-btn:hover {
+  background: #f2f2f2;
+}
+
+.difficulty-selector {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
   margin-bottom: 20px;
 }
 
-/* Fade In */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(20px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Pop animation */
-@keyframes pop {
-  0% { transform: scale(0.7); opacity: 0; }
-  100% { transform: scale(1); opacity: 1; }
-}
-/* .word-puzzle-letter-button:disabled {
-  cursor: default;
-  opacity: 0.5;
-} */
-
-.word-puzzle-feedback {
-  font-size: 1.5rem;
+.game-score {
+  font-size: 20px;
   font-weight: bold;
-  text-align: center;
-  margin-top: 15px;
-  padding: 10px 20px;
-  border-radius: 12px;
-  animation: popIn 0.4s ease-in-out;
-  transition: background-color 0.3s ease, color 0.3s ease;
-}
-
-/* Optional: Color classes you can toggle in React dynamically */
-.word-puzzle-feedback.correct {
-  background-color: #d4edda;
-  color: #155724;
-  border: 2px solid #c3e6cb;
-}
-
-.word-puzzle-feedback.incorrect {
-  background-color: #f8d7da;
-  color: #721c24;
-  border: 2px solid #f5c6cb;
-}
-
-/* Animation */
-@keyframes popIn {
-  0% {
-    transform: scale(0.8);
-    opacity: 0;
-  }
-  100% {
-    transform: scale(1);
-    opacity: 1;
-  }
+  color: var(--score-color, #28a745);
 }

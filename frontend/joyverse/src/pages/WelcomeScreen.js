@@ -14,13 +14,14 @@ const WelcomeScreen = () => {
 
   const showMessage = (mood) => {
     const messages = {
-      happy: "Yay! You're feeling great! Keep smiling! 🌟",
-      smile: "Nice! A smile makes everything better 😊",
-      neutral: "That's okay! Let’s make your day better 🌈",
-      sad: "Oh no! Big hugs coming your way 🤗",
-      angry: "It's okay to feel angry. Take deep breaths 🌬",
+      happy: "Yay! You're feeling great! Keep smiling! ",
+      smile: "Nice! A smile makes everything better ",
+      neutral: "That's okay! Let’s make your day better ",
+      sad: "Oh no! Big hugs coming your way ",
+      angry: "It's okay to feel angry. Take deep breaths ",
     };
     setMessage(messages[mood]);
+    localStorage.setItem("selectedEmotion", mood);
   };
 
   const handleStartPlaying = () => {
@@ -43,19 +44,19 @@ const WelcomeScreen = () => {
           <h2 className="how-are-you">How are you feeling today?</h2>
           <div className="emojibuttons">
             <div className="happybutton" onClick={() => showMessage("happy")}>
-              <img className="happyicon" alt="Happy" src="/happyicon@2x.png" />
+              <img className="happyicon" alt="happy"src="/images/happy.png" />
             </div>
             <div className="smilebutton" onClick={() => showMessage("smile")}>
-              <img className="happyicon" alt="Smile" src="/smileicon@2x.png" />
+              <img className="happyicon" alt="Smile" src="/images/smile.png" />
             </div>
             <div className="neutralbutton" onClick={() => showMessage("neutral")}>
-              <img className="happyicon" alt="Neutral" src="/neutralicon@2x.png" />
+              <img className="happyicon" alt="Neutral" src="/images/neutral.png" />
             </div>
             <div className="sadbutton" onClick={() => showMessage("sad")}>
-              <img className="happyicon" alt="Sad" src="/sadicon@2x.png" />
+              <img className="happyicon" alt="Sad" src="/images/sad.png" />
             </div>
             <div className="angrybutton" onClick={() => showMessage("angry")}>
-              <img className="happyicon" alt="Angry" src="/angryicon@2x.png" />
+              <img className="happyicon" alt="Angry" src="/images/angry.png" />
             </div>
           </div>
         </div>

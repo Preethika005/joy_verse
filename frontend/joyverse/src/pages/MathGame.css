@@ -4,8 +4,13 @@
   font-family: 'Comic Sans MS', cursive, sans-serif;
   min-height: 100vh;
   color: #333;
-  /* background: url("C:\Users\preet\OneDrive\Documents\Project\JOYVERSE\frontend\joyverse\public\images\maths.jpg") no-repeat center center; */
-  background-size: cover;
+  background: rgba(255, 255, 255, 0.8);
+  padding: 40px;
+  border-radius: 10px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  max-width: 650px;
+  margin: 0 auto;
+ 
 }
 
 .math-game-title {

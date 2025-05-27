@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './SyllableTapGame.css';
+import useEmotionDetection from "../hooks/useEmotionDetection";
 
 // const hardcodedWords = {
 //   easy: [
@@ -27,6 +28,7 @@ import './SyllableTapGame.css';
 // };
 
 export default function SyllableTapGame() {
+  const { emotion, videoRef, canvasRef } = useEmotionDetection();
   const [difficulty, setDifficulty] = useState('easy');
   const [wordPool, setWordPool] = useState([]);
   const [usedWords, setUsedWords] = useState([]);
@@ -43,7 +45,7 @@ useEffect(() => {
 
   const fetchWords = async (level) => {
     try {
-      const res = await axios.get(`http://localhost:5000/api/syllable-game/${level}`);
+      const res = await axios.get(`http://localhost:4000/api/syllable-game/${level}`);
       const words = res.data;
       setDifficulty(level);
       setUsedWords([]);
@@ -122,53 +124,65 @@ const handleDifficultyChange = (e) => {
 
 
   return (
-    <div className="syllable-tap-game">
-      <h2 className="game-title"> Syllable Tap Game</h2>
+  <div classname="game-container">
+  <div className="game-card">
+    <h2 className="game-title">Syllable Tap Game</h2>
 
-      <div className="difficulty-select">
-        <label>Difficulty: </label>
-        <select value={difficulty} onChange={handleDifficultyChange}>
-          <option value="easy">🟢Easy </option>
-          <option value="medium">🟡Medium </option>
-          <option value="hard">🔴Hard </option>
-        </select>
-      </div>
+    <div className="difficulty-select">
+      <label htmlFor="difficulty">Difficulty: </label>
+      <select id="difficulty" value={difficulty} onChange={handleDifficultyChange}>
+        <option value="easy">🟢 Easy</option>
+        <option value="medium">🟡 Medium</option>
+        <option value="hard">🔴 Hard</option>
+      </select>
+    </div>
 
+    <div className="game-content">
       {currentWord ? (
         <>
-          <p className="current-word-display">{currentWord.word}</p>
+          <p className="current-word">{currentWord.word}</p>
+
           {isFirstWord && (
-  <p className="syllable-split-display">
-    {currentWord.split.map((syllable, idx) => (
-      <span key={idx} className="syllable">{syllable}</span>
-    ))}
-  </p>
-)}
-
-          <button onClick={handleTap} className="tap-button">Tap</button>
-          <p className="tap-count">Taps: {taps}</p>
-
-          {!feedback && taps > 0 && (
-            <button onClick={handleSubmit} className="submit-button">Submit</button>
+            <div className="syllable-split">
+              {currentWord.split.map((syllable, idx) => (
+                <span key={idx} className="syllable">{syllable}</span>
+              ))}
+            </div>
           )}
+
+          <p className="tap-count">Taps: {taps}</p>
+          <div>
+             <button onClick={handleTap} className="game-button">Tap</button>
+          </div>
+          <div className="button-group">
+            {!feedback && taps > 0 && (
+              <button onClick={handleSubmit} className="game-button secondary">Submit</button>
+            )}
+            {feedback && (
+              <button onClick={nextWord} className="game-button">Next Word</button>
+            )}
+          </div>
 
           <p className={`feedback-message ${feedback.startsWith('✅') ? 'correct' : feedback.startsWith('❌') ? 'wrong' : ''}`}>
             {feedback}
           </p>
-
-          {feedback && (
-            <button onClick={nextWord} className="next-button">Next Word</button>
-          )}
         </>
       ) : gameComplete ? (
-        <div className="game-over-message">
-          <p> You completed all words in <strong>{difficulty}</strong> mode!</p>
-          <p> Your score: {score}/{wordPool.length*20}</p>
-          <button onClick={repeatGame} className="repeat-game-button">🔁 Repeat All Words</button>
+        <div className="game-complete">
+          <p>You completed all words in <strong>{difficulty}</strong> mode!</p>
+          <p>Your score: {score}/{wordPool.length * 20}</p>
+          <div className="button-group">
+            <button onClick={repeatGame} className="game-button">🔁 Repeat All Words</button>
+          </div>
         </div>
       ) : (
         <p className="loading-message">Loading...</p>
       )}
     </div>
-  );
+
+    <video ref={videoRef} autoPlay style={{ display: "none" }} />
+    <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }} />
+  </div>
+  </div>
+);
 }

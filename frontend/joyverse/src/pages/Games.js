@@ -1,4 +1,4 @@
-import React,{useEffect} from "react";
+import React,{useEffect,useState} from "react";
 import { useNavigate } from "react-router-dom";
 import "./Games.css";
 import shapememoryimg from '../assets/shapememorygame.png';
@@ -17,12 +17,28 @@ function Games() {
       };
     }, []);
   const navigate = useNavigate();
+  const [emotion, setEmotion] = useState("neutral");
+  useEffect(() => {
+    const selected = localStorage.getItem("selectedEmotion") || "neutral";
+    setEmotion(selected);
+  }, []);
+  const backgroundMap = {
+    happy: "url('https://i.pinimg.com/736x/21/01/cc/2101cc1cb0e93c8d9f04145946118c7f.jpg')",
+    smile: "url('https://i.pinimg.com/736x/8d/40/84/8d4084f141bce06f25e99b44956790d3.jpg')",
+    neutral: "url('https://i.pinimg.com/736x/65/6b/e4/656be4ba10df99f7849a609f4bac3f36.jpg')",
+    sad: "url('https://i.pinimg.com/736x/7a/7c/2a/7a7c2a56165f9015ad57e4cebb16c022.jpg')",
+    angry: "url('https://i.pinimg.com/736x/4b/06/6a/4b066a49cbe4ff6061c742fa23858687.jpg')",
+  };
+  const backgroundStyle = {
+    backgroundImage: backgroundMap[emotion],
+    backgroundSize: "cover",
+    backgroundPosition: "center",
+    minHeight: "100vh",
+    width: "100%",
+  };
   return (
     <div
-  style={{
-    background: `url(${gamesBackground}) no-repeat center center`,
-    backgroundSize: 'cover',
-  }}
+  style={backgroundStyle}
 >
     <div className="games-page-container">
      

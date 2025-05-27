@@ -1,42 +1,143 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import ReactApexChart from 'react-apexcharts';
-import './TherapistDashboard.css';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import ReactApexChart from "react-apexcharts";
+import "./TherapistDashboard.css";
 
-const EmotionTimelineChart = ({ expressions }) => {
-  const series = expressions.map((exp, idx) => ({
-    x: exp.expression,
-    y: [
-      new Date(exp.timestamp).getTime(),
-      new Date(exp.timestamp).getTime() + 1000 // 1 second duration
-    ]
-  }));
+const Search = ({ className = "", size = 48 }) => {
+  return (
+    <div className={`search ${className}`} data-size={size}>
+      <img className="icon" loading="lazy" alt="" src="/icon.svg" />
+    </div>
+  );
+};
 
-  const options = {
-    chart: {
-      type: 'rangeBar',
-      height: 150,
-      toolbar: { show: false }
-    },
-    plotOptions: {
-      bar: {
-        horizontal: true,
-        barHeight: '60%'
-      }
-    },
-    xaxis: {
-      type: 'datetime',
-      labels: { datetimeFormatter: { second: 'HH:mm:ss' } }
-    },
-    title: {
-      text: 'Emotion Timeline',
-      align: 'left',
-      style: { fontSize: '14px' }
+const AddChildArea = ({ onAddChild }) => {
+  const [child, setChild] = useState({ name: "", username: "", password: "" });
+  const [error, setError] = useState("");
+  const [success, setSuccess] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!child.name || !child.username || !child.password) {
+      setError("All fields are required.");
+      return;
+    }
+
+    setError("");
+    try {
+      await onAddChild(child);
+      setChild({ name: "", username: "", password: "" });
+      setSuccess("Child added successfully!");
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err) {
+      setError("Failed to add child.");
     }
   };
 
   return (
-    <div style={{ marginBottom: '20px' }}>
+    <section className="add-child-area">
+      <form className="add-child-button-area-parent" onSubmit={handleSubmit}>
+        <button type="submit" className="add-child-button-area">
+          <div className="addchildbutton">
+            <div className="addchildtext">
+              <div className="add-child">Add Child</div>
+            </div>
+          </div>
+        </button>
+        <div className="addchildform">
+          <div className="username">
+            <input
+              className="username1"
+              placeholder="Username"
+              type="text"
+              value={child.username}
+              onChange={(e) => setChild({ ...child, username: e.target.value })}
+            />
+          </div>
+          <div className="childname">
+            <input
+              className="childs-name"
+              placeholder="Child’s Name"
+              type="text"
+              value={child.name}
+              onChange={(e) => setChild({ ...child, name: e.target.value })}
+            />
+          </div>
+          <div className="username">
+            <input
+              className="password1"
+              placeholder="Password"
+              type="text"
+              value={child.password}
+              onChange={(e) => setChild({ ...child, password: e.target.value })}
+            />
+          </div>
+          <button type="submit" className="addchildbutton2">
+            <div className="add-child1">Add Child</div>
+          </button>
+          {error && <p className="error-msg">{error}</p>}
+          {success && <p className="success-msg">{success}</p>}
+        </div>
+      </form>
+    </section>
+  );
+};
+
+const ChildrenTableArea = ({ children, onViewDetails }) => {
+  return (
+    <section className="children-table-area">
+      <div className="childrentable">
+        <div className="tableheader">
+          <div className="sno">S.no</div>
+          <div className="name">Name</div>
+          <div className="name">Username</div>
+          <div className="name">Actions</div>
+        </div>
+        <div className="rowcontainer">
+          {children.length === 0 ? (
+            <div className="row">
+              <div className="name" style={{ gridColumn: "span 4", textAlign: "center" }}>
+                No children found.
+              </div>
+            </div>
+          ) : (
+            children.map((child, index) => (
+              <div className="row" key={child._id}>
+                <div className="sno">{index + 1}.</div>
+                <div className="name">{child.name}</div>
+                <div className="name">{child.username}</div>
+                <button className="viewdetailsbutton" onClick={() => onViewDetails(child.username)}>
+                  <div className="viewdetailstext">
+                    <div className="view-details">View Details</div>
+                  </div>
+                </button>
+              </div>
+            ))
+          )}
+        </div>
+      </div>
+    </section>
+  );
+};
+
+const EmotionTimelineChart = ({ expressions }) => {
+  const series = expressions.map((exp) => ({
+    x: exp.expression,
+    y: [new Date(exp.timestamp).getTime(), new Date(exp.timestamp).getTime() + 1000]
+  }));
+
+  const options = {
+    chart: { type: "rangeBar", height: 150, toolbar: { show: false } },
+    plotOptions: { bar: { horizontal: true, barHeight: "60%" } },
+    xaxis: {
+      type: "datetime",
+      labels: { datetimeFormatter: { second: "HH:mm:ss" } }
+    },
+    title: { text: "Emotion Timeline", align: "left", style: { fontSize: "14px" } }
+  };
+
+  return (
+    <div style={{ marginBottom: "20px" }}>
       <ReactApexChart options={options} series={[{ data: series }]} type="rangeBar" height={150} />
     </div>
   );
@@ -45,185 +146,115 @@ const EmotionTimelineChart = ({ expressions }) => {
 const TherapistDashboard = () => {
   const [children, setChildren] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [showAddChildForm, setShowAddChildForm] = useState(false);
-  const [child, setChild] = useState({ name: '', username: '', password: '' });
-  const [error, setError] = useState('');
-  const [successMessage, setSuccessMessage] = useState('');
-  const [selectedChildSessions, setSelectedChildSessions] = useState([]);
-  const [showSessionDetails, setShowSessionDetails] = useState(false);
-  const [sessionError, setSessionError] = useState('');
-
+  const [selectedSessions, setSelectedSessions] = useState([]);
+  const [selectedChild, setSelectedChild] = useState(null);
   const therapistId = localStorage.getItem("therapistId");
- useEffect(() => {
-    // Enable scrolling when this page is open
+
+  useEffect(() => {
     document.body.style.overflow = "auto";
-  
-    // When leaving this page, disable scrolling again
     return () => {
       document.body.style.overflow = "hidden";
     };
   }, []);
+
   useEffect(() => {
     const fetchChildren = async () => {
-      if (!therapistId) {
-        setError('Therapist ID is missing');
-        return;
-      }
       try {
-        const response = await axios.get("http://localhost:5000/api/children", {
-          headers: { 'therapist-id': therapistId }
+        const res = await axios.get("http://localhost:4000/api/children", {
+          headers: { "therapist-id": therapistId }
         });
-        setChildren(response.data);
+        setChildren(res.data);
       } catch (err) {
-        setError('Failed to fetch children');
+        console.error("Error fetching children", err);
       }
     };
 
-    fetchChildren();
+    if (therapistId) fetchChildren();
   }, [therapistId]);
+
+  const handleAddChild = async (childData) => {
+    const res = await axios.post("http://localhost:4000/api/children", {
+      ...childData,
+      therapistId
+    });
+    setChildren((prev) => [...prev, res.data]);
+  };
 
   const handleViewDetails = async (username) => {
     try {
-      const response = await axios.get(`http://localhost:5000/api/sessions?username=${username}`);
-      setSelectedChildSessions(response.data);
-      setShowSessionDetails(true);
+      const res = await axios.get(`http://localhost:4000/api/sessions?username=${username}`);
+      setSelectedSessions(res.data);
+      const child = children.find((c) => c.username === username);
+      setSelectedChild(child);
     } catch (err) {
-      setSessionError('Failed to fetch game sessions');
+      console.error("Error fetching sessions", err);
     }
   };
 
-  const handleAddChild = async (e) => {
-    e.preventDefault();
-    setError("");
-    setSuccessMessage(""); // Reset success message
-
-    if (!child.name || !child.username || !child.password) {
-      setError("All fields are required.");
-      return;
-    }
-
-    try {
-      const response = await axios.post("http://localhost:5000/api/children", {
-        ...child,
-        therapistId,
-      });
-
-      setChildren(prev => [...prev, response.data]);
-
-      setChild({ name: "", username: "", password: "" });
-      setShowAddChildForm(false);
-      setSuccessMessage("Child added successfully!"); // Show success message
-
-      // Hide success message after 3 seconds
-      setTimeout(() => {
-      setSuccessMessage('');
-    }, 3000);
-  } catch (err) {
-    setError(err.response?.data?.message || "Failed to add child.");
-  }
-  };
-
-  const filteredChildren = children.filter(child =>
-    (child.username && child.username.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (child.name && child.name.toLowerCase().includes(searchTerm.toLowerCase()))
+  const filteredChildren = children.filter(
+    (child) =>
+      child.username.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      child.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
+
   return (
-    <div className="dashboard-container">
-      <h2 className="welcome-therapist">Welcome back, Therapist!</h2>
-      <h2 className="dashboard-title">Logged-in Children</h2>
-
-      <input
-        type="text"
-        placeholder="Search by Name or Username..."
-        className="search-bar"
-        onChange={(e) => setSearchTerm(e.target.value)}
-      />
-
-      <button
-        onClick={() => setShowAddChildForm(!showAddChildForm)}
-        className="add-child-btn"
-      >
-        {showAddChildForm ? 'Cancel' : 'Add Child'}
-      </button>
-
-      {showAddChildForm && (
-        <div className="add-child-form-container">
-          <h3>Add Child</h3>
-          <form className="add-child-form" onSubmit={handleAddChild}>
-            <input
-              type="text"
-              name="name"
-              placeholder="Child's Name"
-              className="form-input"
-              value={child.name}
-              onChange={(e) => setChild({ ...child, name: e.target.value })}
-            />
-            <input
-              type="text"
-              name="username"
-              placeholder="Username"
-              className="form-input"
-              value={child.username}
-              onChange={(e) => setChild({ ...child, username: e.target.value })}
-            />
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className="form-input"
-              value={child.password}
-              onChange={(e) => setChild({ ...child, password: e.target.value })}
-            />
-            <button type="submit" className="submit-btn">Add Child</button>
-          </form>
-          {error && <p className="error-msg">{error}</p>}
-          {successMessage && <p className="success-msg">{successMessage}</p>}
+    <div className="therapistdashboard">
+      <header className="header">
+        <div className="welcometext">
+          <h3 className="welcome-back-therapist">Welcome Back, Therapist!</h3>
+          <div className="logged-in-children">Logged-in Children</div>
         </div>
-      )}
-
-      <table className="custom-table">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Username</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredChildren.map((child, index) => (
-            <tr key={child._id}>
-              <td>{index + 1}</td>
-              <td>{child.name}</td>
-              <td>{child.username}</td>
-              <td>
-                <button
-                  className="action-btn"
-                  onClick={() => handleViewDetails(child.username)}
-                >
-                  View Details
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-
-      {showSessionDetails && (
-        <div className="session-details">
-          <h3>Game Sessions for {filteredChildren.find(c => c.username === selectedChildSessions[0]?.username)?.name}</h3>
-          {sessionError && <p className="error-msg">{sessionError}</p>}
-
-          {selectedChildSessions.map((session, index) => (
-            <div key={session._id} className="session-block">
-              <h4>Session {index + 1}: {session.gameName} ({session.difficulty})</h4>
-              <p><strong>Start:</strong> {new Date(session.startTime).toLocaleString()}</p>
-              <p><strong>End:</strong> {new Date(session.endTime).toLocaleString()}</p>
-              <EmotionTimelineChart expressions={session.expressions} />
+      </header>
+      <main className="main-content">
+        <section className="search-area">
+          <div className="searchbarcontainer-wrapper">
+            <div className="searchbarcontainer">
+              <div className="searchbar">
+                <input
+                  type="text"
+                  placeholder="Search By Name or Username"
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                />
+              </div>
+              <div className="searchbutton">
+                <Search size={48} />
+              </div>
             </div>
-          ))}
-        </div>
-      )}
+          </div>
+          <AddChildArea onAddChild={handleAddChild} />
+          <ChildrenTableArea children={filteredChildren} onViewDetails={handleViewDetails} />
+
+          {selectedChild && (
+            <div className="game-session-area">
+              <b className="game-sessions-for">
+                Game Sessions for {selectedChild.name}:
+              </b>
+              {selectedSessions.map((session, index) => (
+                <div key={session._id} className="gamesessioncard">
+                  <div className="gamesessiondata">
+                    <div className="session-num-game-difficul-container">
+                      <p className="session-num-game-difficul">
+                        Session {index + 1}: {session.gameName} — Difficulty: {session.difficulty}
+                      </p>
+                      <p className="session-num-game-difficul">
+                        Start: {new Date(session.startTime).toLocaleString()}
+                      </p>
+                      <p className="session-num-game-difficul">
+                        End: {new Date(session.endTime).toLocaleString()}
+                      </p>
+                    </div>
+                    <div className="emotion-timeline">Emotion Timeline:</div>
+                    <EmotionTimelineChart expressions={session.expressions} />
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
+      </main>
+      <footer className="footer">
+        <h2 className="joyverse">JoyVerse</h2>
+      </footer>
     </div>
   );
 };
