@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./WordPuzzleAdventure.css";
 import useEmotionDetection from "../hooks/useEmotionDetection";
-
+import useGameSessionLogger from "../hooks/useGameSessionLogger";
 const WordPuzzleAdventure = () => {
   const { emotion, videoRef, canvasRef } = useEmotionDetection();
   const [difficulty, setDifficulty] = useState("easy");
@@ -15,16 +15,25 @@ const WordPuzzleAdventure = () => {
   const [score, setScore] = useState(0);
   const [gameCompleted, setGameCompleted] = useState(false);
   const [feedback, setFeedback] = useState("");
-
+  const username = localStorage.getItem("username");
+  const { endSession } = useGameSessionLogger({
+  username,
+  difficulty,
+  expression: emotion,
+});
   useEffect(() => {
     fetchQuestions(difficulty);
   }, [difficulty]);
 
   useEffect(() => {
     if (gameCompleted) {
-      confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
-    }
-  }, [gameCompleted]);
+    confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
+
+    (async () => {
+      await endSession(); 
+    })();
+  }
+}, [gameCompleted]);
 
   useEffect(() => {
     document.body.style.overflow = "auto";
