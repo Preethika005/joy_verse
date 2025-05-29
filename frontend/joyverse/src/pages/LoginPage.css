@@ -6,7 +6,7 @@
   min-height: 100vh;
   width: 100%;
   padding: 2rem;
-  background-image: url("C:\Users\user\OneDrive\Desktop\ps 2-2\joy_verse\frontend\joyverse\public\images\loginPageBg.png");
+  background-image: url("/public/images/loginPageBg.png");
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;

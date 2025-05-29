@@ -3,7 +3,7 @@ import axios from "axios";
 import "./LoginPage.css";
 import { useNavigate } from "react-router-dom";
 
-const LoginPage = () => {
+function LoginPage() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -18,17 +18,14 @@ const LoginPage = () => {
       });
 
       localStorage.setItem("username", username);
-
       const { role, therapistId } = response.data;
 
       if (role === "therapist") {
         localStorage.setItem("therapistId", therapistId);
         navigate("/therapistdashboard");
-      } 
-      else if (role === "superadmin") {
+      } else if (role === "superadmin") {
         navigate("/superadmin");
-      }
-      else if (role === "child") {
+      } else if (role === "child") {
         navigate("/welcomepage");
       } else {
         setError("Unknown user role");
@@ -38,35 +35,41 @@ const LoginPage = () => {
     }
   };
 
-  return (
-    <div className="loginscreen">
-      <section className="joyverse-wrapper">
-        <h1 className="joyverse">JoyVerse</h1>
-      </section>
-      <form className="usernamecontainer-parent" onSubmit={handleLogin}>
-        <input
-          className="usernamecontainer"
-          placeholder="username"
-          type="text"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          required
-        />
-        <input
-          className="passwordcontainer"
-          placeholder="password"
-          type="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          required
-        />
-        <button className="login-button" type="submit">
-          <div className="login">login</div>
-        </button>
-      </form>
-      {error && <p className="error">{error}</p>}
-    </div>
+  return React.createElement(
+    "div",
+    { className: "loginscreen" },
+    React.createElement(
+      "section",
+      { className: "joyverse-wrapper" },
+      React.createElement("h1", { className: "joyverse" }, "JoyVerse")
+    ),
+    React.createElement(
+      "form",
+      { className: "usernamecontainer-parent", onSubmit: handleLogin },
+      React.createElement("input", {
+        className: "usernamecontainer",
+        placeholder: "username",
+        type: "text",
+        value: username,
+        onChange: (e) => setUsername(e.target.value),
+        required: true,
+      }),
+      React.createElement("input", {
+        className: "passwordcontainer",
+        placeholder: "password",
+        type: "password",
+        value: password,
+        onChange: (e) => setPassword(e.target.value),
+        required: true,
+      }),
+      React.createElement(
+        "button",
+        { className: "login-button", type: "submit" },
+        React.createElement("div", { className: "login" }, "login")
+      )
+    ),
+    error && React.createElement("p", { className: "error" }, error)
   );
-};
+}
 
 export default LoginPage;

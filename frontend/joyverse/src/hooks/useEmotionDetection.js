@@ -20,7 +20,7 @@ const useEmotionDetection = ({ intervalTime = 5000, apiUrl = "http://localhost:5
     const video = videoRef.current;
     const canvas = canvasRef.current;
     const ctx = canvas?.getContext("2d");
-
+    
     if (!video || !canvas || !ctx) return;
 
     const faceMesh = new FaceMesh({
