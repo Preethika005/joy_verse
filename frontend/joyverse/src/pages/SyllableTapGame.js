@@ -124,7 +124,7 @@ const handleDifficultyChange = (e) => {
 
 
   return (
-  <div classname="game-container">
+  <div className="game-container">
   <div className="game-card">
     <h2 className="game-title">Syllable Tap Game</h2>
 

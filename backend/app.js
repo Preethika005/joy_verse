@@ -11,6 +11,7 @@ import wordQuestionsRoutes from './Routes/wordQuestions.js';
 import syllableRoutes from './Routes/syllableGame.js';
 import mirrorQuestionRoutes from './Routes/mirrorQuestion.js';
 import superadminRoutes from './Routes/superadmin.js';
+import emotionRoutes from './Routes/emotion.js';
 dotenv.config();
 
 const app = express();
@@ -28,6 +29,7 @@ app.use(cors());
 app.use(express.json());
 
 // Routes
+app.use('/api/emotion', emotionRoutes);
 app.use('/api/superadmin', superadminRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/children', childRoutes);
