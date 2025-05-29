@@ -2,6 +2,9 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
 import './TherapistDashboard.css';
+import EmotionBarChart from '../components/EmotionBarChart';
+import EmotionPercentageList from '../components/EmotionPercentageList';
+
 
 const EmotionTimelineChart = ({ expressions }) => {
   const series = expressions.map((exp, idx) => ({
@@ -43,7 +46,7 @@ const EmotionTimelineChart = ({ expressions }) => {
 };
 
 const TherapistDashboard = () => {
-  const [children, setChildren] = useState([]);
+  const [children, setChildren] = useState([]); 
   const [searchTerm, setSearchTerm] = useState("");
   const [showAddChildForm, setShowAddChildForm] = useState(false);
   const [child, setChild] = useState({ name: '', username: '', password: '' });
@@ -215,16 +218,24 @@ const TherapistDashboard = () => {
           {sessionError && <p className="error-msg">{sessionError}</p>}
 
           {selectedChildSessions.map((session, index) => (
-            <div key={session._id} className="session-block">
-              <h4>Session {index + 1}: {session.gameName} ({session.difficulty})</h4>
-              <p><strong>Start:</strong> {new Date(session.startTime).toLocaleString()}</p>
-              <p><strong>End:</strong> {new Date(session.endTime).toLocaleString()}</p>
-              <EmotionTimelineChart expressions={session.expressions} />
-            </div>
-          ))}
+  <div key={session._id} className="session-block">
+    <h3>Session {index + 1}: {session.gameName} ({session.difficulty})</h3>
+    <p><strong>Start:</strong> {new Date(session.startTime).toLocaleString()}</p>
+    <p><strong>End:</strong> {new Date(session.endTime).toLocaleString()}</p>
+
+    {/* Timeline chart */}
+    <EmotionTimelineChart expressions={session.expressions} />
+
+    {/* Bar chart summarizing emotions */}
+    <EmotionBarChart expressions={session.expressions} />
+    <EmotionPercentageList expressions={session.expressions} />
+  </div>
+))}
+
         </div>
       )}
     </div>
+    
   );
 };
 

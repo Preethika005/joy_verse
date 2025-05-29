@@ -1,11 +1,11 @@
 @font-face {
   font-family: "OpenDyslexic";
-  src: url("C:\\Users\\user\\OneDrive\\Desktop\\ps 2-2\\joy_verse\\frontend\\joyverse\\public\\OpenDyslexic-Regular.otf");
+  src: url("/public/OpenDyslexic-Regular.otf");
   font-weight: 400;
 }
 @font-face {
   font-family: "OpenDyslexic";
-  src: url("C:\\Users\\user\\OneDrive\\Desktop\\ps 2-2\\joy_verse\\frontend\\joyverse\\public\\OpenDyslexic-Bold.otf");
+  src: url("/public/OpenDyslexic-Bold.otf");
   font-weight: 700;
 }
 

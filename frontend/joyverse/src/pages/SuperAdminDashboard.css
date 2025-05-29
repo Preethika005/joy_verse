@@ -1,100 +1,98 @@
+/* SuperAdminDashboard.css */
+
 .superadmin-dashboard-container {
-  padding: 30px;
-  max-width: 1000px;
-  margin: 0 auto;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  max-width: 1200px;
+  margin: auto;
+  padding: 40px 20px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f9f9f9;
 }
 
 .superadmin-dashboard-title {
   font-size: 2rem;
-  margin-bottom: 20px;
-  color: #2c3e50;
   text-align: center;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.superadmin-form-button {
+  background-color: beige;
+  color: black;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: 0.3s ease;
+  margin-bottom: 20px;
+}
+
+.superadmin-form-button:hover {
+  background-color: #e3e4d9;
+}
+
+.superadmin-form-button.cancel {
+  background-color: #f44336;
+  margin-left: 10px;
+}
+
+.superadmin-form-button.cancel:hover {
+  background-color: #d32f2f;
 }
 
 .superadmin-form-container {
   display: flex;
-  flex-wrap: wrap;
   flex-direction: column;
-  align-items: center;
-  gap: 10px;
-  margin-bottom: 30px;
-  justify-content: center;
-}
-.superadmin-form-button-group {
-  display: flex;
-  gap: 10px;
-  margin-top: 10px;
+  gap: 12px;
+  max-width: 500px;
+  margin: 0 auto 30px auto;
+  background-color: white;
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .superadmin-form-input {
-  width: 400px;
-  padding: 10px;
-  margin: 5px 0;
-  border-radius: 6px;
+  padding: 10px 14px;
+  font-size: 16px;
   border: 1px solid #ccc;
-  font-size: 16px;
-}
-
-.superadmin-form-button {
-  background-color: #2196f3;
-  color: white;
-  padding: 10px 20px;
-  font-size: 16px;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  gap: 5px;
-}
-
-.superadmin-form-button:hover {
-  background-color: #2271b3;
+  border-radius: 6px;
 }
 
 .superadmin-section-title {
   font-size: 1.5rem;
-  color: #34495e;
-  margin-bottom: 15px;
-  text-align: center;
-}
-
-.superadmin-therapist-card {
-  background-color: #f9f9f9;
-  border: 1px solid #dcdde1;
-  border-radius: 10px;
-  padding: 20px;
   margin-bottom: 20px;
-  transition: box-shadow 0.3s ease;
+  color: #444;
 }
 
-.superadmin-therapist-card:hover {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+.superadmin-table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: white;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
 }
 
-.superadmin-therapist-name {
-  font-size: 1.2rem;
-  color: #2e86de;
+.superadmin-table th,
+.superadmin-table td {
+  padding: 14px 20px;
+  text-align: left;
+  border-bottom: 1px solid #eee;
 }
 
-.superadmin-therapist-id {
-  font-size: 0.95rem;
-  color: #7f8c8d;
+.superadmin-table th {
+  background-color: beige;
+  color: black;
+  font-weight: 600;
 }
 
 .superadmin-child-list {
-  list-style: none;
+  list-style-type: disc;
   padding-left: 20px;
-  margin-top: 10px;
+  margin: 0;
 }
 
-.superadmin-child-item {
-  font-size: 1rem;
-  padding: 3px 0;
-  color: #34495e;
-}
-.superadmin-child-list {
-  list-style-type: decimal;
-  padding-left: 20px;
+.superadmin-child-list li {
+  margin: 4px 0;
 }

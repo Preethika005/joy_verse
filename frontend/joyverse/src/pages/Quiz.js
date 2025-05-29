@@ -122,6 +122,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import confetti from "canvas-confetti";
 import useEmotionDetection from "../hooks/useEmotionDetection";
+import useGameSessionLogger from "../hooks/useGameSessionLogger";
 import "./Quiz.css";
 
 const emotionToDifficulty = {
@@ -140,7 +141,9 @@ const Quiz = () => {
   const [score, setScore] = useState(0);
   const [showScore, setShowScore] = useState(false);
   const [difficulty, setDifficulty] = useState("Easy");
-
+  
+  const username = localStorage.getItem("username");
+  const { endSession } = useGameSessionLogger({ username, difficulty, expression: emotion });
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -160,7 +163,12 @@ const Quiz = () => {
       document.body.style.overflow = "hidden";
     };
   }, [difficulty]);
-
+  useEffect(() => {
+    // When quiz ends (showScore becomes true), call endSession
+    if (showScore) {
+      endSession();
+    }
+  }, [showScore, endSession]);
   const handleAnswerClick = (selected) => {
     if (selected === questions[currentQuestion].answer) {
       setScore(score + 1);
