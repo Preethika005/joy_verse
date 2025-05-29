@@ -178,11 +178,11 @@ import { FaceMesh } from "@mediapipe/face_mesh";
 import { Camera } from "@mediapipe/camera_utils";
 
 const emotionThemes = {
-  Happy: { backgroundImage: "url('https://img.freepik.com/free-photo/beautiful-natural-landscape_23-2151839255.jpg')", "--card-color": "#F8FD89", "--button-bg": "#EDD1B0", "--button-hover-bg": "#e2c0a0", "--button-text": "#333333", "--text-color": "#333333", "--score-color": "#EDD1B0" },
-  Sad: { backgroundImage: "url('https://img.freepik.com/free-photo/pathway-middle-green-leafed-trees-with-sun-shining-through-branches_181624-4539.jpg')", "--card-color": "#D8FAD2", "--button-bg": "#CDE8B0", "--button-hover-bg": "#b9d9a2", "--button-text": "#3B2F2F", "--text-color": "#3B2F2F", "--score-color": "#CDE8B0" },
-  Angry: { backgroundImage: "url('https://img.freepik.com/free-photo/beautiful-landscape-view-ocean_23-2149119440.jpg')", "--card-color": "#A5F7E1", "--button-bg": "#96ADFC", "--button-hover-bg": "#8198f0", "--button-text": "#223344", "--text-color": "#223344", "--score-color": "#96ADFC" },
-  Neutral: { backgroundImage: "url('https://img.freepik.com/premium-photo/man-fishing-boat-near-tree-blue-water-lake-is-very-smooth_42764-132.jpg')", "--card-color": "#F9F9F3", "--button-bg": "#E6E6FA", "--button-hover-bg": "#d8d8ef", "--button-text": "#2C2C2C", "--text-color": "#2C2C2C", "--score-color": "#E6E6FA" },
-  Surprise: { backgroundImage: "url('https://img.freepik.com/free-vector/aurora-realistic-night-background_1284-69939.jpg')", "--card-color": "#FFDAB9", "--button-bg": "#FFFACD", "--button-hover-bg": "#f2eebf", "--button-text": "#4B0082", "--text-color": "#4B0082", "--score-color": "#FFFACD" },
+  Happy: { backgroundImage: "url('/gameBackgrounds/happy.jpg')", "--card-color": "#F8FD89", "--button-bg": "#EDD1B0", "--button-hover-bg": "#e2c0a0", "--button-text": "#333333", "--text-color": "#333333", "--score-color": "#EDD1B0" },
+  Sad: { backgroundImage: "url('/gameBackgrounds/sad.jpg')", "--card-color": "#D8FAD2", "--button-bg": "#CDE8B0", "--button-hover-bg": "#b9d9a2", "--button-text": "#3B2F2F", "--text-color": "#3B2F2F", "--score-color": "#CDE8B0" },
+  Angry: { backgroundImage: "url('/gameBackgrounds/angry.jpg')", "--card-color": "#A5F7E1", "--button-bg": "#96ADFC", "--button-hover-bg": "#8198f0", "--button-text": "#223344", "--text-color": "#223344", "--score-color": "#96ADFC" },
+  Neutral: { backgroundImage: "url('/gameBackgrounds/neutral.jpg')", "--card-color": "#F9F9F3", "--button-bg": "#E6E6FA", "--button-hover-bg": "#d8d8ef", "--button-text": "#2C2C2C", "--text-color": "#2C2C2C", "--score-color": "#E6E6FA" },
+  Surprise: { backgroundImage: "url('/gameBackgrounds/surprise.jpg')", "--card-color": "#FFDAB9", "--button-bg": "#FFFACD", "--button-hover-bg": "#f2eebf", "--button-text": "#4B0082", "--text-color": "#4B0082", "--score-color": "#FFFACD" },
 };
 
 const useEmotionDetection = ({ intervalTime = 2000, apiUrl = "http://localhost:4000/api/emotion/predict" } = {}) => {

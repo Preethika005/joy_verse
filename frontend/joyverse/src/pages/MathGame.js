@@ -302,7 +302,21 @@ const MathGame = () => {
       }
     }, 1200);
   };
-
+  const getEmotionStyles = (emotion) => {
+  switch (emotion) {
+    case "Happy":
+      return { backgroundColor: "#F8FD89", color: "#333333" };
+    case "Sad":
+      return { backgroundColor: "#D8FAD2", color: "#3B2F2F" };
+    case "Angry":
+      return { backgroundColor: "#A5F7E1", color: "#223344" };
+    case "Surprise":
+      return { backgroundColor: "#FFDAB9", color: "#4B0082" };
+    case "Neutral":
+    default:
+      return { backgroundColor: "#F9F9F3", color: "#2C2C2C" };
+  }
+};
   const handleReplay = () => {
     const nextEmotion = sessionDominantEmotion || "Neutral";
     const nextDifficulty = emotionToDifficulty[nextEmotion] || "Medium";
