@@ -138,10 +138,28 @@ const WordPuzzleAdventure = () => {
   };
 
   const currentWordObj = shuffledWords[currentIndex] || {};
-
+  const getEmotionStyles = (emotion) => {
+  switch (emotion) {
+    case "Happy":
+      return { backgroundColor: "#F8FD89", color: "#333333" }; 
+    case "Sad":
+      return { backgroundColor: "#D8FAD2", color: "#3B2F2F" }; 
+    case "Angry":
+      return { backgroundColor: "#A5F7E1", color: "#223344" }; 
+    case "Surprise":
+      return { backgroundColor: "#FFDAB9", color: "#4B0082" }; 
+    case "Neutral":
+    default:
+      return { backgroundColor: "#F9F9F3", color: "#2C2C2C" }; 
+  }
+};
   return (
     <div className="quiz-container">
-      <div className="game-card">
+      <div className="game-card" style={{
+    backgroundColor: getEmotionStyles(emotion).backgroundColor,
+    color: getEmotionStyles(emotion).color,
+    '--text-color': getEmotionStyles(emotion).color,
+  }}>
         <h2 className="game-title">Word Puzzle Adventure</h2>
         <p className="game-text emotion-text">Detected Emotion: {emotion}</p>
 
