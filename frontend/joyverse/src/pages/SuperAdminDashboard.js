@@ -5,11 +5,15 @@ import "./SuperAdminDashboard.css";
 const SuperAdminDashboard = () => {
   const [therapists, setTherapists] = useState([]);
   const [form, setForm] = useState({ therapistId: '', name: '', username: '', password: '' });
-  const [showForm, setShowForm] = useState(false); // Toggle form visibility
+  const [showForm, setShowForm] = useState(false);
 
   const fetchTherapists = async () => {
-    const res = await axios.get("http://localhost:4000/api/superadmin/therapists-with-children");
-    setTherapists(res.data);
+    try {
+      const res = await axios.get("http://localhost:4000/api/superadmin/therapists-with-children");
+      setTherapists(res.data);
+    } catch (error) {
+      console.error("Error fetching therapists:", error);
+    }
   };
 
   useEffect(() => {
@@ -17,10 +21,14 @@ const SuperAdminDashboard = () => {
   }, []);
 
   const handleAddTherapist = async () => {
-    await axios.post("http://localhost:4000/api/superadmin/therapists", form);
-    setForm({ therapistId: '', name: '', username: '', password: '' });
-    setShowForm(false); // Hide form after adding
-    fetchTherapists();
+    try {
+      await axios.post("http://localhost:4000/api/superadmin/therapists", form);
+      setForm({ therapistId: '', name: '', username: '', password: '' });
+      setShowForm(false);
+      fetchTherapists();
+    } catch (error) {
+      console.error("Error adding therapist:", error);
+    }
   };
 
   return (
@@ -62,37 +70,57 @@ const SuperAdminDashboard = () => {
           />
           <div className="superadmin-form-button-group">
             <button className="superadmin-form-button" onClick={handleAddTherapist}>
-               Submit
+              Submit
             </button>
             <button className="superadmin-form-button cancel" onClick={() => setShowForm(false)}>
-               Cancel
+              Cancel
             </button>
           </div>
         </div>
       )}
 
       <h3 className="superadmin-section-title">All Therapists and Their Children</h3>
-      {therapists.map((entry, index) => (
-        <div key={index} className="superadmin-therapist-card">
-          <h4 className="superadmin-therapist-name">
-             {entry.therapist.name} ({entry.therapist.username})
-          </h4>
-          <p className="superadmin-therapist-id">
-            Therapist ID: {entry.therapist.therapistId}
-          </p>
-          {entry.children.length > 0 ? (
-  <ol className="superadmin-child-list">
-    {entry.children.map((child, idx) => (
-      <li key={child._id} className="superadmin-child-item">
-        {child.name} ({child.username})
-      </li>
-    ))}
-  </ol>
-) : (
-  <p className="superadmin-child-item">No children registered</p>
-)}
-        </div>
-      ))}
+
+      <table className="superadmin-table">
+        <thead>
+          <tr>
+            <th>Therapist ID</th>
+            <th>Name</th>
+            <th>Username</th>
+            <th>Children</th>
+          </tr>
+        </thead>
+        <tbody>
+          {therapists.length > 0 ? (
+            therapists.map((entry) => (
+              <tr key={entry.therapist.therapistId}>
+                <td>{entry.therapist.therapistId}</td>
+                <td>{entry.therapist.name}</td>
+                <td>{entry.therapist.username}</td>
+                <td>
+                  {entry.children.length > 0 ? (
+                    <ul className="superadmin-child-list">
+                      {entry.children.map((child) => (
+                        <li key={child._id}>
+                          {child.name} ({child.username})
+                        </li>
+                      ))}
+                    </ul>
+                  ) : (
+                    <em>No child registered</em>
+                  )}
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="4" style={{ textAlign: "center" }}>
+                No therapists found.
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </table>
     </div>
   );
 };

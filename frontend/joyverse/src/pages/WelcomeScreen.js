@@ -5,11 +5,15 @@ import "./WelcomeScreen.css";
 const WelcomeScreen = () => {
   const [username, setUsername] = useState("");
   const [message, setMessage] = useState("");
+  const [emotion, setEmotion] = useState("neutral");
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
     setUsername(storedUsername || "Guest");
+
+    const selectedEmotion = localStorage.getItem("selectedEmotion") || "neutral";
+    setEmotion(selectedEmotion);
   }, []);
 
   const showMessage = (mood) => {
@@ -22,7 +26,24 @@ const WelcomeScreen = () => {
     };
     setMessage(messages[mood]);
     localStorage.setItem("selectedEmotion", mood);
+    setEmotion(mood);
   };
+
+//  const backgroundMap = {
+//     happy: "url('https://i.pinimg.com/736x/21/01/cc/2101cc1cb0e93c8d9f04145946118c7f.jpg')", 
+//     smile: "url('https://i.pinimg.com/736x/8d/40/84/8d4084f141bce06f25e99b44956790d3.jpg')",
+//     neutral: "url('https://i.pinimg.com/736x/65/6b/e4/656be4ba10df99f7849a609f4bac3f36.jpg')",
+//     sad: "url('https://i.pinimg.com/736x/7a/7c/2a/7a7c2a56165f9015ad57e4cebb16c022.jpg')",
+//     angry: "url('https://i.pinimg.com/736x/4b/06/6a/4b066a49cbe4ff6061c742fa23858687.jpg')",
+//   };
+
+//   const backgroundStyle = {
+//     backgroundImage: backgroundMap[emotion],
+//     backgroundSize: "cover",
+//     backgroundPosition: "center",
+//     minHeight: "100vh",
+//     width: "100%",
+//   };
 
   const handleStartPlaying = () => {
     navigate("/games");
@@ -44,7 +65,7 @@ const WelcomeScreen = () => {
           <h2 className="how-are-you">How are you feeling today?</h2>
           <div className="emojibuttons">
             <div className="happybutton" onClick={() => showMessage("happy")}>
-              <img className="happyicon" alt="happy"src="/images/happy.png" />
+              <img className="happyicon" alt="happy" src="/images/happy.png" />
             </div>
             <div className="smilebutton" onClick={() => showMessage("smile")}>
               <img className="happyicon" alt="Smile" src="/images/smile.png" />

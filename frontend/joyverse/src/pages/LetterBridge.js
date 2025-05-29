@@ -3,6 +3,7 @@ import { difficultyData } from './letterBridgingData';
 import LineDrawer from '../components/LineDrawer';
 import './LetterBridge.css';
 import useEmotionDetection from "../hooks/useEmotionDetection";
+
 const GAME_DURATION = 60;
 
 const LetterBridge = () => {
@@ -18,7 +19,6 @@ const LetterBridge = () => {
   const [score, setScore] = useState(0);
   const [timeLeft, setTimeLeft] = useState(GAME_DURATION);
   const [gameOver, setGameOver] = useState(false);
-  const [hasStarted, setHasStarted] = useState(false);
 
   const wrapperRef = useRef(null);
   const letterRefs = useRef({});
@@ -38,14 +38,13 @@ const LetterBridge = () => {
     setPositions([]);
   };
 
-  const handleStart = () => {
-    setHasStarted(true);
+  useEffect(() => {
     initializeGame();
-  };
+  }, [difficulty]);
 
   useEffect(() => {
-    if (!hasStarted || timeLeft <= 0) {
-      if (timeLeft <= 0) setGameOver(true);
+    if (timeLeft <= 0) {
+      setGameOver(true);
       return;
     }
 
@@ -54,7 +53,7 @@ const LetterBridge = () => {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [timeLeft, hasStarted]);
+  }, [timeLeft]);
 
   useEffect(() => {
     if (Object.keys(selected).length === letters.length && !gameOver) {
@@ -100,7 +99,7 @@ const LetterBridge = () => {
   }, [selected, letters]);
 
   const handleSelect = (column, letter) => {
-    if (gameOver || !hasStarted) return;
+    if (gameOver) return;
 
     const nextColumnToSelect = Object.keys(selected).length;
     if (parseInt(column) === nextColumnToSelect) {
@@ -108,79 +107,74 @@ const LetterBridge = () => {
     }
   };
 
+  const handleRestart = () => {
+    initializeGame();
+  };
+
   const handleDifficultyChange = (e) => {
     setDifficulty(e.target.value);
   };
 
   return (
-    <div className="letter-bridge-container">
-      {!hasStarted ? (
-        <div className="letter-bridge-start-screen">
-          <h1 className="letter-bridge-title">Letter Bridging Game</h1>
-          <p className="letter-bridge-subtitle">Tap one letter from each column, left to right, to form a valid word!</p>
+    <div className="game-card">
+      <h1 className="game-title">Letter Bridging Game</h1>
+      <p className="game-instructions">Tap one letter from each column, left to right, to form a valid word!</p>
 
-          <div className="letter-bridge-difficulty-select">
-            <label>Select Difficulty:</label>
-            <select value={difficulty} onChange={handleDifficultyChange}>
-              <option value="easy">🟢Easy</option>
-              <option value="medium">🟡Medium</option>
-              <option value="hard">🔴Hard</option>
-            </select>
-          </div>
+      <div className="game-info-bar">
+        <p>⏱️ Time Left: <strong>{timeLeft}s</strong></p>
+        <p>⭐ Score: <strong>{score}</strong></p>
 
-          <button className="letter-bridge-start-btn" onClick={handleStart}>Start Game</button>
+        <div className="game-difficulty-select">
+          <label htmlFor="difficulty">Difficulty:</label>
+          <select id="difficulty" value={difficulty} onChange={handleDifficultyChange}>
+            <option value="easy">🟢 Easy</option>
+            <option value="medium">🟡 Medium</option>
+            <option value="hard">🔴 Hard</option>
+          </select>
         </div>
-      ) : (
-        <>
-          <h1 className="letter-bridge-title">Letter Bridging Game</h1>
-          <div className="letter-bridge-info-bar">
-            <p>⏱️ Time Left: <strong>{timeLeft}s</strong></p>
-            <p>⭐ Score: <strong>{score}</strong></p>
-          </div>
+      </div>
 
-          <div className="letter-bridge-grid-wrapper" ref={wrapperRef}>
-            <div className="letter-bridge-grid">
-              {letters.map((col, colIndex) => (
-                <div key={colIndex} className="letter-bridge-column">
-                  {col.map((letter, rowIndex) => {
-                    const isSelected = selected[colIndex] === letter;
-                    const isBlinking = blinkingCols.includes(colIndex) && isSelected;
-                    return (
-                      <div
-                        key={rowIndex}
-                        className={`letter-bridge-circle ${isSelected ? 'letter-bridge-selected' : ''} ${isBlinking ? 'letter-bridge-blink-red' : ''}`}
-                        onClick={() => handleSelect(colIndex, letter)}
-                        ref={(el) => (letterRefs.current[`${colIndex}-${letter}`] = el)}
-                      >
-                        {letter}
-                      </div>
-                    );
-                  })}
-                </div>
-              ))}
+      <div className="game-grid-wrapper" ref={wrapperRef}>
+        <div className="game-grid">
+          {letters.map((col, colIndex) => (
+            <div key={colIndex} className="game-column">
+              {col.map((letter, rowIndex) => {
+                const isSelected = selected[colIndex] === letter;
+                const isBlinking = blinkingCols.includes(colIndex) && isSelected;
+                return (
+                  <div
+                    key={rowIndex}
+                    className={`game-letter ${isSelected ? 'selected' : ''} ${isBlinking ? 'blink-red' : ''}`}
+                    onClick={() => handleSelect(colIndex, letter)}
+                    ref={(el) => (letterRefs.current[`${colIndex}-${letter}`] = el)}
+                  >
+                    {letter}
+                  </div>
+                );
+              })}
             </div>
-            <LineDrawer positions={positions} isValid={isValid} />
-          </div>
+          ))}
+        </div>
+        <LineDrawer positions={positions} isValid={isValid} />
+      </div>
 
-          <div className="letter-bridge-words-container">
-            <h3>Words Formed:</h3>
-            {formedWords.map((word, idx) => (
-              <span key={idx} className="letter-bridge-word-pill">{word}</span>
-            ))}
-          </div>
+      <div className="game-word-list">
+        <h3>Words Formed:</h3>
+        {formedWords.map((word, idx) => (
+          <span key={idx} className="game-word-pill">{word}</span>
+        ))}
+      </div>
 
-          {gameOver && (
-            <div className="letter-bridge-game-over">
-              <h2>⏰ Time’s Up!</h2>
-              <p>Your final score: <strong>{score}</strong></p>
-              <button className="letter-bridge-start-btn" onClick={handleStart}>Play Again</button>
-            </div>
-          )}
-        </>
+      {gameOver && (
+        <div className="game-over">
+          <h2>⏰ Time’s Up!</h2>
+          <p>Your final score: <strong>{score}</strong></p>
+          <button className="game-btn" onClick={handleRestart}>Play Again</button>
+        </div>
       )}
+
       <video ref={videoRef} autoPlay style={{ display: "none" }} />
-    <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }}/>
-    
+      <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }} />
     </div>
   );
 };
