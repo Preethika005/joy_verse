@@ -15,6 +15,12 @@ const WelcomeScreen = () => {
     const selectedEmotion = localStorage.getItem("selectedEmotion") || "neutral";
     setEmotion(selectedEmotion);
   }, []);
+  useEffect(() => {
+    document.body.style.overflow = "auto";
+    return () => {
+      document.body.style.overflow = "hidden";
+    };
+  }, []);
 
   const showMessage = (mood) => {
     const messages = {

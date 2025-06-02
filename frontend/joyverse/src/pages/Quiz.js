@@ -143,7 +143,7 @@ const Quiz = () => {
   const [difficulty, setDifficulty] = useState("Easy");
   
   const username = localStorage.getItem("username");
-  const { endSession } = useGameSessionLogger({ username, difficulty, expression: emotion });
+  const { endSession } = useGameSessionLogger({ username, difficulty, expression: emotion ,score});
   useEffect(() => {
     const fetchQuestions = async () => {
       try {
@@ -166,12 +166,12 @@ const Quiz = () => {
   useEffect(() => {
     // When quiz ends (showScore becomes true), call endSession
     if (showScore) {
-      endSession();
+      endSession(score);
     }
   }, [showScore, endSession]);
   const handleAnswerClick = (selected) => {
     if (selected === questions[currentQuestion].answer) {
-      setScore(score + 1);
+      setScore(score + 20);
     }
 
     const nextQuestion = currentQuestion + 1;
@@ -223,7 +223,7 @@ const Quiz = () => {
           <p className="game-text">Loading questions...</p>
         ) : showScore ? (
           <div className="game-score">
-            <p className="game-text">You scored {score} out of {questions.length}! 🎉</p>
+            <p className="game-text">You scored {score} out of {questions.length*20}! 🎉</p>
             <p className="game-text">Session Emotion: {sessionDominantEmotion}</p>
             <p className="game-text">Next Difficulty: {emotionToDifficulty[sessionDominantEmotion] || "Medium"}</p>
             <button className="game-button" onClick={handleReplay}>Replay Quiz</button>

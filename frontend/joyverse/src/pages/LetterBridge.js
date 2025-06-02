@@ -3,6 +3,7 @@ import { difficultyData } from './letterBridgingData';
 import LineDrawer from '../components/LineDrawer';
 import './LetterBridge.css';
 import useEmotionDetection from "../hooks/useEmotionDetection";
+import useGameSessionLogger from "../hooks/useGameSessionLogger";
 
 const GAME_DURATION = 60;
 
@@ -22,7 +23,8 @@ const LetterBridge = () => {
 
   const wrapperRef = useRef(null);
   const letterRefs = useRef({});
-
+    const username = localStorage.getItem("username");
+  const { endSession } = useGameSessionLogger({ username, difficulty, expression: emotion ,score});
   const initializeGame = () => {
     const difficultySets = difficultyData[difficulty];
     const randomSet = difficultySets[Math.floor(Math.random() * difficultySets.length)];
@@ -45,6 +47,7 @@ const LetterBridge = () => {
   useEffect(() => {
     if (timeLeft <= 0) {
       setGameOver(true);
+          endSession();
       return;
     }
 
@@ -114,9 +117,27 @@ const LetterBridge = () => {
   const handleDifficultyChange = (e) => {
     setDifficulty(e.target.value);
   };
-
+  const getEmotionStyles = (emotion) => {
+  switch (emotion) {
+    case "Happy":
+      return { backgroundColor: "#F8FD89", color: "#333333" }; 
+    case "Sad":
+      return { backgroundColor: "#D8FAD2", color: "#3B2F2F" }; 
+    case "Angry":
+      return { backgroundColor: "#A5F7E1", color: "#223344" }; 
+    case "Surprise":
+      return { backgroundColor: "#FFDAB9", color: "#4B0082" }; 
+    case "Neutral":
+    default:
+      return { backgroundColor: "#F9F9F3", color: "#2C2C2C" }; 
+  }
+};
   return (
-    <div className="game-card">
+    <div className="game-card" style={{
+    backgroundColor: getEmotionStyles(emotion).backgroundColor,
+    color: getEmotionStyles(emotion).color,
+    '--text-color': getEmotionStyles(emotion).color,
+  }}>
       <h1 className="game-title">Letter Bridging Game</h1>
       <p className="game-instructions">Tap one letter from each column, left to right, to form a valid word!</p>
 

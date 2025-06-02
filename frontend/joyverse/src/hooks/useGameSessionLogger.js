@@ -49,7 +49,7 @@
 import { useEffect, useRef } from "react";
 import axios from "axios";
 
-const useGameSessionLogger = ({ username, difficulty, expression }) => {
+const useGameSessionLogger = ({ username, difficulty, expression,score }) => {
   const startTimeRef = useRef(new Date());
   const expressionsRef = useRef([]);
 
@@ -73,6 +73,7 @@ const useGameSessionLogger = ({ username, difficulty, expression }) => {
       endTime: endTime.toISOString(),
       expressions: expressionsRef.current,
       gameName, // ✅ Added here
+      score,
     };
 
     try {

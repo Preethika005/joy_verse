@@ -318,6 +318,7 @@
 // ShapeMemoryGame.jsx
 import { useEffect, useState, useRef } from "react";
 import "./ShapeMemoryGame.css";
+import useEmotionDetection from "../hooks/useEmotionDetection";
 import useGameSessionLogger from "../hooks/useGameSessionLogger"; // Adjust path
 
 const emotionThemes = {
@@ -339,6 +340,7 @@ const levelSettings = {
 };
 
 function ShapeMemoryGame() {
+  const { emotion, videoRef, canvasRef } = useEmotionDetection();
   const [tileValues, setTileValues] = useState([]);
   const [revealed, setRevealed] = useState([]);
   const [correctTiles, setCorrectTiles] = useState([]);
@@ -353,9 +355,15 @@ function ShapeMemoryGame() {
   const [clicksLeft, setClicksLeft] = useState(0);
   const [expression, setExpression] = useState("Neutral");
 
-  const videoRef = useRef(null);
-  const canvasRef = useRef(null);
-
+  // const videoRef = useRef(null);
+  // const canvasRef = useRef(null);
+  const username = localStorage.getItem("username");
+  const { endSession } = useGameSessionLogger({
+  username,
+  difficulty:level,
+  expression: emotion,
+  score,
+});
   useEffect(() => {
     setupGame();
   }, [level]);
@@ -372,6 +380,7 @@ function ShapeMemoryGame() {
       const timer = setTimeout(() => setTimeLeft((prev) => prev - 1), 1000);
       return () => clearTimeout(timer);
     } else if (timeLeft === 0 && !isGameOver && !isStarting) {
+      // endSession(score);
       setIsGameOver(true);
     }
   }, [timeLeft, isGameOver, isStarting]);
@@ -406,7 +415,7 @@ function ShapeMemoryGame() {
 
   useEffect(() => {
     if (isGameOver) {
-      endSession();
+      endSession(score);
     }
   }, [isGameOver]);
 
@@ -443,8 +452,6 @@ function ShapeMemoryGame() {
     }, "image/jpeg");
   };
 
-  const username = localStorage.getItem("username");
-  const { endSession } = useGameSessionLogger({ username, difficulty: level, expression });
 
   const shuffleArray = (array) => {
     for (let i = array.length - 1; i > 0; i--) {
@@ -559,7 +566,7 @@ function ShapeMemoryGame() {
 
       <p className="smg-timer">{isStarting ? `Memorizing... ${timeLeft}s` : `Time Left: ${timeLeft}s`}</p>
       <p className="smg-clicks-left">Chances Left: {clicksLeft}</p>
-      <p className="smg-expression">Current Mood: {expression}</p>
+      {/* <p className="smg-expression">Current Mood: {expression}</p> */}
 
       <div className="smg-grid smg-grid-4x4">
         {tileValues.map((shape, idx) => {
@@ -598,8 +605,8 @@ function ShapeMemoryGame() {
         </div>
       )}
 
-      <video ref={videoRef} autoPlay playsInline style={{ display: "none" }} />
-      <canvas ref={canvasRef} style={{ display: "none" }} />
+      <video ref={videoRef} autoPlay style={{ display: "none" }} />
+        <canvas ref={canvasRef} width={640} height={480} style={{ display: "none" }} />
     </div>
   );
 }

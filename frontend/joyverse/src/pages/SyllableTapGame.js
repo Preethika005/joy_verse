@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import './SyllableTapGame.css';
 import useEmotionDetection from "../hooks/useEmotionDetection";
-
+import useGameSessionLogger from "../hooks/useGameSessionLogger";
 // const hardcodedWords = {
 //   easy: [
 //     { word: 'cat', syllables: 1, split: ['cat'] },
@@ -38,7 +38,8 @@ export default function SyllableTapGame() {
   const [score, setScore] = useState(0);
   const [gameComplete, setGameComplete] = useState(false);
   const [isFirstWord, setIsFirstWord] = useState(true);
-
+  const username = localStorage.getItem("username");
+  const { endSession } = useGameSessionLogger({ username, difficulty, expression: emotion,score });
 useEffect(() => {
     fetchWords(difficulty);
   }, []);
@@ -68,6 +69,7 @@ useEffect(() => {
       setCurrentWord(null);
       setGameComplete(true);
       // submitScore();
+      endSession();
       return;
     }
 
@@ -121,11 +123,29 @@ const handleDifficultyChange = (e) => {
   useEffect(() => {
     fetchWords(difficulty);
   }, []);
-
+  const getEmotionStyles = (emotion) => {
+  switch (emotion) {
+    case "Happy":
+      return { backgroundColor: "#F8FD89", color: "#333333" }; 
+    case "Sad":
+      return { backgroundColor: "#D8FAD2", color: "#3B2F2F" }; 
+    case "Angry":
+      return { backgroundColor: "#A5F7E1", color: "#223344" }; 
+    case "Surprise":
+      return { backgroundColor: "#FFDAB9", color: "#4B0082" }; 
+    case "Neutral":
+    default:
+      return { backgroundColor: "#F9F9F3", color: "#2C2C2C" }; 
+  }
+};
 
   return (
   <div className="game-container">
-  <div className="game-card">
+  <div className="game-card" style={{
+    backgroundColor: getEmotionStyles(emotion).backgroundColor,
+    color: getEmotionStyles(emotion).color,
+    '--text-color': getEmotionStyles(emotion).color,
+  }}>
     <h2 className="game-title">Syllable Tap Game</h2>
 
     <div className="difficulty-select">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import confetti from "canvas-confetti";
 import "./MirrorWordsGame.css";
 import useEmotionDetection from "../hooks/useEmotionDetection";
+import useGameSessionLogger from "../hooks/useGameSessionLogger";
 const MirrorWordsGame = () => {
   const { emotion, videoRef, canvasRef } = useEmotionDetection();
   const [level, setLevel] = useState("Easy");
@@ -11,6 +12,8 @@ const MirrorWordsGame = () => {
   const [score, setScore] = useState(0);
   const [showResult, setShowResult] = useState(false);
   const [questions, setQuestions] = useState([]);
+    const username = localStorage.getItem("username");
+  const { endSession } = useGameSessionLogger({ username, difficulty:level, expression: emotion ,score});
   useEffect(() => {
   const fetchQuestions = async () => {
     try {
@@ -62,6 +65,7 @@ const filteredQuestions = questions;
         } else {
           setShowResult(true);
           fireConfetti();
+          endSession(score);
         }
       }, 1000); // Delay in ms before moving to next question or result
 

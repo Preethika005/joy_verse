@@ -17,6 +17,7 @@ const gameSessionSchema = new mongoose.Schema({
     endTime: { type: Date, required: true },
     gameName: { type: String, required: true }, // ✅ Added
     expressions: [expressionSchema],
+    score: { type: Number, required: true },
   });
   
 // Use existing model if already defined (for hot reload compatibility)
@@ -28,7 +29,7 @@ router.post('/', async (req, res) => {
     console.log("✅ Incoming POST /api/sessions");
     console.log("📦 Payload:", req.body);
 
-    const { username, difficulty, startTime, endTime, expressions, gameName } = req.body;
+    const { username, difficulty, startTime, endTime, expressions, gameName,score } = req.body;
 
     const session = new GameSession({
         username,
@@ -37,6 +38,7 @@ router.post('/', async (req, res) => {
         endTime,
         expressions,
         gameName, // ✅ Add to document
+        score,
     });
 
     await session.save();

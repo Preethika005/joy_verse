@@ -222,6 +222,7 @@ const TherapistDashboard = () => {
     <h3>Session {index + 1}: {session.gameName} ({session.difficulty})</h3>
     <p><strong>Start:</strong> {new Date(session.startTime).toLocaleString()}</p>
     <p><strong>End:</strong> {new Date(session.endTime).toLocaleString()}</p>
+    <p><strong>Score:</strong> {session.score}</p>
 
     {/* Timeline chart */}
     <EmotionTimelineChart expressions={session.expressions} />

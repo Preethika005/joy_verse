@@ -20,6 +20,7 @@ const WordPuzzleAdventure = () => {
   username,
   difficulty,
   expression: emotion,
+  score,
 });
   useEffect(() => {
     fetchQuestions(difficulty);
@@ -30,7 +31,7 @@ const WordPuzzleAdventure = () => {
     confetti({ particleCount: 150, spread: 100, origin: { y: 0.6 } });
 
     (async () => {
-      await endSession(); 
+      await endSession(score); 
     })();
   }
 }, [gameCompleted]);
@@ -199,7 +200,13 @@ const WordPuzzleAdventure = () => {
             <img
               src={currentWordObj.image}
               alt="word"
-              className="quiz-option-image"
+              className="quiz-option-image"style={{
+    width: "200px",
+    height: "200px",
+    objectFit: "contain",
+    borderRadius: "12px",
+    margin: "10px auto"
+  }}
             />
             <div className="word-slot-container">
               {selectedLetters.map((letter, index) => (
