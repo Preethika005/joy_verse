@@ -7,6 +7,7 @@ JoyVerse is a web-based learning and therapy support platform featuring interact
 ## Tech Stack
 
 **Frontend**
+
 - React (Create React App)
 - React Router
 - Axios
@@ -15,12 +16,14 @@ JoyVerse is a web-based learning and therapy support platform featuring interact
 - react-webcam
 
 **Backend**
+
 - Node.js, Express
 - MongoDB Atlas, Mongoose
 - bcrypt / bcryptjs
 - cors, dotenv
 
 **ML Service**
+
 - FastAPI
 - Hugging Face Transformers
 - PyTorch
@@ -60,15 +63,18 @@ joy_verse/
 ## How It Works
 
 ### Frontend
+
 - Client-side routing is handled by `react-router-dom`.
 - Main routes include login, dashboards, and multiple mini‑games.
 
 ### Backend API (Express)
+
 - Connects to MongoDB using `MONGO_URI`.
 - Exposes REST endpoints under `/api/*`.
 - Runs on port `4000`.
 
 Mounted route groups:
+
 - `/api/auth`
 - `/api/children`
 - `/api/sessions`
@@ -80,6 +86,7 @@ Mounted route groups:
 - `/api/emotion`
 
 ### Emotion Prediction Service (FastAPI)
+
 - `POST /predict` accepts an uploaded image and returns a predicted expression label.
 - Default model: `trpakov/vit-face-expression`.
 
@@ -88,6 +95,7 @@ Mounted route groups:
 ## Environment Variables
 
 ### Backend (Express + FastAPI config)
+
 Create `backend/.env`:
 
 ```env
