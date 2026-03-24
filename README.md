@@ -421,28 +421,34 @@ Vision Transformers excel at capturing global facial structure through self-atte
 ## 🚀 Working Screens
 
 <p align="center">
-  <img src="workingScreenshots/analytics.png" width="45%" />
-  <img src="workingScreenshots/gameDash1.png" width="45%" />
-</p>
-
-<p align="center">
-  <img src="workingScreenshots/gameDash2.png" width="45%" />
-  <img src="workingScreenshots/happyQuiz.png" width="45%" />
-</p>
-
-<p align="center">
   <img src="workingScreenshots/login.png" width="45%" />
+  <img src="workingScreenshots/welcome.png" width="45%" />
+  
+  
+</p>
+
+<p align="center">
+  <img src="workingScreenshots/gameDash1.png" width="45%" />
+  <img src="workingScreenshots/gameDash2.png" width="45%" />
+  
+</p>
+
+<p align="center">
+  <img src="workingScreenshots/happyQuiz.png" width="45%" />
   <img src="workingScreenshots/sadQuiz.png" width="45%" />
 </p>
 
 <p align="center">
-  <img src="workingScreenshots/superAdminDash.png" width="45%" />
-  <img src="workingScreenshots/superadminLogin.png" width="45%" />
+  <img src="workingScreenshots/therapist.png" width="45%" />
+  <img src="workingScreenshots/analytics.png" width="45%" />
+  
 </p>
 
 <p align="center">
-  <img src="workingScreenshots/therapist.png" width="45%" />
-  <img src="workingScreenshots/welcome.png" width="45%" />
+  <img src="workingScreenshots/superadminLogin.png" width="45%" />
+  <img src="workingScreenshots/superAdminDash.png" width="45%" />
+  
+  
 </p>
 
 ---
